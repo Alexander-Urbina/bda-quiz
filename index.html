@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayesian Data Analysis Quiz App</title>
+    <!-- MathJax for rendering mathematical formulas -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Load quiz data from external file -->
+    <script src="quiz_data.js"></script>
+    <style>
+        :root {
+            /* Light mode colors */
+            --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --bg-secondary: white;
+            --bg-tertiary: #f8f9fa;
+            --bg-card: white;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --text-inverse: white;
+            --border-color: #e9ecef;
+            --shadow: rgba(0,0,0,0.3);
+            --shadow-light: rgba(0,0,0,0.1);
+            --accent: #667eea;
+            --accent-hover: #5568d3;
+            --success: #28a745;
+            --success-bg: #d4edda;
+            --danger: #dc3545;
+            --danger-bg: #f8d7da;
+            --info-bg: #e8f5e9;
+            --option-bg: white;
+            --option-hover: #f0f4ff;
+            --option-selected: #e8edff;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --bg-secondary: #1e1e2e;
+            --bg-tertiary: #2d2d44;
+            --bg-card: #252538;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --text-inverse: #e0e0e0;
+            --border-color: #3d3d5c;
+            --shadow: rgba(0,0,0,0.6);
+            --shadow-light: rgba(0,0,0,0.3);
+            --accent: #7c8ef0;
+            --accent-hover: #6b7de0;
+            --success: #4caf50;
+            --success-bg: #1e4620;
+            --danger: #f44336;
+            --danger-bg: #4a1e1e;
+            --info-bg: #1e3a1e;
+            --option-bg: #2d2d44;
+            --option-hover: #3d3d5c;
+            --option-selected: #4d4d6c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-primary);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px var(--shadow);
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .header {
+            background: var(--bg-primary);
+            color: var(--text-inverse);
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--text-inverse);
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .nav {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--accent);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            min-width: 120px;
+        }
+
+        .nav-btn:hover {
+            background: var(--option-hover);
+        }
+
+        .nav-btn.active {
+            background: var(--bg-secondary);
+            border-bottom-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .view {
+            display: none;
+            padding: 30px;
+            min-height: 500px;
+            background: var(--bg-secondary);
+            transition: background 0.3s ease;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .mode-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .mode-card h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+
+        .mode-card p {
+            opacity: 0.9;
+        }
+
+        .quiz-section-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .section-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .section-card h3 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .section-card .count {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .question-container {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .question-header h2 {
+            color: #667eea;
+            font-size: 1.3em;
+        }
+
+        .question-meta {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .question-statement {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question-statement img {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* MathJax styling */
+        .question-statement .MathJax,
+        .explanation .MathJax,
+        .option .MathJax {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .question-statement mjx-container,
+        .explanation mjx-container,
+        .option mjx-container {
+            display: inline-block;
+            margin: 0 0.2em;
+            vertical-align: middle;
+        }
+
+        .question-statement mjx-container[display="true"],
+        .explanation mjx-container[display="true"],
+        .option mjx-container[display="true"] {
+            display: block;
+            margin: 1em 0;
+            text-align: center;
+        }
+
+        .options {
+            margin: 20px 0;
+        }
+
+        .option {
+            background: var(--option-bg);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            color: var(--text-primary);
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background: var(--option-hover);
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background: var(--option-selected);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: var(--danger-bg);
+        }
+
+        .option input[type="checkbox"],
+        .option input[type="radio"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .explanation {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--info-bg);
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+            display: none;
+            color: var(--text-primary);
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation h3 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+
+        .explanation img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--text-inverse);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--option-hover);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--text-inverse);
+        }
+
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--text-inverse);
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            color: var(--text-inverse);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .progress-chart {
+            margin: 30px 0;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            color: var(--text-primary);
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: var(--border-color);
+            border-radius: 15px;
+            margin: 10px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--bg-primary);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-inverse);
+            font-weight: 600;
+        }
+
+        .file-controls {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .question-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .question-nav-btn {
+            padding: 8px 16px;
+            background: var(--accent);
+            color: var(--text-inverse);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-nav-btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+        }
+
+        .question-nav-btn:disabled {
+            background: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2em;
+            color: var(--accent);
+        }
+
+        .error {
+            background: var(--danger-bg);
+            color: var(--danger);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--danger);
+        }
+
+        .question-container {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .question-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .question-header h2 {
+            color: var(--text-primary);
+        }
+
+        .question-meta {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .question-statement {
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+                padding-right: 50px;
+            }
+
+            .header p {
+                font-size: 0.9em;
+            }
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+                padding: 8px 12px;
+                font-size: 1em;
+            }
+
+            .nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                border-bottom: 1px solid var(--border-color);
+                border-right: none;
+                padding: 12px 15px;
+                text-align: left;
+            }
+
+            .nav-btn.active {
+                border-bottom-color: var(--accent);
+                border-left: 3px solid var(--accent);
+            }
+
+            .view {
+                padding: 15px;
+            }
+
+            .mode-selector {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .mode-card {
+                padding: 20px;
+            }
+
+            .mode-card h2 {
+                font-size: 1.2em;
+            }
+
+            .quiz-section-list {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .section-card {
+                padding: 15px;
+            }
+
+            .section-card h3 {
+                font-size: 1em;
+            }
+
+            .question-container {
+                padding: 15px;
+            }
+
+            .question-header h2 {
+                font-size: 1.3em;
+            }
+
+            .question-statement {
+                font-size: 0.95em;
+            }
+
+            .option {
+                padding: 12px;
+                font-size: 0.9em;
+            }
+
+            .progress-stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 15px;
+            }
+
+            .stat-card h3 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .question-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .question-nav-btn {
+                width: 100%;
+            }
+
+            .file-controls {
+                flex-direction: column;
+            }
+
+            .file-controls .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.2em;
+            }
+
+            .view {
+                padding: 10px;
+            }
+
+            .question-container {
+                padding: 10px;
+            }
+
+            .option {
+                padding: 10px;
+                font-size: 0.85em;
+            }
+
+            .explanation {
+                padding: 15px;
+                font-size: 0.9em;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .quiz-section-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mode-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <span id="theme-icon">🌙</span>
+            </button>
+            <h1>📚 Bayesian Data Analysis Quiz App</h1>
+            <p>Practice and track your progress</p>
+        </div>
+
+        <div class="nav">
+            <button class="nav-btn active" onclick="showView('home', this)">Home</button>
+            <button class="nav-btn" onclick="showView('explore', this)">Explore</button>
+            <button class="nav-btn" onclick="showView('random-section', this)">Random Section</button>
+            <button class="nav-btn" onclick="showView('random-question', this)">Random Question</button>
+            <button class="nav-btn" onclick="showView('progress', this)">Progress</button>
+        </div>
+
+        <!-- Home View -->
+        <div id="home-view" class="view active">
+            <h2>Welcome! Choose a mode:</h2>
+            <div class="mode-selector">
+                <div class="mode-card" onclick="showView('explore')">
+                    <h2>🔍 Explore</h2>
+                    <p>Browse all quiz sections and select specific ones to practice</p>
+                </div>
+                <div class="mode-card" onclick="showView('random-section')">
+                    <h2>🎲 Random Section</h2>
+                    <p>Get a random section from any quiz to test your knowledge</p>
+                </div>
+                <div class="mode-card" onclick="showView('random-question')">
+                    <h2>❓ Random Question</h2>
+                    <p>Practice with individual random questions</p>
+                </div>
+                <div class="mode-card" onclick="showView('progress')">
+                    <h2>📊 Progress</h2>
+                    <p>View your learning progress and statistics</p>
+                </div>
+            </div>
+
+            <div class="file-controls">
+                <button class="btn btn-primary" onclick="downloadProgress()">📥 Download Progress</button>
+                <label for="upload-progress" class="btn btn-secondary" style="cursor: pointer;">
+                    📤 Upload Progress
+                </label>
+                <input type="file" id="upload-progress" class="file-input" accept=".json" onchange="uploadProgress(event)">
+                <button class="btn btn-danger" onclick="resetQuiz()">🔄 Reset Quiz Answers</button>
+            </div>
+        </div>
+
+        <!-- Explore View -->
+        <div id="explore-view" class="view">
+            <h2>Explore Quiz Sections</h2>
+            <div id="quiz-sections" class="quiz-section-list">
+                <!-- Sections will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Random Section View -->
+        <div id="random-section-view" class="view">
+            <div id="random-section-content">
+                <!-- Random section will be displayed here -->
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="loadRandomSection()">🎲 New Random Section</button>
+                <button class="btn btn-secondary" onclick="showView('home')">🏠 Home</button>
+            </div>
+        </div>
+
+        <!-- Random Question View -->
+        <div id="random-question-view" class="view">
+            <div id="random-question-content">
+                <!-- Random question will be displayed here -->
+            </div>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="loadRandomQuestion()">❓ New Random Question</button>
+                <button class="btn btn-secondary" onclick="showView('home')">🏠 Home</button>
+            </div>
+        </div>
+
+        <!-- Progress View -->
+        <div id="progress-view" class="view">
+            <h2>Your Progress</h2>
+            <div class="progress-stats" id="progress-stats">
+                <!-- Stats will be loaded here -->
+            </div>
+            <div class="progress-chart" id="progress-chart">
+                <!-- Progress chart will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+;
+</script>
+
+    <script>
+
+        let quizData = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let progress = loadProgress();
+
+        // Function to render MathJax after content update
+        function renderMath() {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise().catch(function (err) {
+                    console.log('MathJax rendering error:', err);
+                });
+            } else if (window.MathJax && window.MathJax.typeset) {
+                // Fallback for older MathJax versions
+                MathJax.typeset();
+            }
+        }
+
+        // Theme management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('quizTheme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('quizTheme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
+        // Initialize app
+        async function init() {
+            try {
+                // Try to load from embedded data first
+                if (typeof QUIZ_DATA !== 'undefined') {
+                    quizData = QUIZ_DATA;
+                } else {
+                    // Fallback to fetch if not embedded
+                    const response = await fetch('all_quizzes.json');
+                    quizData = await response.json();
+                }
+                setupExploreView();
+                loadRandomSection();
+                loadRandomQuestion();
+                updateProgressView();
+                
+                // Wait for MathJax to be ready, then render
+                if (window.MathJax && window.MathJax.startup) {
+                    MathJax.startup.promise.then(() => {
+                        setTimeout(() => renderMath(), 200);
+                    });
+                } else {
+                    // If MathJax isn't loaded yet, wait a bit
+                    setTimeout(() => renderMath(), 500);
+                }
+            } catch (error) {
+                document.body.innerHTML = `
+                    <div class="container">
+                        <div class="error">
+                            <h2>Error loading quiz data</h2>
+                            <p>${error.message}</p>
+                            <p>Make sure quiz data is embedded in the HTML file or all_quizzes.json is available.</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // View management
+        function showView(viewName, buttonElement) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(`${viewName}-view`).classList.add('active');
+            
+            // Activate the clicked button
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            } else {
+                // Fallback: find button by text content
+                const navButtons = document.querySelectorAll('.nav-btn');
+                navButtons.forEach(btn => {
+                    const btnText = btn.textContent.trim().toLowerCase();
+                    const viewText = viewName.replace('-', ' ').toLowerCase();
+                    if (btnText.includes(viewText.split(' ')[0]) || 
+                        (viewName === 'home' && btnText === 'home')) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            if (viewName === 'progress') {
+                updateProgressView();
+            }
+        }
+
+        // Setup explore view
+        function setupExploreView() {
+            const container = document.getElementById('quiz-sections');
+            container.innerHTML = '';
+
+            // Group questions by quiz and section
+            Object.keys(quizData.quizzes).forEach(quizNum => {
+                const questions = quizData.quizzes[quizNum];
+                
+                // Group by section
+                const sections = {};
+                questions.forEach(q => {
+                    const sectionKey = q.section || 'Unnamed Section';
+                    if (!sections[sectionKey]) {
+                        sections[sectionKey] = [];
+                    }
+                    sections[sectionKey].push(q);
+                });
+
+                // Create quiz header with reset button
+                const quizHeader = document.createElement('div');
+                quizHeader.style.cssText = 'grid-column: 1 / -1; font-size: 1.3em; font-weight: bold; color: #667eea; margin: 20px 0 10px 0; padding-bottom: 10px; border-bottom: 2px solid #e9ecef; display: flex; justify-content: space-between; align-items: center;';
+                
+                const quizTitle = document.createElement('span');
+                quizTitle.textContent = `Quiz ${quizNum} (${questions.length} questions)`;
+                
+                const resetQuizBtn = document.createElement('button');
+                resetQuizBtn.className = 'btn btn-secondary';
+                resetQuizBtn.style.cssText = 'padding: 5px 15px; font-size: 0.7em;';
+                resetQuizBtn.textContent = '🔄 Reset Quiz';
+                resetQuizBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    resetQuizByNumber(quizNum);
+                };
+                
+                quizHeader.appendChild(quizTitle);
+                quizHeader.appendChild(resetQuizBtn);
+                container.appendChild(quizHeader);
+
+                // Create section cards
+                Object.keys(sections).forEach(sectionName => {
+                    const sectionQuestions = sections[sectionName];
+                    
+                    // Calculate progress for this section
+                    const sectionAnswered = sectionQuestions.filter(q => 
+                        progress.answered[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const sectionCorrect = sectionQuestions.filter(q => 
+                        progress.correct[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const sectionWrong = sectionQuestions.filter(q => 
+                        progress.wrong[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const sectionAccuracy = sectionAnswered > 0 ? ((sectionCorrect / sectionAnswered) * 100).toFixed(0) : 0;
+                    
+                    const sectionCard = document.createElement('div');
+                    sectionCard.className = 'section-card';
+                    sectionCard.innerHTML = `
+                        <h3>${sectionName}</h3>
+                        <div class="count">${sectionQuestions.length} questions</div>
+                        ${sectionQuestions[0].section_number ? `<div class="count" style="font-size: 0.8em; color: #999;">Section ${sectionQuestions[0].section_number}</div>` : ''}
+                        ${sectionAnswered > 0 ? `
+                            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e9ecef;">
+                                <div style="font-size: 0.9em; color: #666;">
+                                    <span style="color: #28a745;">✓ ${sectionCorrect}</span> / 
+                                    <span style="color: #dc3545;">✗ ${sectionWrong}</span> / 
+                                    ${sectionAnswered} answered (${sectionAccuracy}%)
+                                </div>
+                            </div>
+                        ` : ''}
+                        <div style="margin-top: 10px; display: flex; gap: 5px;">
+                            <button class="btn btn-primary" data-quiz="${quizNum}" data-section="${sectionName.replace(/"/g, '&quot;')}" onclick="event.stopPropagation(); const btn = event.target; const quizNum = btn.getAttribute('data-quiz'); const sectionName = btn.getAttribute('data-section'); const questions = quizData.quizzes[quizNum].filter(q => (q.section || 'Unnamed Section') === sectionName); loadSectionByQuestions(questions, quizNum, sectionName);" style="flex: 1; font-size: 0.9em;">
+                                📝 Take Quiz
+                            </button>
+                            ${sectionAnswered > 0 ? `
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); resetSection(${quizNum}, '${sectionName.replace(/'/g, "\\'")}');" style="flex: 1; font-size: 0.9em; padding: 8px;">
+                                    🔄 Reset
+                                </button>
+                            ` : ''}
+                        </div>
+                    `;
+                    // Remove onclick from card since we have buttons now
+                    sectionCard.style.cursor = 'default';
+                    container.appendChild(sectionCard);
+                });
+            });
+        }
+
+        // Load a specific section by quiz number (all questions in quiz)
+        function loadSection(quizNum) {
+            const questions = quizData.quizzes[quizNum] || [];
+            if (questions.length === 0) return;
+
+            currentQuestions = questions;
+            currentQuestionIndex = 0;
+            displayQuestion(questions[0], 0, questions.length);
+            showView('random-section');
+        }
+
+        // Load a specific section by questions array (for section-based loading)
+        function loadSectionByQuestions(questions, quizNum, sectionName) {
+            if (questions.length === 0) return;
+
+            // Make a copy of questions array to avoid reference issues
+            currentQuestions = Array.isArray(questions) ? JSON.parse(JSON.stringify(questions)) : questions;
+            currentQuestionIndex = 0;
+            displayQuestion(currentQuestions[0], 0, currentQuestions.length, sectionName);
+            showView('random-section');
+        }
+
+        // Load random section
+        function loadRandomSection() {
+            // Collect all sections from all quizzes
+            const allSections = [];
+            Object.keys(quizData.quizzes).forEach(quizNum => {
+                const questions = quizData.quizzes[quizNum];
+                // Group by section
+                const sections = {};
+                questions.forEach(q => {
+                    const sectionKey = q.section || 'Unnamed Section';
+                    if (!sections[sectionKey]) {
+                        sections[sectionKey] = [];
+                    }
+                    sections[sectionKey].push(q);
+                });
+                // Add each section
+                Object.keys(sections).forEach(sectionName => {
+                    allSections.push({
+                        questions: sections[sectionName],
+                        quizNum: quizNum,
+                        sectionName: sectionName
+                    });
+                });
+            });
+
+            if (allSections.length === 0) return;
+
+            const randomSection = allSections[Math.floor(Math.random() * allSections.length)];
+            loadSectionByQuestions(randomSection.questions, randomSection.quizNum, randomSection.sectionName);
+        }
+
+        // Load random question
+        function loadRandomQuestion() {
+            if (!quizData || !quizData.all_questions || quizData.all_questions.length === 0) return;
+
+            const randomQuestion = quizData.all_questions[Math.floor(Math.random() * quizData.all_questions.length)];
+            displaySingleQuestion(randomQuestion);
+        }
+
+        // Display a question
+        function displayQuestion(question, index, total, sectionName = null) {
+            const container = document.getElementById('random-section-content');
+            const questionId = `q_${question.quiz_number}_${question.question_number}`;
+            const userAnswer = progress.answers[questionId] || null;
+            const isAnswered = userAnswer !== null;
+            const displaySectionName = sectionName || question.section || '';
+            const sectionDescription = question.section_description || null;
+            // Show section description for all questions in section
+            const showSectionDesc = sectionDescription !== null;
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-header">
+                        <h2>Question ${question.question_number}</h2>
+                        <div class="question-meta">
+                            Quiz ${question.quiz_number}${displaySectionName ? ` • ${displaySectionName}` : ''} • ${index + 1} of ${total}
+                        </div>
+                    </div>
+                    ${showSectionDesc ? `
+                        <div class="section-description" style="background: var(--info-bg); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent); color: var(--text-primary);">
+                            <h3 style="margin-top: 0; color: var(--accent); font-size: 1.1em;">${displaySectionName}</h3>
+                            <div style="line-height: 1.6;">${sectionDescription}</div>
+                        </div>
+                    ` : ''}
+                    <div class="question-statement">${question.statement}</div>
+                    ${question.options ? `
+                        <div class="options" id="options-${questionId}">
+                            ${question.options.map((opt, idx) => {
+                                const isSelected = userAnswer && userAnswer.includes(idx);
+                                const isCorrect = question.correct_answer && question.correct_answer.includes(idx);
+                                let className = 'option';
+                                if (isAnswered) {
+                                    className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
+                                } else if (isSelected) {
+                                    className += ' selected';
+                                }
+                                return `
+                                    <div class="${className}" onclick="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                        <input type="${question.correct_answer && question.correct_answer.length > 1 ? 'checkbox' : 'radio'}" 
+                                               name="${questionId}" 
+                                               ${isSelected ? 'checked' : ''}
+                                               ${isAnswered ? 'disabled' : ''}
+                                               onchange="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                        ${opt}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    ` : `
+                        <div class="question-statement">
+                            <p><em>This question requires a text/numerical answer.</em></p>
+                            ${isAnswered ? `<p><strong>Your answer:</strong> ${userAnswer}</p>` : ''}
+                        </div>
+                    `}
+                    ${question.explanation ? `
+                        <div class="explanation ${isAnswered ? 'show' : ''}" id="explanation-${questionId}">
+                            <h3>Explanation</h3>
+                            ${question.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="question-navigation">
+                    <button class="question-nav-btn" onclick="previousQuestion()" ${index === 0 ? 'disabled' : ''}>
+                        ← Previous
+                    </button>
+                    <button class="question-nav-btn" onclick="nextQuestion()" ${index === total - 1 ? 'disabled' : ''}>
+                        Next →
+                    </button>
+                    ${currentQuestions.length > 0 ? `
+                        <button class="btn btn-secondary" onclick="resetCurrentSection()" style="margin-left: 10px;">
+                            🔄 Reset Section
+                        </button>
+                    ` : ''}
+                </div>
+            `;
+            // Render MathJax after content is inserted
+            setTimeout(() => renderMath(), 100);
+        }
+
+        // Display single question (for random question mode)
+        function displaySingleQuestion(question) {
+            const container = document.getElementById('random-question-content');
+            const questionId = `q_${question.quiz_number}_${question.question_number}`;
+            const userAnswer = progress.answers[questionId] || null;
+            const isAnswered = userAnswer !== null;
+            const sectionDescription = question.section_description || null;
+
+            container.innerHTML = `
+                <div class="question-container">
+                    <div class="question-header">
+                        <h2>Question ${question.question_number}</h2>
+                        <div class="question-meta">Quiz ${question.quiz_number}${question.section ? ` • ${question.section}` : ''}</div>
+                    </div>
+                    ${sectionDescription ? `
+                        <div class="section-description" style="background: var(--info-bg); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent); color: var(--text-primary);">
+                            <h3 style="margin-top: 0; color: var(--accent); font-size: 1.1em;">${question.section || 'Section'}</h3>
+                            <div style="line-height: 1.6;">${sectionDescription}</div>
+                        </div>
+                    ` : ''}
+                    <div class="question-statement">${question.statement}</div>
+                    ${question.options ? `
+                        <div class="options" id="options-${questionId}">
+                            ${question.options.map((opt, idx) => {
+                                const isSelected = userAnswer && userAnswer.includes(idx);
+                                const isCorrect = question.correct_answer && question.correct_answer.includes(idx);
+                                let className = 'option';
+                                if (isAnswered) {
+                                    className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
+                                } else if (isSelected) {
+                                    className += ' selected';
+                                }
+                                return `
+                                    <div class="${className}" onclick="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                        <input type="${question.correct_answer && question.correct_answer.length > 1 ? 'checkbox' : 'radio'}" 
+                                               name="${questionId}" 
+                                               ${isSelected ? 'checked' : ''}
+                                               ${isAnswered ? 'disabled' : ''}
+                                               onchange="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                        ${opt}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    ` : `
+                        <div class="question-statement">
+                            <p><em>This question requires a text/numerical answer.</em></p>
+                            ${isAnswered ? `<p><strong>Your answer:</strong> ${userAnswer}</p>` : ''}
+                        </div>
+                    `}
+                    ${question.explanation ? `
+                        <div class="explanation ${isAnswered ? 'show' : ''}" id="explanation-${questionId}">
+                            <h3>Explanation</h3>
+                            ${question.explanation}
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+            // Render MathJax after content is inserted
+            setTimeout(() => renderMath(), 100);
+        }
+
+        // Select option
+        function selectOption(questionId, optionIndex, isCorrect) {
+            const question = findQuestionById(questionId);
+            if (!question) return;
+
+            // If already answered, don't allow changes (or allow if you want to enable review mode)
+            const wasAnswered = progress.answered[questionId];
+            if (wasAnswered && question.options) {
+                // Allow re-selection for review, but don't change the answered status
+                // Just update the visual display
+            }
+
+            if (!progress.answers[questionId]) {
+                progress.answers[questionId] = [];
+            }
+            
+            // Handle single vs multiple choice
+            if (question.correct_answer && question.correct_answer.length === 1) {
+                // Single choice - replace answer
+                progress.answers[questionId] = [optionIndex];
+            } else if (question.correct_answer && question.correct_answer.length > 1) {
+                // Multiple choice - toggle
+                const index = progress.answers[questionId].indexOf(optionIndex);
+                if (index > -1) {
+                    progress.answers[questionId].splice(index, 1);
+                } else {
+                    progress.answers[questionId].push(optionIndex);
+                }
+            } else {
+                // No correct answer defined (text/numerical question)
+                progress.answers[questionId] = [optionIndex];
+            }
+
+            // Mark as answered (only once)
+            if (!progress.answered[questionId]) {
+                progress.answered[questionId] = Date.now();
+            }
+
+            // Check if correct (only for questions with options and correct answers)
+            if (question.options && question.correct_answer) {
+                const userAnswer = [...progress.answers[questionId]].sort().join(',');
+                const correctAnswer = [...question.correct_answer].sort().join(',');
+                const isAnswerCorrect = userAnswer === correctAnswer;
+
+                if (isAnswerCorrect) {
+                    if (!progress.correct[questionId]) {
+                        progress.correct[questionId] = Date.now();
+                    }
+                    // Remove from wrong if it was previously wrong
+                    if (progress.wrong[questionId]) {
+                        delete progress.wrong[questionId];
+                    }
+                } else {
+                    // Mark as wrong if answer is incorrect
+                    if (!progress.wrong[questionId]) {
+                        progress.wrong[questionId] = Date.now();
+                    }
+                    // Remove from correct if it was previously correct
+                    if (progress.correct[questionId]) {
+                        delete progress.correct[questionId];
+                    }
+                }
+            }
+
+            saveProgress();
+            
+            // Update UI immediately
+            const questionObj = findQuestionById(questionId);
+            if (questionObj) {
+                if (currentQuestions.length > 0) {
+                    const sectionName = currentQuestions[0].section || null;
+                    displayQuestion(questionObj, currentQuestionIndex, currentQuestions.length, sectionName);
+                } else {
+                    displaySingleQuestion(questionObj);
+                }
+            }
+        }
+
+        // Find question by ID
+        function findQuestionById(questionId) {
+            const [_, quizNum, qNum] = questionId.match(/q_(\d+)_(.+)/);
+            const questions = quizData.quizzes[quizNum] || [];
+            return questions.find(q => q.question_number === qNum);
+        }
+
+        // Navigation
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                const sectionName = currentQuestions[0].section || null;
+                displayQuestion(currentQuestions[currentQuestionIndex], currentQuestionIndex, currentQuestions.length, sectionName);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                const sectionName = currentQuestions[0].section || null;
+                displayQuestion(currentQuestions[currentQuestionIndex], currentQuestionIndex, currentQuestions.length, sectionName);
+            }
+        }
+
+        // Reset current section
+        function resetCurrentSection() {
+            if (currentQuestions.length === 0) return;
+            
+            const firstQ = currentQuestions[0];
+            const quizNum = firstQ.quiz_number;
+            const sectionName = firstQ.section || 'Unnamed Section';
+            
+            if (confirm(`Reset all answers for the current section "${sectionName}"?`)) {
+                resetSection(quizNum, sectionName);
+                // Reload the section
+                loadSectionByQuestions(currentQuestions, quizNum, sectionName);
+            }
+        }
+
+        // Progress management
+        function loadProgress() {
+            const saved = localStorage.getItem('quizProgress');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                // Ensure backward compatibility - add wrong field if missing
+                if (!parsed.wrong) {
+                    parsed.wrong = {};
+                }
+                return parsed;
+            }
+            return {
+                answers: {},
+                answered: {},
+                correct: {},
+                wrong: {},
+                sessions: []
+            };
+        }
+
+        function saveProgress() {
+            // Add session data
+            if (!progress.sessions) {
+                progress.sessions = [];
+            }
+            
+            const today = new Date().toISOString().split('T')[0];
+            const sessionIndex = progress.sessions.findIndex(s => s.date === today);
+            
+            const answeredCount = Object.keys(progress.answered).length;
+            const correctCount = Object.keys(progress.correct).length;
+            const wrongCount = Object.keys(progress.wrong || {}).length;
+            
+            if (sessionIndex === -1) {
+                progress.sessions.push({
+                    date: today,
+                    questionsAnswered: answeredCount,
+                    questionsCorrect: correctCount,
+                    questionsWrong: wrongCount
+                });
+            } else {
+                progress.sessions[sessionIndex].questionsAnswered = answeredCount;
+                progress.sessions[sessionIndex].questionsCorrect = correctCount;
+                progress.sessions[sessionIndex].questionsWrong = wrongCount;
+            }
+
+            localStorage.setItem('quizProgress', JSON.stringify(progress));
+        }
+
+        function downloadProgress() {
+            const dataStr = JSON.stringify(progress, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `quiz-progress-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function uploadProgress(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const uploaded = JSON.parse(e.target.result);
+                    progress = uploaded;
+                    saveProgress();
+                    updateProgressView();
+                    alert('Progress uploaded successfully!');
+                } catch (error) {
+                    alert('Error reading progress file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // Reset quiz answers (keeps progress history)
+        function resetQuiz() {
+            if (confirm('Are you sure you want to reset all quiz answers? This will clear your current answers but keep your progress history.')) {
+                progress.answers = {};
+                progress.answered = {};
+                progress.correct = {};
+                progress.wrong = {};
+                saveProgress();
+                updateProgressView();
+                setupExploreView(); // Refresh explore view
+                // Reload current view
+                if (currentQuestions.length > 0) {
+                    const sectionName = currentQuestions[0].section || null;
+                    displayQuestion(currentQuestions[currentQuestionIndex], currentQuestionIndex, currentQuestions.length, sectionName);
+                } else {
+                    loadRandomQuestion();
+                }
+                alert('Quiz answers have been reset!');
+            }
+        }
+
+        // Reset quiz by quiz number
+        function resetQuizByNumber(quizNum) {
+            if (confirm(`Are you sure you want to reset all answers for Quiz ${quizNum}? This will clear your answers for this quiz but keep your progress history.`)) {
+                const questions = quizData.quizzes[quizNum] || [];
+                let resetCount = 0;
+                
+                questions.forEach(q => {
+                    const questionId = `q_${quizNum}_${q.question_number}`;
+                    if (progress.answers[questionId]) {
+                        delete progress.answers[questionId];
+                        resetCount++;
+                    }
+                    if (progress.answered[questionId]) {
+                        delete progress.answered[questionId];
+                    }
+                    if (progress.correct[questionId]) {
+                        delete progress.correct[questionId];
+                    }
+                    if (progress.wrong[questionId]) {
+                        delete progress.wrong[questionId];
+                    }
+                });
+                
+                saveProgress();
+                updateProgressView();
+                setupExploreView(); // Refresh explore view
+                alert(`Reset ${resetCount} answers for Quiz ${quizNum}!`);
+            }
+        }
+
+        // Reset section answers
+        function resetSection(quizNum, sectionName) {
+            if (confirm(`Are you sure you want to reset answers for "${sectionName}" in Quiz ${quizNum}?`)) {
+                const questions = quizData.quizzes[quizNum] || [];
+                const sectionQuestions = questions.filter(q => (q.section || 'Unnamed Section') === sectionName);
+                let resetCount = 0;
+                
+                sectionQuestions.forEach(q => {
+                    const questionId = `q_${quizNum}_${q.question_number}`;
+                    if (progress.answers[questionId]) {
+                        delete progress.answers[questionId];
+                        resetCount++;
+                    }
+                    if (progress.answered[questionId]) {
+                        delete progress.answered[questionId];
+                    }
+                    if (progress.correct[questionId]) {
+                        delete progress.correct[questionId];
+                    }
+                    if (progress.wrong[questionId]) {
+                        delete progress.wrong[questionId];
+                    }
+                });
+                
+                saveProgress();
+                updateProgressView();
+                setupExploreView(); // Refresh explore view
+                alert(`Reset ${resetCount} answers for "${sectionName}"!`);
+            }
+        }
+
+        // Update progress view
+        function updateProgressView() {
+            const totalQuestions = quizData ? quizData.all_questions.length : 0;
+            const answeredCount = Object.keys(progress.answered).length;
+            const correctCount = Object.keys(progress.correct).length;
+            const wrongCount = Object.keys(progress.wrong || {}).length;
+            const accuracy = answeredCount > 0 ? ((correctCount / answeredCount) * 100).toFixed(1) : 0;
+
+            // Update stats
+            document.getElementById('progress-stats').innerHTML = `
+                <div class="stat-card">
+                    <h3>${answeredCount}</h3>
+                    <p>Questions Answered</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                    <h3>${correctCount}</h3>
+                    <p>Correct Answers</p>
+                </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                    <h3>${wrongCount}</h3>
+                    <p>Wrong Answers</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${accuracy}%</h3>
+                    <p>Accuracy</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalQuestions}</h3>
+                    <p>Total Questions</p>
+                </div>
+            `;
+
+            // Update progress chart
+            const progressPercent = totalQuestions > 0 ? ((answeredCount / totalQuestions) * 100).toFixed(1) : 0;
+            document.getElementById('progress-chart').innerHTML = `
+                <h3>Overall Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progressPercent}%">
+                        ${progressPercent}%
+                    </div>
+                </div>
+                <h3 style="margin-top: 30px;">Progress by Quiz</h3>
+                ${Object.keys(quizData.quizzes).map(quizNum => {
+                    const questions = quizData.quizzes[quizNum];
+                    const quizAnswered = questions.filter(q => 
+                        progress.answered[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const quizCorrect = questions.filter(q => 
+                        progress.correct[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const quizWrong = questions.filter(q => 
+                        progress.wrong[`q_${quizNum}_${q.question_number}`]
+                    ).length;
+                    const quizPercent = questions.length > 0 ? ((quizAnswered / questions.length) * 100).toFixed(1) : 0;
+                    const quizAccuracy = quizAnswered > 0 ? ((quizCorrect / quizAnswered) * 100).toFixed(1) : 0;
+                    
+                    // Group by section for this quiz
+                    const sections = {};
+                    questions.forEach(q => {
+                        const sectionKey = q.section || 'Unnamed Section';
+                        if (!sections[sectionKey]) {
+                            sections[sectionKey] = [];
+                        }
+                        sections[sectionKey].push(q);
+                    });
+                    
+                    return `
+                        <div style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <strong>Quiz ${quizNum}</strong>
+                                    <span style="margin-left: 10px; font-size: 0.9em; color: #666;">
+                                        <span style="color: #28a745;">✓ ${quizCorrect}</span> / 
+                                        <span style="color: #dc3545;">✗ ${quizWrong}</span> / 
+                                        ${quizAnswered} answered (${quizAccuracy}% accuracy)
+                                    </span>
+                                </div>
+                                <span>${quizAnswered} / ${questions.length} (${quizPercent}%)</span>
+                            </div>
+                            <div class="progress-bar" style="margin-bottom: 15px;">
+                                <div class="progress-fill" style="width: ${quizPercent}%">
+                                    ${quizPercent}%
+                                </div>
+                            </div>
+                            <details style="margin-top: 10px;">
+                                <summary style="cursor: pointer; color: #667eea; font-weight: 600;">View by Section</summary>
+                                <div style="margin-top: 10px; padding-left: 20px;">
+                                    ${Object.keys(sections).map(sectionName => {
+                                        const sectionQuestions = sections[sectionName];
+                                        const sectionAnswered = sectionQuestions.filter(q => 
+                                            progress.answered[`q_${quizNum}_${q.question_number}`]
+                                        ).length;
+                                        const sectionCorrect = sectionQuestions.filter(q => 
+                                            progress.correct[`q_${quizNum}_${q.question_number}`]
+                                        ).length;
+                                        const sectionWrong = sectionQuestions.filter(q => 
+                                            progress.wrong[`q_${quizNum}_${q.question_number}`]
+                                        ).length;
+                                        const sectionPercent = sectionQuestions.length > 0 ? ((sectionAnswered / sectionQuestions.length) * 100).toFixed(1) : 0;
+                                        const sectionAccuracy = sectionAnswered > 0 ? ((sectionCorrect / sectionAnswered) * 100).toFixed(1) : 0;
+                                        
+                                        return `
+                                            <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+                                                    <div>
+                                                        <strong>${sectionName}</strong>
+                                                        <span style="margin-left: 10px; font-size: 0.85em; color: #666;">
+                                                            <span style="color: #28a745;">✓ ${sectionCorrect}</span> / 
+                                                            <span style="color: #dc3545;">✗ ${sectionWrong}</span> / 
+                                                            ${sectionAnswered} answered (${sectionAccuracy}%)
+                                                        </span>
+                                                    </div>
+                                                    <span style="font-size: 0.9em;">${sectionAnswered} / ${sectionQuestions.length} (${sectionPercent}%)</span>
+                                                </div>
+                                                <div class="progress-bar" style="height: 20px;">
+                                                    <div class="progress-fill" style="width: ${sectionPercent}%">
+                                                        ${sectionPercent}%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            </details>
+                        </div>
+                    `;
+                }).join('')}
+                ${progress.sessions && progress.sessions.length > 0 ? `
+                    <h3 style="margin-top: 30px;">Progress Over Time</h3>
+                    <div style="margin-top: 20px;">
+                        ${progress.sessions.slice(-10).map(session => {
+                            const sessionCorrect = session.questionsCorrect || 0;
+                            const sessionWrong = session.questionsWrong || 0;
+                            const sessionAccuracy = session.questionsAnswered > 0 ? ((sessionCorrect / session.questionsAnswered) * 100).toFixed(1) : 0;
+                            return `
+                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                    <strong>${session.date}</strong>: ${session.questionsAnswered} answered, 
+                                    <span style="color: #28a745; font-weight: bold;">${sessionCorrect} correct</span>, 
+                                    <span style="color: #dc3545; font-weight: bold;">${sessionWrong} wrong</span>, 
+                                    ${sessionAccuracy}% accuracy
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        // Initialize on load
+        initTheme();
+        init();
+    </script>
+</body>
+</html>
+
