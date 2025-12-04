@@ -142,133 +142,6 @@
             transition: background 0.3s ease, border-color 0.3s ease;
         }
 
-        .hamburger-menu {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 10px;
-            background: var(--bg-secondary);
-            border-radius: 5px;
-            margin: 10px;
-            transition: background 0.3s ease;
-        }
-
-        .hamburger-menu:hover {
-            background: var(--option-hover);
-        }
-
-        .hamburger-menu span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background: var(--accent);
-            margin: 3px 0;
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger-menu.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger-menu.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-menu.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .mobile-nav.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .mobile-nav-content {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 280px;
-            height: 100%;
-            background: var(--bg-secondary);
-            box-shadow: 2px 0 10px var(--shadow);
-            transition: left 0.3s ease;
-            overflow-y: auto;
-            z-index: 1001;
-        }
-
-        .mobile-nav.active .mobile-nav-content {
-            left: 0;
-        }
-
-        .mobile-nav-header {
-            padding: 20px;
-            border-bottom: 2px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--bg-primary);
-            color: var(--text-inverse);
-        }
-
-        .mobile-nav-header h3 {
-            margin: 0;
-            font-size: 1.2em;
-        }
-
-        .mobile-nav-close {
-            background: none;
-            border: none;
-            color: var(--text-inverse);
-            font-size: 1.5em;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-
-        .mobile-nav-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .mobile-nav-btn {
-            display: block;
-            width: 100%;
-            padding: 15px 20px;
-            background: none;
-            border: none;
-            border-bottom: 1px solid var(--border-color);
-            text-align: left;
-            font-size: 1em;
-            font-weight: 600;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-nav-btn:hover {
-            background: var(--option-hover);
-        }
-
-        .mobile-nav-btn.active {
-            background: var(--bg-tertiary);
-            color: var(--accent);
-            border-left: 4px solid var(--accent);
-        }
 
         .nav-btn {
             flex: 1;
@@ -639,6 +512,10 @@
             margin: 20px 0;
         }
 
+        .question-navigation-reset {
+            margin: 10px 0 20px 0;
+        }
+
         .question-nav-btn {
             padding: 8px 16px;
             background: var(--accent);
@@ -739,8 +616,20 @@
                 display: none;
             }
 
-            .hamburger-menu {
-                display: flex;
+            .nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                border-bottom: 1px solid var(--border-color);
+                border-right: none;
+                padding: 12px 15px;
+                text-align: left;
+            }
+
+            .nav-btn.active {
+                border-bottom-color: var(--accent);
+                border-left: 3px solid var(--accent);
             }
 
             .view {
@@ -876,24 +765,6 @@
             <p>Practice and track your progress</p>
         </div>
 
-        <div class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileNav()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="mobile-nav" id="mobile-nav">
-            <div class="mobile-nav-content">
-                <div class="mobile-nav-header">
-                    <h3>Menu</h3>
-                    <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
-                </div>
-                <button class="mobile-nav-btn active" onclick="handleMobileNavClick('home', this)">Home</button>
-                <button class="mobile-nav-btn" onclick="handleMobileNavClick('explore', this)">Explore</button>
-                <button class="mobile-nav-btn" onclick="handleMobileNavClick('random-section', this)">Random Section</button>
-                <button class="mobile-nav-btn" onclick="handleMobileNavClick('random-question', this)">Random Question</button>
-                <button class="mobile-nav-btn" onclick="handleMobileNavClick('progress', this)">Progress</button>
-            </div>
-        </div>
         <div class="nav">
             <button class="nav-btn active" onclick="showView('home', this)">Home</button>
             <button class="nav-btn" onclick="showView('explore', this)">Explore</button>
@@ -1093,15 +964,6 @@
                 buttonElement.classList.add('active');
             }
             
-            // Update mobile nav buttons to match active view
-            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
-            mobileNavButtons.forEach(btn => {
-                btn.classList.remove('active');
-                const onclick = btn.getAttribute('onclick');
-                if (onclick && onclick.includes(`'${viewName}'`)) {
-                    btn.classList.add('active');
-                }
-            });
             
             if (viewName === 'progress') {
                 updateProgressView();
@@ -1332,12 +1194,14 @@
                     <button class="question-nav-btn" onclick="nextQuestion()" ${index === total - 1 ? 'disabled' : ''}>
                         Next →
                     </button>
-                    ${currentQuestions.length > 0 ? `
-                        <button class="btn btn-secondary" onclick="resetCurrentSection()" style="margin-left: 10px;">
+                </div>
+                ${currentQuestions.length > 0 ? `
+                    <div class="question-navigation-reset">
+                        <button class="btn btn-secondary" onclick="resetCurrentSection()" style="width: 100%;">
                             🔄 Reset Section
                         </button>
-                    ` : ''}
-                </div>
+                    </div>
+                ` : ''}
             `;
             // Render MathJax after content is inserted
             setTimeout(() => renderMath(), 100);
@@ -1486,6 +1350,11 @@
         function selectOption(questionId, optionIndex, isCorrect) {
             const question = findQuestionById(questionId);
             if (!question) return;
+
+            // Don't handle multiple choice questions here - they use toggleOption/submitAnswer
+            if (question.correct_answer && question.correct_answer.length > 1) {
+                return;
+            }
 
             // If already answered, don't allow changes
             const wasAnswered = progress.answered[questionId];
