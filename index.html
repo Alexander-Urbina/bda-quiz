@@ -142,6 +142,29 @@
             transition: background 0.3s ease, border-color 0.3s ease;
         }
 
+        .nav-dropdown {
+            display: none;
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1em;
+            color: var(--text-primary);
+            cursor: pointer;
+            margin: 10px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+
+        .nav-dropdown:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
         .nav-btn {
             flex: 1;
             padding: 15px 20px;
@@ -273,9 +296,9 @@
             line-height: 1.6;
             margin: 20px 0;
             padding: 20px;
-            background: white;
+            background: var(--bg-card);
             border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid var(--accent);
         }
 
         .question-statement img {
@@ -608,19 +631,11 @@
             }
 
             .nav {
-                flex-direction: column;
+                display: none;
             }
 
-            .nav-btn {
-                border-bottom: 1px solid var(--border-color);
-                border-right: none;
-                padding: 12px 15px;
-                text-align: left;
-            }
-
-            .nav-btn.active {
-                border-bottom-color: var(--accent);
-                border-left: 3px solid var(--accent);
+            .nav-dropdown {
+                display: block;
             }
 
             .view {
@@ -693,12 +708,13 @@
             }
 
             .question-navigation {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 10px;
+                justify-content: space-between;
             }
 
             .question-nav-btn {
-                width: 100%;
+                flex: 1;
             }
 
             .file-controls {
@@ -755,6 +771,13 @@
             <p>Practice and track your progress</p>
         </div>
 
+        <select class="nav-dropdown" id="nav-dropdown" onchange="handleNavChange(this.value)">
+            <option value="home">Home</option>
+            <option value="explore">Explore</option>
+            <option value="random-section">Random Section</option>
+            <option value="random-question">Random Question</option>
+            <option value="progress">Progress</option>
+        </select>
         <div class="nav">
             <button class="nav-btn active" onclick="showView('home', this)">Home</button>
             <button class="nav-btn" onclick="showView('explore', this)">Explore</button>
@@ -921,6 +944,16 @@
             }
         }
 
+        // Handle navigation dropdown change
+        function handleNavChange(viewName) {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const button = Array.from(navButtons).find(btn => {
+                const onclick = btn.getAttribute('onclick');
+                return onclick && onclick.includes(`'${viewName}'`);
+            });
+            showView(viewName, button);
+        }
+
         // View management
         function showView(viewName, buttonElement) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -931,6 +964,12 @@
             // Activate the clicked button
             if (buttonElement) {
                 buttonElement.classList.add('active');
+            }
+            
+            // Update dropdown to match active view
+            const dropdown = document.getElementById('nav-dropdown');
+            if (dropdown) {
+                dropdown.value = viewName;
             } else {
                 // Fallback: find button by text content
                 const navButtons = document.querySelectorAll('.nav-btn');
@@ -1129,6 +1168,7 @@
                             ${question.options.map((opt, idx) => {
                                 const isSelected = userAnswer && userAnswer.includes(idx);
                                 const isCorrect = question.correct_answer && question.correct_answer.includes(idx);
+                                const isMultipleChoice = question.correct_answer && question.correct_answer.length > 1;
                                 let className = 'option';
                                 if (isAnswered) {
                                     className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
@@ -1136,17 +1176,22 @@
                                     className += ' selected';
                                 }
                                 return `
-                                    <div class="${className}" onclick="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
-                                        <input type="${question.correct_answer && question.correct_answer.length > 1 ? 'checkbox' : 'radio'}" 
+                                    <div class="${className}" onclick="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                        <input type="${isMultipleChoice ? 'checkbox' : 'radio'}" 
                                                name="${questionId}" 
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
-                                               onchange="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                               onchange="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
                                         ${opt}
                                     </div>
                                 `;
                             }).join('')}
                         </div>
+                        ${question.correct_answer && question.correct_answer.length > 1 && !isAnswered ? `
+                            <button class="btn btn-primary" onclick="submitAnswer('${questionId}')" style="margin-top: 20px; width: 100%;">
+                                Submit Answer
+                            </button>
+                        ` : ''}
                     ` : `
                         <div class="question-statement">
                             <p><em>This question requires a text/numerical answer.</em></p>
@@ -1204,6 +1249,7 @@
                             ${question.options.map((opt, idx) => {
                                 const isSelected = userAnswer && userAnswer.includes(idx);
                                 const isCorrect = question.correct_answer && question.correct_answer.includes(idx);
+                                const isMultipleChoice = question.correct_answer && question.correct_answer.length > 1;
                                 let className = 'option';
                                 if (isAnswered) {
                                     className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
@@ -1211,17 +1257,22 @@
                                     className += ' selected';
                                 }
                                 return `
-                                    <div class="${className}" onclick="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
-                                        <input type="${question.correct_answer && question.correct_answer.length > 1 ? 'checkbox' : 'radio'}" 
+                                    <div class="${className}" onclick="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                        <input type="${isMultipleChoice ? 'checkbox' : 'radio'}" 
                                                name="${questionId}" 
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
-                                               onchange="selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})">
+                                               onchange="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
                                         ${opt}
                                     </div>
                                 `;
                             }).join('')}
                         </div>
+                        ${question.correct_answer && question.correct_answer.length > 1 && !isAnswered ? `
+                            <button class="btn btn-primary" onclick="submitAnswer('${questionId}')" style="margin-top: 20px; width: 100%;">
+                                Submit Answer
+                            </button>
+                        ` : ''}
                     ` : `
                         <div class="question-statement">
                             <p><em>This question requires a text/numerical answer.</em></p>
@@ -1240,45 +1291,101 @@
             setTimeout(() => renderMath(), 100);
         }
 
-        // Select option
+        // Toggle option for multiple choice (before submission)
+        function toggleOption(questionId, optionIndex) {
+            if (!progress.answers[questionId]) {
+                progress.answers[questionId] = [];
+            }
+            
+            const index = progress.answers[questionId].indexOf(optionIndex);
+            if (index > -1) {
+                progress.answers[questionId].splice(index, 1);
+            } else {
+                progress.answers[questionId].push(optionIndex);
+            }
+            
+            saveProgress();
+            
+            // Update UI to show selected state
+            const question = findQuestionById(questionId);
+            if (question) {
+                if (currentQuestions.length > 0) {
+                    const sectionName = currentQuestions[0].section || null;
+                    displayQuestion(question, currentQuestionIndex, currentQuestions.length, sectionName);
+                } else {
+                    displaySingleQuestion(question);
+                }
+            }
+        }
+
+        // Submit answer for multiple choice questions
+        function submitAnswer(questionId) {
+            const question = findQuestionById(questionId);
+            if (!question) return;
+            
+            // Mark as answered
+            if (!progress.answered[questionId]) {
+                progress.answered[questionId] = Date.now();
+            }
+
+            // Check if correct
+            if (question.options && question.correct_answer) {
+                const userAnswer = [...(progress.answers[questionId] || [])].sort().join(',');
+                const correctAnswer = [...question.correct_answer].sort().join(',');
+                const isAnswerCorrect = userAnswer === correctAnswer;
+
+                if (isAnswerCorrect) {
+                    if (!progress.correct[questionId]) {
+                        progress.correct[questionId] = Date.now();
+                    }
+                    if (progress.wrong[questionId]) {
+                        delete progress.wrong[questionId];
+                    }
+                } else {
+                    if (!progress.wrong[questionId]) {
+                        progress.wrong[questionId] = Date.now();
+                    }
+                    if (progress.correct[questionId]) {
+                        delete progress.correct[questionId];
+                    }
+                }
+            }
+
+            saveProgress();
+            
+            // Update UI to show answer
+            if (currentQuestions.length > 0) {
+                const sectionName = currentQuestions[0].section || null;
+                displayQuestion(question, currentQuestionIndex, currentQuestions.length, sectionName);
+            } else {
+                displaySingleQuestion(question);
+            }
+        }
+
+        // Select option (for single choice questions)
         function selectOption(questionId, optionIndex, isCorrect) {
             const question = findQuestionById(questionId);
             if (!question) return;
 
-            // If already answered, don't allow changes (or allow if you want to enable review mode)
+            // If already answered, don't allow changes
             const wasAnswered = progress.answered[questionId];
             if (wasAnswered && question.options) {
-                // Allow re-selection for review, but don't change the answered status
-                // Just update the visual display
+                return;
             }
 
             if (!progress.answers[questionId]) {
                 progress.answers[questionId] = [];
             }
             
-            // Handle single vs multiple choice
-            if (question.correct_answer && question.correct_answer.length === 1) {
-                // Single choice - replace answer
-                progress.answers[questionId] = [optionIndex];
-            } else if (question.correct_answer && question.correct_answer.length > 1) {
-                // Multiple choice - toggle
-                const index = progress.answers[questionId].indexOf(optionIndex);
-                if (index > -1) {
-                    progress.answers[questionId].splice(index, 1);
-                } else {
-                    progress.answers[questionId].push(optionIndex);
-                }
-            } else {
-                // No correct answer defined (text/numerical question)
-                progress.answers[questionId] = [optionIndex];
-            }
+            // Single choice - replace answer
+            progress.answers[questionId] = [optionIndex];
 
-            // Mark as answered (only once)
+            // Mark as answered immediately for single choice
             if (!progress.answered[questionId]) {
                 progress.answered[questionId] = Date.now();
             }
 
-            // Check if correct (only for questions with options and correct answers)
+            // Check if correct
             if (question.options && question.correct_answer) {
                 const userAnswer = [...progress.answers[questionId]].sort().join(',');
                 const correctAnswer = [...question.correct_answer].sort().join(',');
@@ -1288,16 +1395,13 @@
                     if (!progress.correct[questionId]) {
                         progress.correct[questionId] = Date.now();
                     }
-                    // Remove from wrong if it was previously wrong
                     if (progress.wrong[questionId]) {
                         delete progress.wrong[questionId];
                     }
                 } else {
-                    // Mark as wrong if answer is incorrect
                     if (!progress.wrong[questionId]) {
                         progress.wrong[questionId] = Date.now();
                     }
-                    // Remove from correct if it was previously correct
                     if (progress.correct[questionId]) {
                         delete progress.correct[questionId];
                     }
@@ -1620,11 +1724,11 @@
                                         const sectionAccuracy = sectionAnswered > 0 ? ((sectionCorrect / sectionAnswered) * 100).toFixed(1) : 0;
                                         
                                         return `
-                                            <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                            <div style="margin: 10px 0; padding: 10px; background: var(--bg-card); border-radius: 5px;">
                                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                                                     <div>
                                                         <strong>${sectionName}</strong>
-                                                        <span style="margin-left: 10px; font-size: 0.85em; color: #666;">
+                                                        <span style="margin-left: 10px; font-size: 0.85em; color: var(--text-secondary);">
                                                             <span style="color: #28a745;">✓ ${sectionCorrect}</span> / 
                                                             <span style="color: #dc3545;">✗ ${sectionWrong}</span> / 
                                                             ${sectionAnswered} answered (${sectionAccuracy}%)
@@ -1653,7 +1757,7 @@
                             const sessionWrong = session.questionsWrong || 0;
                             const sessionAccuracy = session.questionsAnswered > 0 ? ((sessionCorrect / session.questionsAnswered) * 100).toFixed(1) : 0;
                             return `
-                                <div style="margin: 10px 0; padding: 10px; background: white; border-radius: 5px;">
+                                <div style="margin: 10px 0; padding: 10px; background: var(--bg-card); border-radius: 5px;">
                                     <strong>${session.date}</strong>: ${session.questionsAnswered} answered, 
                                     <span style="color: #28a745; font-weight: bold;">${sessionCorrect} correct</span>, 
                                     <span style="color: #dc3545; font-weight: bold;">${sessionWrong} wrong</span>, 
