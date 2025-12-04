@@ -1093,22 +1093,15 @@
                 buttonElement.classList.add('active');
             }
             
-            // Update dropdown to match active view
-            const dropdown = document.getElementById('nav-dropdown');
-            if (dropdown) {
-                dropdown.value = viewName;
-            } else {
-                // Fallback: find button by text content
-                const navButtons = document.querySelectorAll('.nav-btn');
-                navButtons.forEach(btn => {
-                    const btnText = btn.textContent.trim().toLowerCase();
-                    const viewText = viewName.replace('-', ' ').toLowerCase();
-                    if (btnText.includes(viewText.split(' ')[0]) || 
-                        (viewName === 'home' && btnText === 'home')) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
+            // Update mobile nav buttons to match active view
+            const mobileNavButtons = document.querySelectorAll('.mobile-nav-btn');
+            mobileNavButtons.forEach(btn => {
+                btn.classList.remove('active');
+                const onclick = btn.getAttribute('onclick');
+                if (onclick && onclick.includes(`'${viewName}'`)) {
+                    btn.classList.add('active');
+                }
+            });
             
             if (viewName === 'progress') {
                 updateProgressView();
