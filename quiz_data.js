@@ -2610,13 +2610,16 @@ const QUIZ_DATA = {
         "section_number": "1",
         "section_description": null,
         "title": "What is the intuition behind HMC as described in the course lectures?",
-        "statement": "What is the intuition behind HMC as described in the course lectures?\n-   ☑ HMC relies on using a pendulum's natural swing frequency to\ngenerate an efficient, high-dimensional Monte Carlo sampling",
+        "statement": "What is the intuition behind HMC as described in the course lectures?",
         "options": [
+          "HMC relies on using a pendulum's natural swing frequency to",
           "HMC relates to musical theory, and is a method for exploring the",
           "HMC is related to Gibbs sampling in that the conditional",
           "HMC is a MCMC algorithm which uses gradient information and"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "While the first option about pendulum's swing is\nselected in the image, the correct answer is the fourth option. HMC is\nindeed an MCMC algorithm that uses gradient information (partial\nderivatives of the log posterior) and dynamic simulation (Hamiltonian\ndynamics) to create efficient proposals that reduce random-walk behavior\nand achieve high acceptance rates. The pendulum analogy is sometimes\nused metaphorically, but the core intuition is about using Hamiltonian\ndynamics with gradient information."
       },
       {
@@ -2633,7 +2636,9 @@ const QUIZ_DATA = {
           "It is the acceptance ratio for HMC",
           "It is the negative probability density of the distribution for θ"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "In HMC, U(θ) represents the potential energy, which\nis defined as the negative log probability density of the target\ndistribution (posterior). This is analogous to potential energy in\nphysics. The term helps define the \"landscape\" over which the sampler\nmoves. Note that option 4 is incorrect because it says \"negative\nprobability density\" (without \"log\"), which would be incorrect."
       },
       {
@@ -2650,7 +2655,9 @@ const QUIZ_DATA = {
           "It is the acceptance ratio for HMC",
           "It is the negative probability density of the distribution for θ"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "K(φ) represents the kinetic energy in HMC, which is a\nfunction of the momentum variable φ. The momentum gives the sampler\n\"velocity\" to move across the parameter space efficiently, allowing it\nto traverse regions that would be difficult to explore with random-walk\nmethods. This is complementary to U(θ) - while U(θ) defines the\nlandscape (potential energy), K(φ) defines the movement through that\nlandscape (kinetic energy)."
       },
       {
@@ -2666,7 +2673,9 @@ const QUIZ_DATA = {
           "It's impossible to solve the Hamiltonian equations",
           "They can only be computed for a posterior with conjugate"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Hamilton's equations provide the continuous dynamics\nfor how θ and φ evolve over time. However, on a digital computer, we\ncannot solve these differential equations analytically for most\nreal-world posteriors. Even when using numerical integration methods,\nfinite numeric precision and the discretization of time steps mean that\nthe Hamiltonian is not perfectly conserved, leading to numerical errors.\nThis is why we need numerical integration schemes like the leapfrog\nintegrator and why we still need a Metropolis acceptance step to correct\nfor these errors."
       },
       {
@@ -2683,7 +2692,9 @@ const QUIZ_DATA = {
           "Runge-Kutta methods",
           "Leapfrog method, also known as the leapfrog integrator"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "Stan and most other HMC implementations use the\nleapfrog integrator (also called Störmer-Verlet method, which is a type\nof Verlet integration). The leapfrog integrator is preferred because it\nis: (1) symplectic, meaning it preserves the geometric properties of\nHamiltonian dynamics, (2) time-reversible, which is important for\nmaintaining detailed balance in MCMC, and (3) has good energy\nconservation properties despite being a discrete approximation. While\nEuler's method and Runge-Kutta methods could theoretically be used, they\ndon't have these desirable properties. The leapfrog integrator\nalternates between half-steps in momentum and full steps in position,\nwhich gives it its name."
       },
       {
@@ -2699,7 +2710,9 @@ const QUIZ_DATA = {
           "With a large step size the integration error increases with more",
           "With a large step size the integration error is bigger, but does"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "This statement is FALSE. Looking at the figures, we\ncan clearly see that: - In figure (c) with stepsize 0.3, the trajectory\nforms a smooth, nearly perfect circle, indicating minimal integration\nerror - In figure (d) with stepsize 1.2, the trajectory shows wild\noscillations and spirals outward with crossing paths, demonstrating that\nthe integration error is not only bigger with the large step size, but\nit also ACCUMULATES and INCREASES with more steps"
       },
       {
@@ -2715,7 +2728,9 @@ const QUIZ_DATA = {
           "We might end up close to the starting point of the joint space",
           "We will end up very far away from the starting point"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "When the trajectory length ϵL is too long, the\nHamiltonian dynamics can cause the trajectory to travel so far that it\ncomes back near its starting point in the joint position-momentum (θ, φ)\nspace. This is because the Hamiltonian dynamics follow contours of\nconstant energy, which can be periodic or quasi-periodic."
       },
       {
@@ -2731,7 +2746,9 @@ const QUIZ_DATA = {
           "The relatively small step-size often results in many steps",
           "Both L and ϵ adapt so that sampling is efficient."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "When you observe the [NUTS demo with the banana\ntarget](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana),\nyou can see that NUTS intelligently adapts both parameters to achieve\nefficient sampling:"
       },
       {
@@ -2747,7 +2764,9 @@ const QUIZ_DATA = {
           "The relatively small step-size results in high probability of",
           "The relatively large step-size results in high discretization"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "When you increase the Leapfrog δt (step size ϵ) from"
       },
       {
@@ -2775,7 +2794,9 @@ const QUIZ_DATA = {
           "The algorithm initially chooses large step sizes to quickly",
           "The algorithm initially chooses small step sizes and many steps"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "When you observe the [DualAveragingNUTS\ndemo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)\nin the first few iterations, you'll notice that the algorithm starts\nwith relatively large step sizes. This is an intentional strategy during\nthe warm-up phase."
       },
       {
@@ -2791,7 +2812,9 @@ const QUIZ_DATA = {
           "The algorithm adapts the step size and number of steps to yield",
           "The target acceptance ratio is too low for NUTS to adapt"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "After sufficient warm-up iterations (around 50-200\ndraws in the\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)),\nyou'll observe that NUTS with dual averaging successfully adapts both\nparameters to achieve efficient sampling."
       },
       {
@@ -2807,7 +2830,9 @@ const QUIZ_DATA = {
           "The large target acceptance ratio results in few large steps to",
           "The large target acceptance ratio results in few small steps to"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "When you set the target acceptance ratio δ to 0.95 in\nthe\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana),\nyou're telling the algorithm to be very conservative and aim for a 95%\nacceptance rate."
       },
       {
@@ -2835,7 +2860,9 @@ const QUIZ_DATA = {
           "The small acceptance ratio results in many small steps which",
           "The small acceptance ratio eventually is adapted at some point"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "When you set the target acceptance ratio δ to the\nsmallest possible value in the\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana),\nyou're telling the algorithm that you're willing to accept very low\nacceptance rates."
       },
       {
@@ -2851,7 +2878,9 @@ const QUIZ_DATA = {
           "By increasing `adapt_delta` we force the algorithm to jump very",
           "By increasing `adapt_delta` we tell Stan to use a higher"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Increasing `adapt_delta` tells Stan to target a\nhigher acceptance rate during the warm-up phase, which has important\nimplications for how the step size is adapted."
       },
       {
@@ -2867,7 +2896,9 @@ const QUIZ_DATA = {
           "Computational: number of potential steps (and hence the number",
           "Computational: the larger the tree, the larger the probability"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "The `max_treedepth` parameter in NUTS directly\ncontrols how many times the tree-building algorithm can double the\ntrajectory length, and this has significant computational implications."
       },
       {
@@ -2883,7 +2914,9 @@ const QUIZ_DATA = {
           "The last point with acceptable error to the trajectory is",
           "The leapfrog integrator fails and the integration error grows"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Even with adaptive step size tuning, challenging\nposterior geometries can cause numerical problems when the step size is\ntoo large relative to local curvature."
       },
       {
@@ -3069,9 +3102,18 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "What is the solid red line plotting?",
-        "statement": "What is the solid red line plotting?\n- ☐ The median of the posterior predictive distribution of the linear predictor term\n- ☐ The median of the posterior predictive distribution for the target\n- ☐ The upper and lower quantiles of the posterior predictive distribution of the linear predictor term\n- ☐ The upper and lower quantiles of the posterior predictive distribution of for the target\n- ☐ The mean of the posterior predictive distribution of the linear predictor term\n- ☐ The mean of the posterior predictive distribution for the target\n**Answer: Option 2 - The median of the posterior predictive distribution for the target**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "What is the solid red line plotting?",
+        "options": [
+          "The median of the posterior predictive distribution of the linear predictor term",
+          "The median of the posterior predictive distribution for the target",
+          "The upper and lower quantiles of the posterior predictive distribution of the linear predictor term",
+          "The upper and lower quantiles of the posterior predictive distribution of for the target",
+          "The mean of the posterior predictive distribution of the linear predictor term",
+          "The mean of the posterior predictive distribution for the target"
+        ],
+        "correct_answer": [
+          1
+        ],
         "explanation": "Looking at the plotting code in the notebook:"
       },
       {
@@ -3081,9 +3123,18 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "What are the dashed red lines referring to?",
-        "statement": "What are the dashed red lines referring to?\n- ☐ The median of the posterior predictive distribution of the linear predictor term\n- ☐ The median of the posterior predictive distribution for the target\n- ☐ The upper and lower quantiles of the posterior predictive distribution of the linear predictor term\n- ☐ The upper and lower quantiles of the posterior predictive distribution of for the target\n- ☐ The mean of the posterior predictive distribution of the linear predictor term\n- ☐ The mean of the posterior predictive distribution for the target\n**Answer: Option 4 - The upper and lower quantiles of the posterior predictive distribution of for the target**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "What are the dashed red lines referring to?",
+        "options": [
+          "The median of the posterior predictive distribution of the linear predictor term",
+          "The median of the posterior predictive distribution for the target",
+          "The upper and lower quantiles of the posterior predictive distribution of the linear predictor term",
+          "The upper and lower quantiles of the posterior predictive distribution of for the target",
+          "The mean of the posterior predictive distribution of the linear predictor term",
+          "The mean of the posterior predictive distribution for the target"
+        ],
+        "correct_answer": [
+          3
+        ],
         "explanation": "The dashed red lines represent the 5th and 95th percentiles (upper and lower quantiles) of the posterior predictive distribution for y."
       },
       {
@@ -3093,9 +3144,16 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "How and why are these different from the corresponding grey lines?",
-        "statement": "How and why are these different from the corresponding grey lines?\n- ☐ The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)\n- ☐ The grey lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the red lines just integrate over the uncertainty of (α, β)\n- ☐ At each draw of the MCMC chain, the grey line is generated conditional from the posterior conditional on the draw for σ\n- ☐ At each draw of the MCMC chain, the red line is generated conditional from the posterior conditional on the draw for α, β\n**Answer: Option 1 - The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "How and why are these different from the corresponding grey lines?",
+        "options": [
+          "The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)",
+          "The grey lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the red lines just integrate over the uncertainty of (α, β)",
+          "At each draw of the MCMC chain, the grey line is generated conditional from the posterior conditional on the draw for σ",
+          "At each draw of the MCMC chain, the red line is generated conditional from the posterior conditional on the draw for α, β"
+        ],
+        "correct_answer": [
+          0
+        ],
         "explanation": "This is the key distinction between the two sets of lines:"
       },
       {
@@ -3105,9 +3163,16 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "What is the general trend of student retention as measured by the assignment submissions?",
-        "statement": "What is the general trend of student retention as measured by the assignment submissions?\n- ☐ The estimated trend is linear and upward sloping\n- ☐ The estimated trend is non-linear and upward sloping\n- ☐ The estimated trend is non-linear and downward sloping\n- ☐ The estimated trend is linear and downward sloping\n**Answer: Option 4 - The estimated trend is linear and downward sloping**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "What is the general trend of student retention as measured by the assignment submissions?",
+        "options": [
+          "The estimated trend is linear and upward sloping",
+          "The estimated trend is non-linear and upward sloping",
+          "The estimated trend is non-linear and downward sloping",
+          "The estimated trend is linear and downward sloping"
+        ],
+        "correct_answer": [
+          3
+        ],
         "explanation": "Looking at the plot, the solid red line (and grey line) shows a clear **downward trend** - the assignment submission percentage decreases as the assignment number increases."
       },
       {
@@ -3117,9 +3182,15 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?",
-        "statement": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?\n- ☐ The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well\n- ☐ The predictive distribution of the linear predictor term is too narrow\n- ☐ Although the model predicts a decrease in the retention rate, and the 95% interval of the predictive distribution spans most points, it fails to detect the increasing marginal slope wrt the assignment number\n**Answer: Option 1 - The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?",
+        "options": [
+          "The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well",
+          "The predictive distribution of the linear predictor term is too narrow",
+          "Although the model predicts a decrease in the retention rate, and the 95% interval of the predictive distribution spans most points, it fails to detect the increasing marginal slope wrt the assignment number"
+        ],
+        "correct_answer": [
+          0
+        ],
         "explanation": "Looking at the plot at assignment number 9 (the blue dots):"
       },
       {
@@ -3129,9 +3200,16 @@ const QUIZ_DATA = {
         "section_number": "2",
         "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
         "title": "What modeling choice could you make to improve the prediction for the given data set?",
-        "statement": "What modeling choice could you make to improve the prediction for the given data set?\n- ☐ Model neglects two key features: 1) non-linearity with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the positive domain of the real line\n- ☐ Model neglects two key features: 1) linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line\n- ☐ Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line\n- ☐ Increase amount of data\n**Answer: Option 3 - Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "What modeling choice could you make to improve the prediction for the given data set?",
+        "options": [
+          "Model neglects two key features: 1) non-linearity with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the positive domain of the real line",
+          "Model neglects two key features: 1) linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line",
+          "Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line",
+          "Increase amount of data"
+        ],
+        "correct_answer": [
+          2
+        ],
         "explanation": "The current model has two main limitations:"
       },
       {
@@ -3141,9 +3219,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "Why is it problematic to use flat, improper priors for this likelihood?",
-        "statement": "Why is it problematic to use flat, improper priors for this likelihood?\n- ☐ The posteriors will be proper but have regions of very high curvature, likely leading to many divergent transitions\n- ☐ The posteriors will be improper but have regions of very high curvature, likely leading to many divergent transitions\n- ☐ The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm\n**Answer: Option 3 - The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Why is it problematic to use flat, improper priors for this likelihood?",
+        "options": [
+          "The posteriors will be proper but have regions of very high curvature, likely leading to many divergent transitions",
+          "The posteriors will be improper but have regions of very high curvature, likely leading to many divergent transitions",
+          "The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm"
+        ],
+        "correct_answer": [
+          2
+        ],
         "explanation": "With logistic regression and complete separation, combined with flat (improper) priors, we have a fundamental problem:"
       },
       {
@@ -3153,9 +3237,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?",
-        "statement": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?\nUsing the data generated from the template, compile and run the logistic regression Stan model with the complete separation data.\n- ☐ There are no divergent transitions but many max_treedepth exceedences\n- ☐ There are many divergent transitions and max_treedepth exceedences\n- ☐ There are many divergent transitions but no max_treedepth exceedences\n**Answer: Option 1 - There are no divergent transitions but many max_treedepth exceedences**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?\nUsing the data generated from the template, compile and run the logistic regression Stan model with the complete separation data.",
+        "options": [
+          "There are no divergent transitions but many max_treedepth exceedences",
+          "There are many divergent transitions and max_treedepth exceedences",
+          "There are many divergent transitions but no max_treedepth exceedences"
+        ],
+        "correct_answer": [
+          0
+        ],
         "explanation": "Based on the diagnostics from your run and the nature of the problem:"
       },
       {
@@ -3165,9 +3255,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?",
-        "statement": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?\n- ☐ The posteriors seem to be sharply distributed around a single mode\n- ☐ The central location of the posteriors seems to be well identified\n- ☐ Improper posteriors resulted in unreasonably large range of values for posterior draws\n**Answer: Option 3 - Improper posteriors resulted in unreasonably large range of values for posterior draws**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?",
+        "options": [
+          "The posteriors seem to be sharply distributed around a single mode",
+          "The central location of the posteriors seems to be well identified",
+          "Improper posteriors resulted in unreasonably large range of values for posterior draws"
+        ],
+        "correct_answer": [
+          2
+        ],
         "explanation": "Your diagnostic plots clearly show the pathological behavior:"
       },
       {
@@ -3177,9 +3273,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?",
-        "statement": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?\n- ☐ That only the alpha parameter has a prior specified\n- ☐ That none of the parameters in the model have priors specified\n- ☐ That only the beta parameter has a prior specified\n**Answer: Option 2 - That none of the parameters in the model have priors specified**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?",
+        "options": [
+          "That only the alpha parameter has a prior specified",
+          "That none of the parameters in the model have priors specified",
+          "That only the beta parameter has a prior specified"
+        ],
+        "correct_answer": [
+          1
+        ],
         "explanation": "When you run `logreg_model$check_syntax(pedantic = TRUE)`, you get two warnings:"
       },
       {
@@ -3189,9 +3291,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?",
-        "statement": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?\nAs you've learned during the course, using proper priors, even when they are wide, are always preferable to stabilise inference and make the model generative. You'll learn next week more about priors.\n- ☐ No issues with NUTS and convergence diagnostics\n- ☐ Some issues with NUTS diagnostics but no convergence issues\n- ☐ No issues with NUTS diagnostics but some convergence issues\n**Answer: Option 1 - No issues with NUTS and convergence diagnostics**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?\nAs you've learned during the course, using proper priors, even when they are wide, are always preferable to stabilise inference and make the model generative. You'll learn next week more about priors.",
+        "options": [
+          "No issues with NUTS and convergence diagnostics",
+          "Some issues with NUTS diagnostics but no convergence issues",
+          "No issues with NUTS diagnostics but some convergence issues"
+        ],
+        "correct_answer": [
+          0
+        ],
         "explanation": "After modifying the model to include proper priors:"
       },
       {
@@ -3201,9 +3309,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?",
-        "statement": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?\n- ☐ No divergent transitions but some max_treedepth exceedences\n- ☐ Some divergent transitions but no max_treedepth exceedences\n- ☐ No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged\n**Answer: Option 3 - No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?",
+        "options": [
+          "No divergent transitions but some max_treedepth exceedences",
+          "Some divergent transitions but no max_treedepth exceedences",
+          "No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged"
+        ],
+        "correct_answer": [
+          2
+        ],
         "explanation": "When you add an unused parameter to the model, for example:"
       },
       {
@@ -3213,9 +3327,15 @@ const QUIZ_DATA = {
         "section_number": "3",
         "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
         "title": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?",
-        "statement": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?\n- ☐ No\n- ☐ Yes\n- ☐ Unclear\n**Answer: Option 2 - Yes**",
-        "options": null,
-        "correct_answer": null,
+        "statement": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?",
+        "options": [
+          "No",
+          "Yes",
+          "Unclear"
+        ],
+        "correct_answer": [
+          1
+        ],
         "explanation": "Stan's pedantic mode would absolutely catch this problem! You would see a warning like:"
       },
       {
@@ -7958,13 +8078,16 @@ const QUIZ_DATA = {
       "section_number": "1",
       "section_description": null,
       "title": "What is the intuition behind HMC as described in the course lectures?",
-      "statement": "What is the intuition behind HMC as described in the course lectures?\n-   ☑ HMC relies on using a pendulum's natural swing frequency to\ngenerate an efficient, high-dimensional Monte Carlo sampling",
+      "statement": "What is the intuition behind HMC as described in the course lectures?",
       "options": [
+        "HMC relies on using a pendulum's natural swing frequency to",
         "HMC relates to musical theory, and is a method for exploring the",
         "HMC is related to Gibbs sampling in that the conditional",
         "HMC is a MCMC algorithm which uses gradient information and"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "While the first option about pendulum's swing is\nselected in the image, the correct answer is the fourth option. HMC is\nindeed an MCMC algorithm that uses gradient information (partial\nderivatives of the log posterior) and dynamic simulation (Hamiltonian\ndynamics) to create efficient proposals that reduce random-walk behavior\nand achieve high acceptance rates. The pendulum analogy is sometimes\nused metaphorically, but the core intuition is about using Hamiltonian\ndynamics with gradient information."
     },
     {
@@ -7981,7 +8104,9 @@ const QUIZ_DATA = {
         "It is the acceptance ratio for HMC",
         "It is the negative probability density of the distribution for θ"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "In HMC, U(θ) represents the potential energy, which\nis defined as the negative log probability density of the target\ndistribution (posterior). This is analogous to potential energy in\nphysics. The term helps define the \"landscape\" over which the sampler\nmoves. Note that option 4 is incorrect because it says \"negative\nprobability density\" (without \"log\"), which would be incorrect."
     },
     {
@@ -7998,7 +8123,9 @@ const QUIZ_DATA = {
         "It is the acceptance ratio for HMC",
         "It is the negative probability density of the distribution for θ"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "K(φ) represents the kinetic energy in HMC, which is a\nfunction of the momentum variable φ. The momentum gives the sampler\n\"velocity\" to move across the parameter space efficiently, allowing it\nto traverse regions that would be difficult to explore with random-walk\nmethods. This is complementary to U(θ) - while U(θ) defines the\nlandscape (potential energy), K(φ) defines the movement through that\nlandscape (kinetic energy)."
     },
     {
@@ -8014,7 +8141,9 @@ const QUIZ_DATA = {
         "It's impossible to solve the Hamiltonian equations",
         "They can only be computed for a posterior with conjugate"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Hamilton's equations provide the continuous dynamics\nfor how θ and φ evolve over time. However, on a digital computer, we\ncannot solve these differential equations analytically for most\nreal-world posteriors. Even when using numerical integration methods,\nfinite numeric precision and the discretization of time steps mean that\nthe Hamiltonian is not perfectly conserved, leading to numerical errors.\nThis is why we need numerical integration schemes like the leapfrog\nintegrator and why we still need a Metropolis acceptance step to correct\nfor these errors."
     },
     {
@@ -8031,7 +8160,9 @@ const QUIZ_DATA = {
         "Runge-Kutta methods",
         "Leapfrog method, also known as the leapfrog integrator"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        3
+      ],
       "explanation": "Stan and most other HMC implementations use the\nleapfrog integrator (also called Störmer-Verlet method, which is a type\nof Verlet integration). The leapfrog integrator is preferred because it\nis: (1) symplectic, meaning it preserves the geometric properties of\nHamiltonian dynamics, (2) time-reversible, which is important for\nmaintaining detailed balance in MCMC, and (3) has good energy\nconservation properties despite being a discrete approximation. While\nEuler's method and Runge-Kutta methods could theoretically be used, they\ndon't have these desirable properties. The leapfrog integrator\nalternates between half-steps in momentum and full steps in position,\nwhich gives it its name."
     },
     {
@@ -8047,7 +8178,9 @@ const QUIZ_DATA = {
         "With a large step size the integration error increases with more",
         "With a large step size the integration error is bigger, but does"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "This statement is FALSE. Looking at the figures, we\ncan clearly see that: - In figure (c) with stepsize 0.3, the trajectory\nforms a smooth, nearly perfect circle, indicating minimal integration\nerror - In figure (d) with stepsize 1.2, the trajectory shows wild\noscillations and spirals outward with crossing paths, demonstrating that\nthe integration error is not only bigger with the large step size, but\nit also ACCUMULATES and INCREASES with more steps"
     },
     {
@@ -8063,7 +8196,9 @@ const QUIZ_DATA = {
         "We might end up close to the starting point of the joint space",
         "We will end up very far away from the starting point"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "When the trajectory length ϵL is too long, the\nHamiltonian dynamics can cause the trajectory to travel so far that it\ncomes back near its starting point in the joint position-momentum (θ, φ)\nspace. This is because the Hamiltonian dynamics follow contours of\nconstant energy, which can be periodic or quasi-periodic."
     },
     {
@@ -8079,7 +8214,9 @@ const QUIZ_DATA = {
         "The relatively small step-size often results in many steps",
         "Both L and ϵ adapt so that sampling is efficient."
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "When you observe the [NUTS demo with the banana\ntarget](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana),\nyou can see that NUTS intelligently adapts both parameters to achieve\nefficient sampling:"
     },
     {
@@ -8095,7 +8232,9 @@ const QUIZ_DATA = {
         "The relatively small step-size results in high probability of",
         "The relatively large step-size results in high discretization"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "When you increase the Leapfrog δt (step size ϵ) from"
     },
     {
@@ -8123,7 +8262,9 @@ const QUIZ_DATA = {
         "The algorithm initially chooses large step sizes to quickly",
         "The algorithm initially chooses small step sizes and many steps"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "When you observe the [DualAveragingNUTS\ndemo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)\nin the first few iterations, you'll notice that the algorithm starts\nwith relatively large step sizes. This is an intentional strategy during\nthe warm-up phase."
     },
     {
@@ -8139,7 +8280,9 @@ const QUIZ_DATA = {
         "The algorithm adapts the step size and number of steps to yield",
         "The target acceptance ratio is too low for NUTS to adapt"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "After sufficient warm-up iterations (around 50-200\ndraws in the\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)),\nyou'll observe that NUTS with dual averaging successfully adapts both\nparameters to achieve efficient sampling."
     },
     {
@@ -8155,7 +8298,9 @@ const QUIZ_DATA = {
         "The large target acceptance ratio results in few large steps to",
         "The large target acceptance ratio results in few small steps to"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "When you set the target acceptance ratio δ to 0.95 in\nthe\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana),\nyou're telling the algorithm to be very conservative and aim for a 95%\nacceptance rate."
     },
     {
@@ -8183,7 +8328,9 @@ const QUIZ_DATA = {
         "The small acceptance ratio results in many small steps which",
         "The small acceptance ratio eventually is adapted at some point"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "When you set the target acceptance ratio δ to the\nsmallest possible value in the\n[demo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana),\nyou're telling the algorithm that you're willing to accept very low\nacceptance rates."
     },
     {
@@ -8199,7 +8346,9 @@ const QUIZ_DATA = {
         "By increasing `adapt_delta` we force the algorithm to jump very",
         "By increasing `adapt_delta` we tell Stan to use a higher"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Increasing `adapt_delta` tells Stan to target a\nhigher acceptance rate during the warm-up phase, which has important\nimplications for how the step size is adapted."
     },
     {
@@ -8215,7 +8364,9 @@ const QUIZ_DATA = {
         "Computational: number of potential steps (and hence the number",
         "Computational: the larger the tree, the larger the probability"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "The `max_treedepth` parameter in NUTS directly\ncontrols how many times the tree-building algorithm can double the\ntrajectory length, and this has significant computational implications."
     },
     {
@@ -8231,7 +8382,9 @@ const QUIZ_DATA = {
         "The last point with acceptable error to the trajectory is",
         "The leapfrog integrator fails and the integration error grows"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Even with adaptive step size tuning, challenging\nposterior geometries can cause numerical problems when the step size is\ntoo large relative to local curvature."
     },
     {
@@ -8417,9 +8570,18 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "What is the solid red line plotting?",
-      "statement": "What is the solid red line plotting?\n- ☐ The median of the posterior predictive distribution of the linear predictor term\n- ☐ The median of the posterior predictive distribution for the target\n- ☐ The upper and lower quantiles of the posterior predictive distribution of the linear predictor term\n- ☐ The upper and lower quantiles of the posterior predictive distribution of for the target\n- ☐ The mean of the posterior predictive distribution of the linear predictor term\n- ☐ The mean of the posterior predictive distribution for the target\n**Answer: Option 2 - The median of the posterior predictive distribution for the target**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "What is the solid red line plotting?",
+      "options": [
+        "The median of the posterior predictive distribution of the linear predictor term",
+        "The median of the posterior predictive distribution for the target",
+        "The upper and lower quantiles of the posterior predictive distribution of the linear predictor term",
+        "The upper and lower quantiles of the posterior predictive distribution of for the target",
+        "The mean of the posterior predictive distribution of the linear predictor term",
+        "The mean of the posterior predictive distribution for the target"
+      ],
+      "correct_answer": [
+        1
+      ],
       "explanation": "Looking at the plotting code in the notebook:"
     },
     {
@@ -8429,9 +8591,18 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "What are the dashed red lines referring to?",
-      "statement": "What are the dashed red lines referring to?\n- ☐ The median of the posterior predictive distribution of the linear predictor term\n- ☐ The median of the posterior predictive distribution for the target\n- ☐ The upper and lower quantiles of the posterior predictive distribution of the linear predictor term\n- ☐ The upper and lower quantiles of the posterior predictive distribution of for the target\n- ☐ The mean of the posterior predictive distribution of the linear predictor term\n- ☐ The mean of the posterior predictive distribution for the target\n**Answer: Option 4 - The upper and lower quantiles of the posterior predictive distribution of for the target**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "What are the dashed red lines referring to?",
+      "options": [
+        "The median of the posterior predictive distribution of the linear predictor term",
+        "The median of the posterior predictive distribution for the target",
+        "The upper and lower quantiles of the posterior predictive distribution of the linear predictor term",
+        "The upper and lower quantiles of the posterior predictive distribution of for the target",
+        "The mean of the posterior predictive distribution of the linear predictor term",
+        "The mean of the posterior predictive distribution for the target"
+      ],
+      "correct_answer": [
+        3
+      ],
       "explanation": "The dashed red lines represent the 5th and 95th percentiles (upper and lower quantiles) of the posterior predictive distribution for y."
     },
     {
@@ -8441,9 +8612,16 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "How and why are these different from the corresponding grey lines?",
-      "statement": "How and why are these different from the corresponding grey lines?\n- ☐ The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)\n- ☐ The grey lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the red lines just integrate over the uncertainty of (α, β)\n- ☐ At each draw of the MCMC chain, the grey line is generated conditional from the posterior conditional on the draw for σ\n- ☐ At each draw of the MCMC chain, the red line is generated conditional from the posterior conditional on the draw for α, β\n**Answer: Option 1 - The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "How and why are these different from the corresponding grey lines?",
+      "options": [
+        "The red lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the grey lines just integrate over the uncertainty of (α, β)",
+        "The grey lines are generated by integrating both over uncertainty of the parameters in the linear predictor term (α, β) and the observation model noise (σ) while the red lines just integrate over the uncertainty of (α, β)",
+        "At each draw of the MCMC chain, the grey line is generated conditional from the posterior conditional on the draw for σ",
+        "At each draw of the MCMC chain, the red line is generated conditional from the posterior conditional on the draw for α, β"
+      ],
+      "correct_answer": [
+        0
+      ],
       "explanation": "This is the key distinction between the two sets of lines:"
     },
     {
@@ -8453,9 +8631,16 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "What is the general trend of student retention as measured by the assignment submissions?",
-      "statement": "What is the general trend of student retention as measured by the assignment submissions?\n- ☐ The estimated trend is linear and upward sloping\n- ☐ The estimated trend is non-linear and upward sloping\n- ☐ The estimated trend is non-linear and downward sloping\n- ☐ The estimated trend is linear and downward sloping\n**Answer: Option 4 - The estimated trend is linear and downward sloping**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "What is the general trend of student retention as measured by the assignment submissions?",
+      "options": [
+        "The estimated trend is linear and upward sloping",
+        "The estimated trend is non-linear and upward sloping",
+        "The estimated trend is non-linear and downward sloping",
+        "The estimated trend is linear and downward sloping"
+      ],
+      "correct_answer": [
+        3
+      ],
       "explanation": "Looking at the plot, the solid red line (and grey line) shows a clear **downward trend** - the assignment submission percentage decreases as the assignment number increases."
     },
     {
@@ -8465,9 +8650,15 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?",
-      "statement": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?\n- ☐ The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well\n- ☐ The predictive distribution of the linear predictor term is too narrow\n- ☐ Although the model predicts a decrease in the retention rate, and the 95% interval of the predictive distribution spans most points, it fails to detect the increasing marginal slope wrt the assignment number\n**Answer: Option 1 - The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Does it do a good job predicting the proportion of students who submit the final 9th assignment?",
+      "options": [
+        "The central 95% interval of the posterior predictive distribution spans most of the points, and if we take the 95% interval it would span all points, so the model does well",
+        "The predictive distribution of the linear predictor term is too narrow",
+        "Although the model predicts a decrease in the retention rate, and the 95% interval of the predictive distribution spans most points, it fails to detect the increasing marginal slope wrt the assignment number"
+      ],
+      "correct_answer": [
+        0
+      ],
       "explanation": "Looking at the plot at assignment number 9 (the blue dots):"
     },
     {
@@ -8477,9 +8668,16 @@ const QUIZ_DATA = {
       "section_number": "2",
       "section_description": "From 2018 to 2023, we have been keeping track of assignment submissions\nfor the BDA course given the number of submissions for the 1st\nassignment. We will fit a simple linear model to answer two questions of\ninterest:\n\n-   What is the trend of student interest as measured by assignment\n    submissions?\n-   Given the submission rates for assignments 1-8, how many students\n    will complete the final 9th assignment (and potentially pass the\n    course)?\n\nBelow is broken Stan code for a linear model. In the following, we write\nthe equations following the Stan distributional definitions. See Stan\ndocumentation for the definitions related to the normal distribution.\n\n$p(y \\mid x, \\alpha, \\beta, \\sigma) = \\text{normal}(y \\mid \\alpha + \\beta x, \\sigma)$\n(normal model)\n\n$p(\\alpha, \\beta, \\sigma) \\propto \\text{const}$ (improper flat prior)\n\nIn both the statistical model above and in the Stan model below,\n$x \\in \\mathbb{R}^N$ and $y \\in \\mathbb{R}^N$ are vectors of the\ncovariates/predictors (the assignment number) and vectors of the\nobservation (proportions of students who have handed in the respective\nassignment), $\\alpha \\in \\mathbb{R}^N$ is the unknown intercept,\n$\\beta \\in \\mathbb{R}$ is the unknown scalar slope and\n$\\sigma \\in \\mathbb{R}_{>0}$ is the unknown scalar observation standard\ndeviation. The statistical model further implies\n\n$p(y_{\\text{pred}} \\mid x_{\\text{pred}}, \\alpha, \\beta, \\sigma) = \\text{normal}(y_{\\text{pred}} \\mid \\alpha + \\beta x_{\\text{pred}}, \\sigma)$\n\nas the predictive distribution for a new observation $y_{\\text{pred}}$\nat a given new covariate value $x_{\\text{pred}}$. The broken Stan model\ncode:",
       "title": "What modeling choice could you make to improve the prediction for the given data set?",
-      "statement": "What modeling choice could you make to improve the prediction for the given data set?\n- ☐ Model neglects two key features: 1) non-linearity with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the positive domain of the real line\n- ☐ Model neglects two key features: 1) linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line\n- ☐ Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line\n- ☐ Increase amount of data\n**Answer: Option 3 - Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "What modeling choice could you make to improve the prediction for the given data set?",
+      "options": [
+        "Model neglects two key features: 1) non-linearity with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the positive domain of the real line",
+        "Model neglects two key features: 1) linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line",
+        "Model neglects two key features: 1) non-linear effects with respect to the assignment number, 2) observation model assumes the retention rate to be distributed along the entire real line",
+        "Increase amount of data"
+      ],
+      "correct_answer": [
+        2
+      ],
       "explanation": "The current model has two main limitations:"
     },
     {
@@ -8489,9 +8687,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "Why is it problematic to use flat, improper priors for this likelihood?",
-      "statement": "Why is it problematic to use flat, improper priors for this likelihood?\n- ☐ The posteriors will be proper but have regions of very high curvature, likely leading to many divergent transitions\n- ☐ The posteriors will be improper but have regions of very high curvature, likely leading to many divergent transitions\n- ☐ The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm\n**Answer: Option 3 - The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Why is it problematic to use flat, improper priors for this likelihood?",
+      "options": [
+        "The posteriors will be proper but have regions of very high curvature, likely leading to many divergent transitions",
+        "The posteriors will be improper but have regions of very high curvature, likely leading to many divergent transitions",
+        "The posterior will be improper, likely leading to flat posterior surfaces and large step sizes within the NUTS algorithm"
+      ],
+      "correct_answer": [
+        2
+      ],
       "explanation": "With logistic regression and complete separation, combined with flat (improper) priors, we have a fundamental problem:"
     },
     {
@@ -8501,9 +8705,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?",
-      "statement": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?\nUsing the data generated from the template, compile and run the logistic regression Stan model with the complete separation data.\n- ☐ There are no divergent transitions but many max_treedepth exceedences\n- ☐ There are many divergent transitions and max_treedepth exceedences\n- ☐ There are many divergent transitions but no max_treedepth exceedences\n**Answer: Option 1 - There are no divergent transitions but many max_treedepth exceedences**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "You can use the function `[fit object name]$diagnostic_summary()` to check for the number of divergent transitions and max_treedepth exceedences. What do you see?\nUsing the data generated from the template, compile and run the logistic regression Stan model with the complete separation data.",
+      "options": [
+        "There are no divergent transitions but many max_treedepth exceedences",
+        "There are many divergent transitions and max_treedepth exceedences",
+        "There are many divergent transitions but no max_treedepth exceedences"
+      ],
+      "correct_answer": [
+        0
+      ],
       "explanation": "Based on the diagnostics from your run and the nature of the problem:"
     },
     {
@@ -8513,9 +8723,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?",
-      "statement": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?\n- ☐ The posteriors seem to be sharply distributed around a single mode\n- ☐ The central location of the posteriors seems to be well identified\n- ☐ Improper posteriors resulted in unreasonably large range of values for posterior draws\n**Answer: Option 3 - Improper posteriors resulted in unreasonably large range of values for posterior draws**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "You can examine the problematic behaviour of MCMC by looking at parameter specific sampling diagnostics using the `summarize_draws()` function. To gain visual intuition use bayesplot's `mcmc_pairs()` function to plot histograms and bivariate scatter plots of the posteriors. What do you observe?",
+      "options": [
+        "The posteriors seem to be sharply distributed around a single mode",
+        "The central location of the posteriors seems to be well identified",
+        "Improper posteriors resulted in unreasonably large range of values for posterior draws"
+      ],
+      "correct_answer": [
+        2
+      ],
       "explanation": "Your diagnostic plots clearly show the pathological behavior:"
     },
     {
@@ -8525,9 +8741,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?",
-      "statement": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?\n- ☐ That only the alpha parameter has a prior specified\n- ☐ That none of the parameters in the model have priors specified\n- ☐ That only the beta parameter has a prior specified\n**Answer: Option 2 - That none of the parameters in the model have priors specified**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Use the function `[Stan model]$check_syntax(pedantic = TRUE)`. What warning message(s) do you get?",
+      "options": [
+        "That only the alpha parameter has a prior specified",
+        "That none of the parameters in the model have priors specified",
+        "That only the beta parameter has a prior specified"
+      ],
+      "correct_answer": [
+        1
+      ],
       "explanation": "When you run `logreg_model$check_syntax(pedantic = TRUE)`, you get two warnings:"
     },
     {
@@ -8537,9 +8759,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?",
-      "statement": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?\nAs you've learned during the course, using proper priors, even when they are wide, are always preferable to stabilise inference and make the model generative. You'll learn next week more about priors.\n- ☐ No issues with NUTS and convergence diagnostics\n- ☐ Some issues with NUTS diagnostics but no convergence issues\n- ☐ No issues with NUTS diagnostics but some convergence issues\n**Answer: Option 1 - No issues with NUTS and convergence diagnostics**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Set normal(0,10) priors for both parameters. What do you find from the MCMC output?\nAs you've learned during the course, using proper priors, even when they are wide, are always preferable to stabilise inference and make the model generative. You'll learn next week more about priors.",
+      "options": [
+        "No issues with NUTS and convergence diagnostics",
+        "Some issues with NUTS diagnostics but no convergence issues",
+        "No issues with NUTS diagnostics but some convergence issues"
+      ],
+      "correct_answer": [
+        0
+      ],
       "explanation": "After modifying the model to include proper priors:"
     },
     {
@@ -8549,9 +8777,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?",
-      "statement": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?\n- ☐ No divergent transitions but some max_treedepth exceedences\n- ☐ Some divergent transitions but no max_treedepth exceedences\n- ☐ No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged\n**Answer: Option 3 - No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Sometimes, when adjusting Stan model code you may have removed a variable from the model block, but left the declaration in the parameters block. Add such a variable to your model. What do you see from convergence diagnostics (it may also help you visualise the MCMC chains using `mcmc_pairs` and `mcmc_trace`)?",
+      "options": [
+        "No divergent transitions but some max_treedepth exceedences",
+        "Some divergent transitions but no max_treedepth exceedences",
+        "No divergent transitions or max_treedepth exceedences, but the chains for the unused variable have clearly not converged"
+      ],
+      "correct_answer": [
+        2
+      ],
       "explanation": "When you add an unused parameter to the model, for example:"
     },
     {
@@ -8561,9 +8795,15 @@ const QUIZ_DATA = {
       "section_number": "3",
       "section_description": "Another benefit of the HMC-NUTS algorithm over simpler non-gradient based MCMC algorithms, is that we have access to many diagnostic tools related to the posterior geometry that we would otherwise not have. This feedback is helpful for modeling and also for debugging code, and therefore an essential part of the Bayesian workflow. A model type which is likely to cause problems is logistic regression with complete separation in the data. This creates an unbounded likelihood.",
       "title": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?",
-      "statement": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?\n- ☐ No\n- ☐ Yes\n- ☐ Unclear\n**Answer: Option 2 - Yes**",
-      "options": null,
-      "correct_answer": null,
+      "statement": "Use `check_syntax(pedantic = TRUE)`, would you have been able to detect this problem from the output?",
+      "options": [
+        "No",
+        "Yes",
+        "Unclear"
+      ],
+      "correct_answer": [
+        1
+      ],
       "explanation": "Stan's pedantic mode would absolutely catch this problem! You would see a warning like:"
     },
     {
