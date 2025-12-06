@@ -2308,8 +2308,8 @@ const QUIZ_DATA = {
         "title": "Look at the trace plots below. For which sequences do you expect HIGHER effective sample size:",
         "statement": "Look at the trace plots below. For which sequences do you expect HIGHER effective sample size:",
         "options": [
-          "Figure 4",
-          "Figure 5"
+          "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/gibbs_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/gibbs_1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": [
           1
@@ -2325,8 +2325,8 @@ const QUIZ_DATA = {
         "title": "Select the autocorrelation function below corresponding to the chains in Figure 4 of the previous question.",
         "statement": "Select the autocorrelation function below corresponding to the chains in Figure 4 of the previous question.",
         "options": [
-          "Figure 6",
-          "Figure 7"
+          "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/autocorrelation_2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 7 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/autocorrelation_1.png\" alt=\"Figure 7\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": [
           0
@@ -2456,8 +2456,8 @@ const QUIZ_DATA = {
         "title": "After performing sampling, let's check the convergence of the chains. The next code chunk will produce trace plots. Which one is the correct one:",
         "statement": "After performing sampling, let's check the convergence of the chains. The next code chunk will produce trace plots. Which one is the correct one:",
         "options": [
-          "Figure 8",
-          "Figure 9"
+          "Figure 8 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/trace_1.png\" alt=\"Figure 8\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 9 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/trace_2.png\" alt=\"Figure 9\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": [
           0
@@ -2593,8 +2593,8 @@ const QUIZ_DATA = {
         "title": "Visualise scatter plot of posterior draws. Which one is the correct figure:",
         "statement": "Visualise scatter plot of posterior draws. Which one is the correct figure:",
         "options": [
-          "Figure 10",
-          "Figure 11"
+          "Figure 10 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/scatter_2.png\" alt=\"Figure 10\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 11 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/scatter_1.png\" alt=\"Figure 11\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": [
           1
@@ -2612,10 +2612,10 @@ const QUIZ_DATA = {
         "title": "What is the intuition behind HMC as described in the course lectures?",
         "statement": "What is the intuition behind HMC as described in the course lectures?",
         "options": [
-          "HMC relies on using a pendulum's natural swing frequency to",
-          "HMC relates to musical theory, and is a method for exploring the",
-          "HMC is related to Gibbs sampling in that the conditional",
-          "HMC is a MCMC algorithm which uses gradient information and"
+          "HMC relies on using a pendulum's natural swing frequency to generate an efficient, high-dimensional Monte Carlo sampling",
+          "HMC relates to musical theory, and is a method for exploring the harmonic structure of a musical piece through statistical analysis",
+          "HMC is related to Gibbs sampling in that the conditional posteriors are used as proposal distributions",
+          "HMC is a MCMC algorithm which uses gradient information and dynamic simulation to reduce random-walk behaviour and increase acceptance rate of proposals"
         ],
         "correct_answer": [
           0
@@ -2631,10 +2631,10 @@ const QUIZ_DATA = {
         "title": "What is the intuition behind the term U(θ)",
         "statement": "What is the intuition behind the term U(θ)\nIn order to generate good proposals, HMC uses the Hamiltonian function\nand it's partial derivatives to generate a path along the surface of the\nlog posterior. As in the lecture, define φ as the momentum variable\nwhich is of the same dimension as the parameter vector θ. The\nHamiltonian function has two terms U(θ) and K(φ).",
         "options": [
-          "It is the kinetic energy determining the momentum (mass times",
-          "It is the negative log probability density of the distribution",
+          "It is the kinetic energy determining the momentum (mass times velocity) which helps the sampler move across large areas of the parameter space that would be otherwise challenging or slower to traverse",
+          "It is the negative log probability density of the distribution for θ that we wish to draw from, referred to as the potential energy",
           "It is the acceptance ratio for HMC",
-          "It is the negative probability density of the distribution for θ"
+          "It is the negative probability density of the distribution for θ that we wish to draw from, referred to as potential energy"
         ],
         "correct_answer": [
           1
@@ -2650,10 +2650,10 @@ const QUIZ_DATA = {
         "title": "What is the intuition behind the term K(φ)",
         "statement": "What is the intuition behind the term K(φ)",
         "options": [
-          "It is the kinetic energy determining the momentum (mass times",
-          "It is the negative log probability density of the distribution",
+          "It is the kinetic energy determining the momentum (mass times velocity) which helps the sampler move across large areas of the parameter space that would be otherwise challenging or slower to traverse",
+          "It is the negative log probability density of the distribution for θ that we wish to draw from, referred to as potential energy",
           "It is the acceptance ratio for HMC",
-          "It is the negative probability density of the distribution for θ"
+          "It is the negative probability density of the distribution for θ that we wish to draw from, referred to as potential energy"
         ],
         "correct_answer": [
           0
@@ -2669,9 +2669,9 @@ const QUIZ_DATA = {
         "title": "The partial derivatives of the Hamiltonian, also known as Hamilton's equations, determine how θ and φ change during MCMC. What problem occurs when implementing Hamilton's equations computationally?",
         "statement": "The partial derivatives of the Hamiltonian, also known as Hamilton's equations, determine how θ and φ change during MCMC. What problem occurs when implementing Hamilton's equations computationally?",
         "options": [
-          "They cannot be perfectly computed because of finite numeric",
-          "It's impossible to solve the Hamiltonian equations",
-          "They can only be computed for a posterior with conjugate"
+          "They cannot be perfectly computed because of finite numeric precision",
+          "It's impossible to solve the Hamiltonian equations mathematically",
+          "They can only be computed for a posterior with conjugate likelihood and prior"
         ],
         "correct_answer": [
           0
@@ -2707,8 +2707,8 @@ const QUIZ_DATA = {
         "statement": "It is not necessary in this course to know the computational details behind the leapfrog integrator, only that it is applied for L steps along the Hamiltonian trajectory with step size, ϵ. The figure below by Neal (2012) shows dynamic simulation in the joint position-momentum space using leapfrog method. Based on these figures, which of the following statements is false?\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/slides/figs/hmc_leapfrog.png\" alt=\"Figure showing leapfrog method trajectories\" style=\"max-width: 100%; height: auto;\" />\n**(c) Leapfrog Method, stepsize 0.3**\n![Figure shows a smooth circular trajectory in position-momentum space\nwith small, regular steps]\n**(d) Leapfrog Method, stepsize 1.2**\n![Figure shows an erratic trajectory with large deviations, crossing\npaths, and visible accumulation of errors spiraling outward]",
         "options": [
           "With a small step size the integration error is small.",
-          "With a large step size the integration error increases with more",
-          "With a large step size the integration error is bigger, but does"
+          "With a large step size the integration error increases with more steps.",
+          "With a large step size the integration error is bigger, but does not increase with more steps."
         ],
         "correct_answer": [
           2
@@ -2725,8 +2725,8 @@ const QUIZ_DATA = {
         "statement": "What can happen eventually, when allowing the trajectory length, defined as step size times number of steps, ϵL, to be long enough?\nHMC has two general steps at each iteration of the MCMC chain. Denote\nthe current state of the MCMC chain as t, then\n1.  we draw a new momentum variable φ (often assumed to distributed\nmarginally Gaussian)\n2.  perform a Metropolis update with r = exp(-H(θ*, φ*) + H(θ\\^(t-1),\nφ\\^(t-1))), where Hamiltonian dynamics are used to produce the\nproposal. The two parameters of the algorithm, number of steps L and\nstep size ϵ, need to be tuned.\nCheck out this [interactive\ndemo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianMC&target=standard)\n(algorithm=HamiltonianMC, target=standard) and set Leapfrog steps equal\nto 75 for visual intuition (if the demo freezes, close the demo, restart\nand instead of sliders, make the control changes by editing the values\nin the numeric fields). Do not adjust anything else in the demo.",
         "options": [
           "We will have explored the posterior sufficiently",
-          "We might end up close to the starting point of the joint space",
-          "We will end up very far away from the starting point"
+          "We might end up close to the starting point of the joint space of θ, φ which is computationally wasteful and may cause random-walk behaviour of the MCMC chain",
+          "We will end up very far away from the starting point guaranteeing that the proposal will be accepted"
         ],
         "correct_answer": [
           1
@@ -2742,8 +2742,8 @@ const QUIZ_DATA = {
         "title": "What do you observe?",
         "statement": "What do you observe?\nTo avoid this behaviour that static HMC with fixed integration time\n(number of steps times the step size) may have, the No-U-Turn (NUTS)\nalgorithm by [Hoffman and Gelman\n(2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf)\nperforms automatic tuning: neither the step size nor number of steps\nneed be specified by the user. NUTS uses a tree-building algorithm (see\nthe\n[slides](https://avehtari.github.io/BDA_course_Aalto/slides/BDA_lecture_6.pdf))\nto adaptively determine the number of steps, L, while the step size is\nadapted during the warm-up phase according to a target average\nacceptance ratio. To gain some more intuition on the behaviour of the\nadaptivity of NUTS, open the interactive demo again with this\n[link](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana)\n(algorithm=EfficientNUTS, target=banana). Set Autoplay delay to around\n500, and set Leapfrog δt to 0.03. This algorithm corresponds to\nAlgorithm 3 in [Hoffman and Gelman\n(2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf),\nwhere for a fixed ϵ, the algorithm adaptively determines the number of\nsteps, L.",
         "options": [
-          "The relatively large step-size often results in few steps taken,",
-          "The relatively small step-size often results in many steps",
+          "The relatively large step-size often results in few steps taken, which is computationally efficient.",
+          "The relatively small step-size often results in many steps taken, which is computationally inefficient because of many posterior and transition evaluations.",
           "Both L and ϵ adapt so that sampling is efficient."
         ],
         "correct_answer": [
@@ -2761,8 +2761,8 @@ const QUIZ_DATA = {
         "statement": "On the other hand, set Leapfrog δt to 0.6, all else equal. What do you observe?",
         "options": [
           "Both L and ϵ adapt so that sampling is efficient.",
-          "The relatively small step-size results in high probability of",
-          "The relatively large step-size results in high discretization"
+          "The relatively small step-size results in high probability of accepting a new proposal, which is computationally efficient.",
+          "The relatively large step-size results in high discretization error which results in many proposals to be rejected or divergences. This is computationally inefficient as it increases autocorrelation."
         ],
         "correct_answer": [
           2
@@ -2790,9 +2790,9 @@ const QUIZ_DATA = {
         "title": "What do you observe with the first couple of iterations?",
         "statement": "What do you observe with the first couple of iterations?\nThe user does not need to select the stepsize directly. Stan includes\nalso adaptation of the step size in the warmup phase using stochastic\noptimization called dual averaging. The user specifies a target\nacceptance ratio (in Stan actually target for expected discretization\nerror), with argument `adapt_delta`, and a number of iterations during\nwhich adaptation of ϵL occurs (warm-up draws). Open, the interactive\ndemo again with this\n[link](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)\n(algorithm=DualAveragingNUTS, target=banana), and adjust the Autoplay\ndelay to around 70, but otherwise keep the default options,\nparticularly, keep the target acceptance ratio (here δ) at 0.65. On the\ntop left-hand corner m/M_adapt tells you how many draws have been taken\ncompared to number of warm-up draws. Wait until m/M_adapt is at least\n50/200.",
         "options": [
-          "The algorithm initially chooses small step sizes and very few",
-          "The algorithm initially chooses large step sizes to quickly",
-          "The algorithm initially chooses small step sizes and many steps"
+          "The algorithm initially chooses small step sizes and very few steps to quickly explore the distribution around the starting point",
+          "The algorithm initially chooses large step sizes to quickly explore the distribution",
+          "The algorithm initially chooses small step sizes and many steps to explore the distribution"
         ],
         "correct_answer": [
           1
@@ -2808,9 +2808,9 @@ const QUIZ_DATA = {
         "title": "What do you observe with sufficient warm-up?",
         "statement": "What do you observe with sufficient warm-up?",
         "options": [
-          "The algorithm adapts the step size and number of steps to yield",
-          "The algorithm adapts the step size and number of steps to yield",
-          "The target acceptance ratio is too low for NUTS to adapt"
+          "The algorithm adapts the step size and number of steps to yield quick and efficient exploration of the distribution",
+          "The algorithm adapts the step size and number of steps to yield very low probability in accepting draws",
+          "The target acceptance ratio is too low for NUTS to adapt efficiently"
         ],
         "correct_answer": [
           0
@@ -2826,9 +2826,9 @@ const QUIZ_DATA = {
         "title": "Now set the target acceptance ratio to 0.95. What do you observe?",
         "statement": "Now set the target acceptance ratio to 0.95. What do you observe?",
         "options": [
-          "The large target acceptance ratio results in many small steps to",
-          "The large target acceptance ratio results in few large steps to",
-          "The large target acceptance ratio results in few small steps to"
+          "The large target acceptance ratio results in many small steps to keep the discretization error small",
+          "The large target acceptance ratio results in few large steps to keep the discretization error small",
+          "The large target acceptance ratio results in few small steps to keep the discretization error small"
         ],
         "correct_answer": [
           0
@@ -2856,9 +2856,9 @@ const QUIZ_DATA = {
         "title": "Now set the target acceptance ratio to the smallest possible value. What do you observe?",
         "statement": "Now set the target acceptance ratio to the smallest possible value. What do you observe?",
         "options": [
-          "The small acceptance ratio eventually results in few large steps",
-          "The small acceptance ratio results in many small steps which",
-          "The small acceptance ratio eventually is adapted at some point"
+          "The small acceptance ratio eventually results in few large steps which increases the discretization error leading to lower acceptance probability",
+          "The small acceptance ratio results in many small steps which decreases the discretization error leading to lower acceptance probability",
+          "The small acceptance ratio eventually is adapted at some point to produce many transitions with high acceptance probability"
         ],
         "correct_answer": [
           0
@@ -2874,9 +2874,9 @@ const QUIZ_DATA = {
         "title": "What should happen when you increase adapt_delta, all else equal?",
         "statement": "What should happen when you increase adapt_delta, all else equal?\nThe current Stan HMC-NUTS implementation has some further enhancements,\nbut we will not go to details of those. The main algorithm parameters\nare `adapt_delta` and `max_treedepth` options.\n`adapt_delta` specifies the target expected discretization error (in the\nsame scale as the average proposal acceptance ratio), during the warm-up\nphase. The default in most packages using Stan is `adapt_delta=0.8`.",
         "options": [
-          "Very far jumps in the (θ, φ)-space are less likely to be",
-          "By increasing `adapt_delta` we force the algorithm to jump very",
-          "By increasing `adapt_delta` we tell Stan to use a higher"
+          "Very far jumps in the (θ, φ)-space are less likely to be accepted, so by increasing `adapt_delta` we force the proposal to be closer to the current state, therefore creating smaller step sizes. This may be very helpful for numerical accuracy for large curvature areas in the log posterior density.",
+          "By increasing `adapt_delta` we force the algorithm to jump very far in the (θ, φ)-space to increase probability getting into higher joint probability regions",
+          "By increasing `adapt_delta` we tell Stan to use a higher precision representation of the Hamiltonian dynamics, increasing probability of accepting proposals"
         ],
         "correct_answer": [
           0
@@ -2892,9 +2892,9 @@ const QUIZ_DATA = {
         "title": "What is the main cost to increasing the max_treedepth?",
         "statement": "What is the main cost to increasing the max_treedepth?\n`max_treedepth` controls the maximum number of doublings in the\ntree-building algorithm and thus controls the maximum number of steps in\nHamiltonian simulation. This allows NUTS to travel further away in the\ndistribution, which can be beneficial when dealing with complex\nposteriors. The default in Stan is `max_treedepth = 10`.",
         "options": [
-          "None, we should always allow for sufficient freedom to explore",
-          "Computational: number of potential steps (and hence the number",
-          "Computational: the larger the tree, the larger the probability"
+          "None, we should always allow for sufficient freedom to explore the posterior fully",
+          "Computational: number of potential steps (and hence the number of log-density and gradient evaluations) increases exponentially with each doubling of the tree",
+          "Computational: the larger the tree, the larger the probability to have a U-turn in the trajectory"
         ],
         "correct_answer": [
           1
@@ -2910,9 +2910,9 @@ const QUIZ_DATA = {
         "title": "Despite the adaptated step-size, you may encounter challenging posteriors, e.g. with highly varying curvature in log-density. What can happen if the step-size is too big compared to the curvature of the log-density?",
         "statement": "Despite the adaptated step-size, you may encounter challenging posteriors, e.g. with highly varying curvature in log-density. What can happen if the step-size is too big compared to the curvature of the log-density?",
         "options": [
-          "Trajectories are abandoned and the algorithm defaults to a Gibbs",
-          "The last point with acceptable error to the trajectory is",
-          "The leapfrog integrator fails and the integration error grows"
+          "Trajectories are abandoned and the algorithm defaults to a Gibbs update to the posterior",
+          "The last point with acceptable error to the trajectory is accepted",
+          "The leapfrog integrator fails and the integration error grows very high, which is reported in Stan as a divergent transition. The last added part of the Hamiltonian trajectory is discarded."
         ],
         "correct_answer": [
           2
@@ -4179,8 +4179,8 @@ const QUIZ_DATA = {
         "title": "Which figure plots the conditional effects of the varying slope model?",
         "statement": "Which figure plots the conditional effects of the varying slope model?",
         "options": [
-          "Figure 3",
-          "Figure 4"
+          "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_1.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": null,
         "explanation": "Figure 3"
@@ -4764,8 +4764,8 @@ const QUIZ_DATA = {
         "title": "",
         "statement": "**Based on the model in Figure 1, which of the plots below match the ECDF plot (light blue envelope indicates regions of acceptable ECDF values)?**",
         "options": [
-          "Figure 2",
-          "Figure 3"
+          "Figure 2 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 2\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": null,
         "explanation": "Figure 2"
@@ -4794,8 +4794,8 @@ const QUIZ_DATA = {
         "title": "",
         "statement": "**Based on the model in Figure 4, which of the plots below match the ECDF plot (light blue envelope indicates regions of acceptable ECDF values)?**\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/predictive_kernel2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />",
         "options": [
-          "Figure 5",
-          "Figure 6"
+          "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />",
+          "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": null,
         "explanation": "Figure 6"
@@ -7778,8 +7778,8 @@ const QUIZ_DATA = {
       "title": "Look at the trace plots below. For which sequences do you expect HIGHER effective sample size:",
       "statement": "Look at the trace plots below. For which sequences do you expect HIGHER effective sample size:",
       "options": [
-        "Figure 4",
-        "Figure 5"
+        "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/gibbs_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/gibbs_1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": [
         1
@@ -7795,8 +7795,8 @@ const QUIZ_DATA = {
       "title": "Select the autocorrelation function below corresponding to the chains in Figure 4 of the previous question.",
       "statement": "Select the autocorrelation function below corresponding to the chains in Figure 4 of the previous question.",
       "options": [
-        "Figure 6",
-        "Figure 7"
+        "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/autocorrelation_2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 7 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/autocorrelation_1.png\" alt=\"Figure 7\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": [
         0
@@ -7926,8 +7926,8 @@ const QUIZ_DATA = {
       "title": "After performing sampling, let's check the convergence of the chains. The next code chunk will produce trace plots. Which one is the correct one:",
       "statement": "After performing sampling, let's check the convergence of the chains. The next code chunk will produce trace plots. Which one is the correct one:",
       "options": [
-        "Figure 8",
-        "Figure 9"
+        "Figure 8 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/trace_1.png\" alt=\"Figure 8\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 9 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/trace_2.png\" alt=\"Figure 9\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": [
         0
@@ -8063,8 +8063,8 @@ const QUIZ_DATA = {
       "title": "Visualise scatter plot of posterior draws. Which one is the correct figure:",
       "statement": "Visualise scatter plot of posterior draws. Which one is the correct figure:",
       "options": [
-        "Figure 10",
-        "Figure 11"
+        "Figure 10 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/scatter_2.png\" alt=\"Figure 10\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 11 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/scatter_1.png\" alt=\"Figure 11\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": [
         1
@@ -8080,10 +8080,10 @@ const QUIZ_DATA = {
       "title": "What is the intuition behind HMC as described in the course lectures?",
       "statement": "What is the intuition behind HMC as described in the course lectures?",
       "options": [
-        "HMC relies on using a pendulum's natural swing frequency to",
-        "HMC relates to musical theory, and is a method for exploring the",
-        "HMC is related to Gibbs sampling in that the conditional",
-        "HMC is a MCMC algorithm which uses gradient information and"
+        "HMC relies on using a pendulum's natural swing frequency to generate an efficient, high-dimensional Monte Carlo sampling",
+        "HMC relates to musical theory, and is a method for exploring the harmonic structure of a musical piece through statistical analysis",
+        "HMC is related to Gibbs sampling in that the conditional posteriors are used as proposal distributions",
+        "HMC is a MCMC algorithm which uses gradient information and dynamic simulation to reduce random-walk behaviour and increase acceptance rate of proposals"
       ],
       "correct_answer": [
         0
@@ -8099,10 +8099,10 @@ const QUIZ_DATA = {
       "title": "What is the intuition behind the term U(θ)",
       "statement": "What is the intuition behind the term U(θ)\nIn order to generate good proposals, HMC uses the Hamiltonian function\nand it's partial derivatives to generate a path along the surface of the\nlog posterior. As in the lecture, define φ as the momentum variable\nwhich is of the same dimension as the parameter vector θ. The\nHamiltonian function has two terms U(θ) and K(φ).",
       "options": [
-        "It is the kinetic energy determining the momentum (mass times",
-        "It is the negative log probability density of the distribution",
+        "It is the kinetic energy determining the momentum (mass times velocity) which helps the sampler move across large areas of the parameter space that would be otherwise challenging or slower to traverse",
+        "It is the negative log probability density of the distribution for θ that we wish to draw from, referred to as the potential energy",
         "It is the acceptance ratio for HMC",
-        "It is the negative probability density of the distribution for θ"
+        "It is the negative probability density of the distribution for θ that we wish to draw from, referred to as potential energy"
       ],
       "correct_answer": [
         1
@@ -8118,10 +8118,10 @@ const QUIZ_DATA = {
       "title": "What is the intuition behind the term K(φ)",
       "statement": "What is the intuition behind the term K(φ)",
       "options": [
-        "It is the kinetic energy determining the momentum (mass times",
-        "It is the negative log probability density of the distribution",
+        "It is the kinetic energy determining the momentum (mass times velocity) which helps the sampler move across large areas of the parameter space that would be otherwise challenging or slower to traverse",
+        "It is the negative log probability density of the distribution for θ that we wish to draw from, referred to as potential energy",
         "It is the acceptance ratio for HMC",
-        "It is the negative probability density of the distribution for θ"
+        "It is the negative probability density of the distribution for θ that we wish to draw from, referred to as potential energy"
       ],
       "correct_answer": [
         0
@@ -8137,9 +8137,9 @@ const QUIZ_DATA = {
       "title": "The partial derivatives of the Hamiltonian, also known as Hamilton's equations, determine how θ and φ change during MCMC. What problem occurs when implementing Hamilton's equations computationally?",
       "statement": "The partial derivatives of the Hamiltonian, also known as Hamilton's equations, determine how θ and φ change during MCMC. What problem occurs when implementing Hamilton's equations computationally?",
       "options": [
-        "They cannot be perfectly computed because of finite numeric",
-        "It's impossible to solve the Hamiltonian equations",
-        "They can only be computed for a posterior with conjugate"
+        "They cannot be perfectly computed because of finite numeric precision",
+        "It's impossible to solve the Hamiltonian equations mathematically",
+        "They can only be computed for a posterior with conjugate likelihood and prior"
       ],
       "correct_answer": [
         0
@@ -8175,8 +8175,8 @@ const QUIZ_DATA = {
       "statement": "It is not necessary in this course to know the computational details behind the leapfrog integrator, only that it is applied for L steps along the Hamiltonian trajectory with step size, ϵ. The figure below by Neal (2012) shows dynamic simulation in the joint position-momentum space using leapfrog method. Based on these figures, which of the following statements is false?\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/slides/figs/hmc_leapfrog.png\" alt=\"Figure showing leapfrog method trajectories\" style=\"max-width: 100%; height: auto;\" />\n**(c) Leapfrog Method, stepsize 0.3**\n![Figure shows a smooth circular trajectory in position-momentum space\nwith small, regular steps]\n**(d) Leapfrog Method, stepsize 1.2**\n![Figure shows an erratic trajectory with large deviations, crossing\npaths, and visible accumulation of errors spiraling outward]",
       "options": [
         "With a small step size the integration error is small.",
-        "With a large step size the integration error increases with more",
-        "With a large step size the integration error is bigger, but does"
+        "With a large step size the integration error increases with more steps.",
+        "With a large step size the integration error is bigger, but does not increase with more steps."
       ],
       "correct_answer": [
         2
@@ -8193,8 +8193,8 @@ const QUIZ_DATA = {
       "statement": "What can happen eventually, when allowing the trajectory length, defined as step size times number of steps, ϵL, to be long enough?\nHMC has two general steps at each iteration of the MCMC chain. Denote\nthe current state of the MCMC chain as t, then\n1.  we draw a new momentum variable φ (often assumed to distributed\nmarginally Gaussian)\n2.  perform a Metropolis update with r = exp(-H(θ*, φ*) + H(θ\\^(t-1),\nφ\\^(t-1))), where Hamiltonian dynamics are used to produce the\nproposal. The two parameters of the algorithm, number of steps L and\nstep size ϵ, need to be tuned.\nCheck out this [interactive\ndemo](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=HamiltonianMC&target=standard)\n(algorithm=HamiltonianMC, target=standard) and set Leapfrog steps equal\nto 75 for visual intuition (if the demo freezes, close the demo, restart\nand instead of sliders, make the control changes by editing the values\nin the numeric fields). Do not adjust anything else in the demo.",
       "options": [
         "We will have explored the posterior sufficiently",
-        "We might end up close to the starting point of the joint space",
-        "We will end up very far away from the starting point"
+        "We might end up close to the starting point of the joint space of θ, φ which is computationally wasteful and may cause random-walk behaviour of the MCMC chain",
+        "We will end up very far away from the starting point guaranteeing that the proposal will be accepted"
       ],
       "correct_answer": [
         1
@@ -8210,8 +8210,8 @@ const QUIZ_DATA = {
       "title": "What do you observe?",
       "statement": "What do you observe?\nTo avoid this behaviour that static HMC with fixed integration time\n(number of steps times the step size) may have, the No-U-Turn (NUTS)\nalgorithm by [Hoffman and Gelman\n(2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf)\nperforms automatic tuning: neither the step size nor number of steps\nneed be specified by the user. NUTS uses a tree-building algorithm (see\nthe\n[slides](https://avehtari.github.io/BDA_course_Aalto/slides/BDA_lecture_6.pdf))\nto adaptively determine the number of steps, L, while the step size is\nadapted during the warm-up phase according to a target average\nacceptance ratio. To gain some more intuition on the behaviour of the\nadaptivity of NUTS, open the interactive demo again with this\n[link](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=EfficientNUTS&target=banana)\n(algorithm=EfficientNUTS, target=banana). Set Autoplay delay to around\n500, and set Leapfrog δt to 0.03. This algorithm corresponds to\nAlgorithm 3 in [Hoffman and Gelman\n(2014)](https://www.jmlr.org/papers/volume15/hoffman14a/hoffman14a.pdf),\nwhere for a fixed ϵ, the algorithm adaptively determines the number of\nsteps, L.",
       "options": [
-        "The relatively large step-size often results in few steps taken,",
-        "The relatively small step-size often results in many steps",
+        "The relatively large step-size often results in few steps taken, which is computationally efficient.",
+        "The relatively small step-size often results in many steps taken, which is computationally inefficient because of many posterior and transition evaluations.",
         "Both L and ϵ adapt so that sampling is efficient."
       ],
       "correct_answer": [
@@ -8229,8 +8229,8 @@ const QUIZ_DATA = {
       "statement": "On the other hand, set Leapfrog δt to 0.6, all else equal. What do you observe?",
       "options": [
         "Both L and ϵ adapt so that sampling is efficient.",
-        "The relatively small step-size results in high probability of",
-        "The relatively large step-size results in high discretization"
+        "The relatively small step-size results in high probability of accepting a new proposal, which is computationally efficient.",
+        "The relatively large step-size results in high discretization error which results in many proposals to be rejected or divergences. This is computationally inefficient as it increases autocorrelation."
       ],
       "correct_answer": [
         2
@@ -8258,9 +8258,9 @@ const QUIZ_DATA = {
       "title": "What do you observe with the first couple of iterations?",
       "statement": "What do you observe with the first couple of iterations?\nThe user does not need to select the stepsize directly. Stan includes\nalso adaptation of the step size in the warmup phase using stochastic\noptimization called dual averaging. The user specifies a target\nacceptance ratio (in Stan actually target for expected discretization\nerror), with argument `adapt_delta`, and a number of iterations during\nwhich adaptation of ϵL occurs (warm-up draws). Open, the interactive\ndemo again with this\n[link](https://chi-feng.github.io/mcmc-demo/app.html?algorithm=DualAveragingNUTS&target=banana)\n(algorithm=DualAveragingNUTS, target=banana), and adjust the Autoplay\ndelay to around 70, but otherwise keep the default options,\nparticularly, keep the target acceptance ratio (here δ) at 0.65. On the\ntop left-hand corner m/M_adapt tells you how many draws have been taken\ncompared to number of warm-up draws. Wait until m/M_adapt is at least\n50/200.",
       "options": [
-        "The algorithm initially chooses small step sizes and very few",
-        "The algorithm initially chooses large step sizes to quickly",
-        "The algorithm initially chooses small step sizes and many steps"
+        "The algorithm initially chooses small step sizes and very few steps to quickly explore the distribution around the starting point",
+        "The algorithm initially chooses large step sizes to quickly explore the distribution",
+        "The algorithm initially chooses small step sizes and many steps to explore the distribution"
       ],
       "correct_answer": [
         1
@@ -8276,9 +8276,9 @@ const QUIZ_DATA = {
       "title": "What do you observe with sufficient warm-up?",
       "statement": "What do you observe with sufficient warm-up?",
       "options": [
-        "The algorithm adapts the step size and number of steps to yield",
-        "The algorithm adapts the step size and number of steps to yield",
-        "The target acceptance ratio is too low for NUTS to adapt"
+        "The algorithm adapts the step size and number of steps to yield quick and efficient exploration of the distribution",
+        "The algorithm adapts the step size and number of steps to yield very low probability in accepting draws",
+        "The target acceptance ratio is too low for NUTS to adapt efficiently"
       ],
       "correct_answer": [
         0
@@ -8294,9 +8294,9 @@ const QUIZ_DATA = {
       "title": "Now set the target acceptance ratio to 0.95. What do you observe?",
       "statement": "Now set the target acceptance ratio to 0.95. What do you observe?",
       "options": [
-        "The large target acceptance ratio results in many small steps to",
-        "The large target acceptance ratio results in few large steps to",
-        "The large target acceptance ratio results in few small steps to"
+        "The large target acceptance ratio results in many small steps to keep the discretization error small",
+        "The large target acceptance ratio results in few large steps to keep the discretization error small",
+        "The large target acceptance ratio results in few small steps to keep the discretization error small"
       ],
       "correct_answer": [
         0
@@ -8324,9 +8324,9 @@ const QUIZ_DATA = {
       "title": "Now set the target acceptance ratio to the smallest possible value. What do you observe?",
       "statement": "Now set the target acceptance ratio to the smallest possible value. What do you observe?",
       "options": [
-        "The small acceptance ratio eventually results in few large steps",
-        "The small acceptance ratio results in many small steps which",
-        "The small acceptance ratio eventually is adapted at some point"
+        "The small acceptance ratio eventually results in few large steps which increases the discretization error leading to lower acceptance probability",
+        "The small acceptance ratio results in many small steps which decreases the discretization error leading to lower acceptance probability",
+        "The small acceptance ratio eventually is adapted at some point to produce many transitions with high acceptance probability"
       ],
       "correct_answer": [
         0
@@ -8342,9 +8342,9 @@ const QUIZ_DATA = {
       "title": "What should happen when you increase adapt_delta, all else equal?",
       "statement": "What should happen when you increase adapt_delta, all else equal?\nThe current Stan HMC-NUTS implementation has some further enhancements,\nbut we will not go to details of those. The main algorithm parameters\nare `adapt_delta` and `max_treedepth` options.\n`adapt_delta` specifies the target expected discretization error (in the\nsame scale as the average proposal acceptance ratio), during the warm-up\nphase. The default in most packages using Stan is `adapt_delta=0.8`.",
       "options": [
-        "Very far jumps in the (θ, φ)-space are less likely to be",
-        "By increasing `adapt_delta` we force the algorithm to jump very",
-        "By increasing `adapt_delta` we tell Stan to use a higher"
+        "Very far jumps in the (θ, φ)-space are less likely to be accepted, so by increasing `adapt_delta` we force the proposal to be closer to the current state, therefore creating smaller step sizes. This may be very helpful for numerical accuracy for large curvature areas in the log posterior density.",
+        "By increasing `adapt_delta` we force the algorithm to jump very far in the (θ, φ)-space to increase probability getting into higher joint probability regions",
+        "By increasing `adapt_delta` we tell Stan to use a higher precision representation of the Hamiltonian dynamics, increasing probability of accepting proposals"
       ],
       "correct_answer": [
         0
@@ -8360,9 +8360,9 @@ const QUIZ_DATA = {
       "title": "What is the main cost to increasing the max_treedepth?",
       "statement": "What is the main cost to increasing the max_treedepth?\n`max_treedepth` controls the maximum number of doublings in the\ntree-building algorithm and thus controls the maximum number of steps in\nHamiltonian simulation. This allows NUTS to travel further away in the\ndistribution, which can be beneficial when dealing with complex\nposteriors. The default in Stan is `max_treedepth = 10`.",
       "options": [
-        "None, we should always allow for sufficient freedom to explore",
-        "Computational: number of potential steps (and hence the number",
-        "Computational: the larger the tree, the larger the probability"
+        "None, we should always allow for sufficient freedom to explore the posterior fully",
+        "Computational: number of potential steps (and hence the number of log-density and gradient evaluations) increases exponentially with each doubling of the tree",
+        "Computational: the larger the tree, the larger the probability to have a U-turn in the trajectory"
       ],
       "correct_answer": [
         1
@@ -8378,9 +8378,9 @@ const QUIZ_DATA = {
       "title": "Despite the adaptated step-size, you may encounter challenging posteriors, e.g. with highly varying curvature in log-density. What can happen if the step-size is too big compared to the curvature of the log-density?",
       "statement": "Despite the adaptated step-size, you may encounter challenging posteriors, e.g. with highly varying curvature in log-density. What can happen if the step-size is too big compared to the curvature of the log-density?",
       "options": [
-        "Trajectories are abandoned and the algorithm defaults to a Gibbs",
-        "The last point with acceptable error to the trajectory is",
-        "The leapfrog integrator fails and the integration error grows"
+        "Trajectories are abandoned and the algorithm defaults to a Gibbs update to the posterior",
+        "The last point with acceptable error to the trajectory is accepted",
+        "The leapfrog integrator fails and the integration error grows very high, which is reported in Stan as a divergent transition. The last added part of the Hamiltonian trajectory is discarded."
       ],
       "correct_answer": [
         2
@@ -9645,8 +9645,8 @@ const QUIZ_DATA = {
       "title": "Which figure plots the conditional effects of the varying slope model?",
       "statement": "Which figure plots the conditional effects of the varying slope model?",
       "options": [
-        "Figure 3",
-        "Figure 4"
+        "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_1.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": null,
       "explanation": "Figure 3"
@@ -10228,8 +10228,8 @@ const QUIZ_DATA = {
       "title": "",
       "statement": "**Based on the model in Figure 1, which of the plots below match the ECDF plot (light blue envelope indicates regions of acceptable ECDF values)?**",
       "options": [
-        "Figure 2",
-        "Figure 3"
+        "Figure 2 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 2\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": null,
       "explanation": "Figure 2"
@@ -10258,8 +10258,8 @@ const QUIZ_DATA = {
       "title": "",
       "statement": "**Based on the model in Figure 4, which of the plots below match the ECDF plot (light blue envelope indicates regions of acceptable ECDF values)?**\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/predictive_kernel2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />",
       "options": [
-        "Figure 5",
-        "Figure 6"
+        "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />",
+        "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />"
       ],
       "correct_answer": null,
       "explanation": "Figure 6"
