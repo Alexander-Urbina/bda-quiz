@@ -1498,7 +1498,7 @@ const QUIZ_DATA = {
         "statement": "Which of these correctly describes MCSE:",
         "options": [
           "It measures the equivalent amount of independent draws from the posterior.",
-          "**It quantifies the uncertainty in the estimate of a parameter or summary statistic due to the finite number of draws. It represents the standard deviation of the sampling distribution of the estimator derived from the finite sample of draws.**",
+          "It quantifies the uncertainty in the estimate of a parameter or summary statistic due to the finite number of draws. It represents the standard deviation of the sampling distribution of the estimator derived from the finite sample of draws.",
           "It represents the maximum deviation of estimates derived from the draws from the true parameter value, indicating the worst-case error scenario.",
           "It is the error introduced by deterministic numerical integration methods."
         ],
@@ -1516,7 +1516,7 @@ const QUIZ_DATA = {
         "title": "Look up the gamma distribution in Appendix A in BDA (or wikipedia). What is the mean of the gamma(alpha = 3, beta = 3) distribution?",
         "statement": "Look up the gamma distribution in Appendix A in BDA (or wikipedia). What is the mean of the gamma(alpha = 3, beta = 3) distribution?",
         "options": [
-          "**1**",
+          "1",
           "3",
           "9",
           "the mean does not exist"
@@ -1538,7 +1538,7 @@ const QUIZ_DATA = {
           "dgamma(x = 1000, shape = 3, rate = 3)",
           "pgamma(q = 1000, shape = 3, rate = 3)",
           "qgamma(p = 1000, shape = 3, rate = 3)",
-          "**rgamma(n = 1000, shape = 3, rate = 3)**"
+          "rgamma(n = 1000, shape = 3, rate = 3)"
         ],
         "correct_answer": [
           3
@@ -1555,7 +1555,7 @@ const QUIZ_DATA = {
         "statement": "Which of these best describes the relationship between the empirical mean of the sample of size 400 and the analytical mean of the gamma(alpha = 3, beta = 3) distribution?",
         "options": [
           "They are exactly equal",
-          "**They are not exactly equal, but with enough draws the empirical mean will approach the analytical mean**",
+          "They are not exactly equal, but with enough draws the empirical mean will approach the analytical mean",
           "The mean does not exist and increasing the number of draws will not help"
         ],
         "correct_answer": [
@@ -1587,7 +1587,7 @@ const QUIZ_DATA = {
           "0",
           "1",
           "10",
-          "**the mean does not exist**"
+          "the mean does not exist"
         ],
         "correct_answer": [
           3
@@ -1603,7 +1603,7 @@ const QUIZ_DATA = {
         "title": "What do you notice about the MCSE for the mean of the Cauchy and gamma distributions?",
         "statement": "What do you notice about the MCSE for the mean of the Cauchy and gamma distributions?",
         "options": [
-          "**The MCSE estimate for the gamma(3, 3) is stable (varies little between repeated calculations), the MCSE for the Cauchy(0, 1) distribution is unstable (varies greatly between repeated calculations)**",
+          "The MCSE estimate for the gamma(3, 3) is stable (varies little between repeated calculations), the MCSE for the Cauchy(0, 1) distribution is unstable (varies greatly between repeated calculations)",
           "The MCSE estimate for the gamma(3, 3) is unstable (varies greatly between calculations), the MCSE for the Cauchy(0, 1) distribution is stable (varies greatly little between repeated calculations)",
           "Both are stable (vary little between repeated calculations)",
           "Both are unstable (vary greatly between repeated calculations)"
@@ -1622,7 +1622,7 @@ const QUIZ_DATA = {
         "title": "Let's put the claims of the CLT to test. Assume you've taken N independent draws of a random variable and stored them in a vector θ. Assume also that the random variable follows a distribution with finite mean and variance, what is the correct formula for the MCSE of the mean? SD denotes the standard deviation and var the variance of θ.",
         "statement": "Let's put the claims of the CLT to test. Assume you've taken N independent draws of a random variable and stored them in a vector θ. Assume also that the random variable follows a distribution with finite mean and variance, what is the correct formula for the MCSE of the mean? SD denotes the standard deviation and var the variance of θ.",
         "options": [
-          "**(SD(\\\\theta) / \\\\sqrt{N}\\\\)**",
+          "(SD(\\\\theta) / \\\\sqrt{N}\\\\)",
           "$SD(\\\\theta) / N$",
           "$var(\\\\theta) / N$",
           "$var(\\\\theta) / \\\\sqrt{N}$"
@@ -1641,11 +1641,11 @@ const QUIZ_DATA = {
         "title": "Based on what you learned about the gamma(3, 3) and the Cauchy(0, 1) distributions, which of these statements is correct?",
         "statement": "Based on what you learned about the gamma(3, 3) and the Cauchy(0, 1) distributions, which of these statements is correct?",
         "options": [
-          "**The MCSE estimate is a reliable measure of the uncertainty of the mean from the gamma(3,3)**",
+          "The MCSE estimate is a reliable measure of the uncertainty of the mean from the gamma(3,3)",
           "The MCSE estimate is a reliable measure of the uncertainty of the mean of the Cauchy(0,1)",
           "The MCSE estimate is not a reliable measure of the uncertainty of the mean of from the gamma(3,3)",
-          "**The MCSE estimate is not a reliable measure of the uncertainty of the mean from the Cauchy(0,1)**",
-          "**If you know the draws are from a distribution for which the mean does not exist, you should not trust the estimate of the mean or the MCSE of the mean**"
+          "The MCSE estimate is not a reliable measure of the uncertainty of the mean from the Cauchy(0,1)",
+          "If you know the draws are from a distribution for which the mean does not exist, you should not trust the estimate of the mean or the MCSE of the mean"
         ],
         "correct_answer": [
           0,
@@ -1663,10 +1663,10 @@ const QUIZ_DATA = {
         "title": "Which of these is true:",
         "statement": "Which of these is true:",
         "options": [
-          "**The Pareto-k diagnostic for the Cauchy(0,1) draws is \\> 0.5, indicating that the mean and MCSE estimates should not be trusted**",
+          "The Pareto-k diagnostic for the Cauchy(0,1) draws is \\> 0.5, indicating that the mean and MCSE estimates should not be trusted",
           "The Pareto-k diagnostic for the Cauchy(0,1) draws is \\< 0.5, indicating that the mean and MCSE estimates should not be trusted",
           "The Pareto-k diagnostic for the gamma(3, 3) draws is \\> 0.5, indicating that the mean and MCSE estimates are trustworthy",
-          "**The Pareto-k diagnostic for the gamma(3, 3) draws is \\< 0.5, indicating that the mean and MCSE estimates are trustworthy**"
+          "The Pareto-k diagnostic for the gamma(3, 3) draws is \\< 0.5, indicating that the mean and MCSE estimates are trustworthy"
         ],
         "correct_answer": [
           0,
@@ -1685,7 +1685,7 @@ const QUIZ_DATA = {
         "options": [
           "mean = 0",
           "mean = 0.5",
-          "**mean = 0.48**",
+          "mean = 0.48",
           "mean = 0.483834"
         ],
         "correct_answer": [
@@ -1704,7 +1704,7 @@ const QUIZ_DATA = {
         "options": [
           "5% quantile = 0",
           "5% quantile = 0.2",
-          "**5% quantile = 0.23**",
+          "5% quantile = 0.23",
           "5% quantile = 0.234536"
         ],
         "correct_answer": [
@@ -1722,7 +1722,7 @@ const QUIZ_DATA = {
         "statement": "Based on recommendations from the lecture how should you report the 95% quantile?",
         "options": [
           "95% quantile = 1",
-          "**95% quantile = 1.3**",
+          "95% quantile = 1.3",
           "95% quantile = 1.35",
           "95% quantile = 1.34823"
         ],
@@ -1772,7 +1772,7 @@ const QUIZ_DATA = {
         "statement": "What is the relationship between the posterior, likelihood and prior when the prior is uniform?",
         "options": [
           "the prior density is equal to the likelihood",
-          "**the unnormalized posterior density is equal to the likelihood**",
+          "the unnormalized posterior density is equal to the likelihood",
           "the unnormalized posterior density is equal to the prior"
         ],
         "correct_answer": [
@@ -1789,8 +1789,8 @@ const QUIZ_DATA = {
         "title": "What is the correct formula or formulas for the self-normalized importance sampling estimate of the mean? w are the unnormalized importance weights, and w̄ are the self-normalized weights.",
         "statement": "What is the correct formula or formulas for the self-normalized importance sampling estimate of the mean? w are the unnormalized importance weights, and w̄ are the self-normalized weights.",
         "options": [
-          "**( \\\\sum\\_{s=1}\\^{S} \\\\left( \\\\bar{w}\\^{(s)} \\\\theta\\^{(s)} \\\\right) \\\\)**",
-          "**( \\\\frac{\\\\sum\\_{s=1}\\^{S} \\\\left(w\\^{(s)} g^{(s)}\\\\right)}{\\\\sum\\_{s=1}^{S} \\\\left(w\\^{(s)}\\\\right)} \\\\)**",
+          "( \\\\sum\\_{s=1}\\^{S} \\\\left( \\\\bar{w}\\^{(s)} \\\\theta\\^{(s)} \\\\right) \\\\)",
+          "( \\\\frac{\\\\sum\\_{s=1}\\^{S} \\\\left(w\\^{(s)} g^{(s)}\\\\right)}{\\\\sum\\_{s=1}^{S} \\\\left(w\\^{(s)}\\\\right)} \\\\)",
           "( \\\\int \\\\theta g(\\\\theta) d\\\\theta \\\\)"
         ],
         "correct_answer": [
@@ -1820,7 +1820,7 @@ const QUIZ_DATA = {
         "title": "What is the equation for the generic effective sample size (ESS) estimate for importance sampling?",
         "statement": "What is the equation for the generic effective sample size (ESS) estimate for importance sampling?",
         "options": [
-          "**( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}^{(s)})^2} \\\\)**",
+          "( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}^{(s)})^2} \\\\)",
           "( \\\\frac{1}{var(\\\\bar{w})} \\\\)",
           "( \\\\frac{1}{mean(\\\\bar{w})} \\\\)",
           "( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}\\^{(s)})} \\\\)"
@@ -1876,7 +1876,7 @@ const QUIZ_DATA = {
         "statement": "Based on the value, should you trust the importance sampling estimate of the mean?",
         "options": [
           "Yes",
-          "**No**"
+          "No"
         ],
         "correct_answer": [
           1
@@ -6970,7 +6970,7 @@ const QUIZ_DATA = {
       "statement": "Which of these correctly describes MCSE:",
       "options": [
         "It measures the equivalent amount of independent draws from the posterior.",
-        "**It quantifies the uncertainty in the estimate of a parameter or summary statistic due to the finite number of draws. It represents the standard deviation of the sampling distribution of the estimator derived from the finite sample of draws.**",
+        "It quantifies the uncertainty in the estimate of a parameter or summary statistic due to the finite number of draws. It represents the standard deviation of the sampling distribution of the estimator derived from the finite sample of draws.",
         "It represents the maximum deviation of estimates derived from the draws from the true parameter value, indicating the worst-case error scenario.",
         "It is the error introduced by deterministic numerical integration methods."
       ],
@@ -6988,7 +6988,7 @@ const QUIZ_DATA = {
       "title": "Look up the gamma distribution in Appendix A in BDA (or wikipedia). What is the mean of the gamma(alpha = 3, beta = 3) distribution?",
       "statement": "Look up the gamma distribution in Appendix A in BDA (or wikipedia). What is the mean of the gamma(alpha = 3, beta = 3) distribution?",
       "options": [
-        "**1**",
+        "1",
         "3",
         "9",
         "the mean does not exist"
@@ -7010,7 +7010,7 @@ const QUIZ_DATA = {
         "dgamma(x = 1000, shape = 3, rate = 3)",
         "pgamma(q = 1000, shape = 3, rate = 3)",
         "qgamma(p = 1000, shape = 3, rate = 3)",
-        "**rgamma(n = 1000, shape = 3, rate = 3)**"
+        "rgamma(n = 1000, shape = 3, rate = 3)"
       ],
       "correct_answer": [
         3
@@ -7027,7 +7027,7 @@ const QUIZ_DATA = {
       "statement": "Which of these best describes the relationship between the empirical mean of the sample of size 400 and the analytical mean of the gamma(alpha = 3, beta = 3) distribution?",
       "options": [
         "They are exactly equal",
-        "**They are not exactly equal, but with enough draws the empirical mean will approach the analytical mean**",
+        "They are not exactly equal, but with enough draws the empirical mean will approach the analytical mean",
         "The mean does not exist and increasing the number of draws will not help"
       ],
       "correct_answer": [
@@ -7059,7 +7059,7 @@ const QUIZ_DATA = {
         "0",
         "1",
         "10",
-        "**the mean does not exist**"
+        "the mean does not exist"
       ],
       "correct_answer": [
         3
@@ -7075,7 +7075,7 @@ const QUIZ_DATA = {
       "title": "What do you notice about the MCSE for the mean of the Cauchy and gamma distributions?",
       "statement": "What do you notice about the MCSE for the mean of the Cauchy and gamma distributions?",
       "options": [
-        "**The MCSE estimate for the gamma(3, 3) is stable (varies little between repeated calculations), the MCSE for the Cauchy(0, 1) distribution is unstable (varies greatly between repeated calculations)**",
+        "The MCSE estimate for the gamma(3, 3) is stable (varies little between repeated calculations), the MCSE for the Cauchy(0, 1) distribution is unstable (varies greatly between repeated calculations)",
         "The MCSE estimate for the gamma(3, 3) is unstable (varies greatly between calculations), the MCSE for the Cauchy(0, 1) distribution is stable (varies greatly little between repeated calculations)",
         "Both are stable (vary little between repeated calculations)",
         "Both are unstable (vary greatly between repeated calculations)"
@@ -7094,7 +7094,7 @@ const QUIZ_DATA = {
       "title": "Let's put the claims of the CLT to test. Assume you've taken N independent draws of a random variable and stored them in a vector θ. Assume also that the random variable follows a distribution with finite mean and variance, what is the correct formula for the MCSE of the mean? SD denotes the standard deviation and var the variance of θ.",
       "statement": "Let's put the claims of the CLT to test. Assume you've taken N independent draws of a random variable and stored them in a vector θ. Assume also that the random variable follows a distribution with finite mean and variance, what is the correct formula for the MCSE of the mean? SD denotes the standard deviation and var the variance of θ.",
       "options": [
-        "**(SD(\\\\theta) / \\\\sqrt{N}\\\\)**",
+        "(SD(\\\\theta) / \\\\sqrt{N}\\\\)",
         "$SD(\\\\theta) / N$",
         "$var(\\\\theta) / N$",
         "$var(\\\\theta) / \\\\sqrt{N}$"
@@ -7113,11 +7113,11 @@ const QUIZ_DATA = {
       "title": "Based on what you learned about the gamma(3, 3) and the Cauchy(0, 1) distributions, which of these statements is correct?",
       "statement": "Based on what you learned about the gamma(3, 3) and the Cauchy(0, 1) distributions, which of these statements is correct?",
       "options": [
-        "**The MCSE estimate is a reliable measure of the uncertainty of the mean from the gamma(3,3)**",
+        "The MCSE estimate is a reliable measure of the uncertainty of the mean from the gamma(3,3)",
         "The MCSE estimate is a reliable measure of the uncertainty of the mean of the Cauchy(0,1)",
         "The MCSE estimate is not a reliable measure of the uncertainty of the mean of from the gamma(3,3)",
-        "**The MCSE estimate is not a reliable measure of the uncertainty of the mean from the Cauchy(0,1)**",
-        "**If you know the draws are from a distribution for which the mean does not exist, you should not trust the estimate of the mean or the MCSE of the mean**"
+        "The MCSE estimate is not a reliable measure of the uncertainty of the mean from the Cauchy(0,1)",
+        "If you know the draws are from a distribution for which the mean does not exist, you should not trust the estimate of the mean or the MCSE of the mean"
       ],
       "correct_answer": [
         0,
@@ -7135,10 +7135,10 @@ const QUIZ_DATA = {
       "title": "Which of these is true:",
       "statement": "Which of these is true:",
       "options": [
-        "**The Pareto-k diagnostic for the Cauchy(0,1) draws is \\> 0.5, indicating that the mean and MCSE estimates should not be trusted**",
+        "The Pareto-k diagnostic for the Cauchy(0,1) draws is \\> 0.5, indicating that the mean and MCSE estimates should not be trusted",
         "The Pareto-k diagnostic for the Cauchy(0,1) draws is \\< 0.5, indicating that the mean and MCSE estimates should not be trusted",
         "The Pareto-k diagnostic for the gamma(3, 3) draws is \\> 0.5, indicating that the mean and MCSE estimates are trustworthy",
-        "**The Pareto-k diagnostic for the gamma(3, 3) draws is \\< 0.5, indicating that the mean and MCSE estimates are trustworthy**"
+        "The Pareto-k diagnostic for the gamma(3, 3) draws is \\< 0.5, indicating that the mean and MCSE estimates are trustworthy"
       ],
       "correct_answer": [
         0,
@@ -7157,7 +7157,7 @@ const QUIZ_DATA = {
       "options": [
         "mean = 0",
         "mean = 0.5",
-        "**mean = 0.48**",
+        "mean = 0.48",
         "mean = 0.483834"
       ],
       "correct_answer": [
@@ -7176,7 +7176,7 @@ const QUIZ_DATA = {
       "options": [
         "5% quantile = 0",
         "5% quantile = 0.2",
-        "**5% quantile = 0.23**",
+        "5% quantile = 0.23",
         "5% quantile = 0.234536"
       ],
       "correct_answer": [
@@ -7194,7 +7194,7 @@ const QUIZ_DATA = {
       "statement": "Based on recommendations from the lecture how should you report the 95% quantile?",
       "options": [
         "95% quantile = 1",
-        "**95% quantile = 1.3**",
+        "95% quantile = 1.3",
         "95% quantile = 1.35",
         "95% quantile = 1.34823"
       ],
@@ -7244,7 +7244,7 @@ const QUIZ_DATA = {
       "statement": "What is the relationship between the posterior, likelihood and prior when the prior is uniform?",
       "options": [
         "the prior density is equal to the likelihood",
-        "**the unnormalized posterior density is equal to the likelihood**",
+        "the unnormalized posterior density is equal to the likelihood",
         "the unnormalized posterior density is equal to the prior"
       ],
       "correct_answer": [
@@ -7261,8 +7261,8 @@ const QUIZ_DATA = {
       "title": "What is the correct formula or formulas for the self-normalized importance sampling estimate of the mean? w are the unnormalized importance weights, and w̄ are the self-normalized weights.",
       "statement": "What is the correct formula or formulas for the self-normalized importance sampling estimate of the mean? w are the unnormalized importance weights, and w̄ are the self-normalized weights.",
       "options": [
-        "**( \\\\sum\\_{s=1}\\^{S} \\\\left( \\\\bar{w}\\^{(s)} \\\\theta\\^{(s)} \\\\right) \\\\)**",
-        "**( \\\\frac{\\\\sum\\_{s=1}\\^{S} \\\\left(w\\^{(s)} g^{(s)}\\\\right)}{\\\\sum\\_{s=1}^{S} \\\\left(w\\^{(s)}\\\\right)} \\\\)**",
+        "( \\\\sum\\_{s=1}\\^{S} \\\\left( \\\\bar{w}\\^{(s)} \\\\theta\\^{(s)} \\\\right) \\\\)",
+        "( \\\\frac{\\\\sum\\_{s=1}\\^{S} \\\\left(w\\^{(s)} g^{(s)}\\\\right)}{\\\\sum\\_{s=1}^{S} \\\\left(w\\^{(s)}\\\\right)} \\\\)",
         "( \\\\int \\\\theta g(\\\\theta) d\\\\theta \\\\)"
       ],
       "correct_answer": [
@@ -7292,7 +7292,7 @@ const QUIZ_DATA = {
       "title": "What is the equation for the generic effective sample size (ESS) estimate for importance sampling?",
       "statement": "What is the equation for the generic effective sample size (ESS) estimate for importance sampling?",
       "options": [
-        "**( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}^{(s)})^2} \\\\)**",
+        "( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}^{(s)})^2} \\\\)",
         "( \\\\frac{1}{var(\\\\bar{w})} \\\\)",
         "( \\\\frac{1}{mean(\\\\bar{w})} \\\\)",
         "( \\\\frac{1}{\\\\sum\\_{s=1}\\^{S} (\\\\bar{w}\\^{(s)})} \\\\)"
@@ -7348,7 +7348,7 @@ const QUIZ_DATA = {
       "statement": "Based on the value, should you trust the importance sampling estimate of the mean?",
       "options": [
         "Yes",
-        "**No**"
+        "No"
       ],
       "correct_answer": [
         1
