@@ -140,6 +140,8 @@
             border-bottom: 2px solid var(--border-color);
             flex-wrap: wrap;
             transition: background 0.3s ease, border-color 0.3s ease;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
 
@@ -215,6 +217,8 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
+            width: 100%;
+            overflow-x: auto;
         }
 
         .section-card {
@@ -613,23 +617,25 @@
             }
 
             .nav {
-                display: none;
-            }
-
-            .nav {
-                flex-direction: column;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
             }
 
             .nav-btn {
                 border-bottom: 1px solid var(--border-color);
-                border-right: none;
+                border-right: 1px solid var(--border-color);
                 padding: 12px 15px;
-                text-align: left;
+                text-align: center;
+                min-width: 120px;
+                flex-shrink: 0;
             }
 
             .nav-btn.active {
                 border-bottom-color: var(--accent);
-                border-left: 3px solid var(--accent);
+                border-bottom-width: 3px;
             }
 
             .view {
@@ -893,16 +899,47 @@
             }
         }
 
+        // Helper function to check if question has options
+        function hasOptions(question) {
+            return question.options && Array.isArray(question.options) && question.options.length > 0;
+        }
+
+        // Filter quiz data to only include questions with options
+        function filterQuestionsWithOptions(data) {
+            const filtered = {
+                quizzes: {},
+                all_questions: []
+            };
+
+            // Filter each quiz
+            Object.keys(data.quizzes).forEach(quizNum => {
+                filtered.quizzes[quizNum] = data.quizzes[quizNum].filter(hasOptions);
+            });
+
+            // Filter all_questions
+            if (data.all_questions) {
+                filtered.all_questions = data.all_questions.filter(hasOptions);
+            } else {
+                // If all_questions doesn't exist, create it from filtered quizzes
+                Object.keys(filtered.quizzes).forEach(quizNum => {
+                    filtered.all_questions.push(...filtered.quizzes[quizNum]);
+                });
+            }
+
+            return filtered;
+        }
+
         // Initialize app
         async function init() {
             try {
                 // Try to load from embedded data first
                 if (typeof QUIZ_DATA !== 'undefined') {
-                    quizData = QUIZ_DATA;
+                    quizData = filterQuestionsWithOptions(QUIZ_DATA);
                 } else {
                     // Fallback to fetch if not embedded
                     const response = await fetch('all_quizzes.json');
-                    quizData = await response.json();
+                    const rawData = await response.json();
+                    quizData = filterQuestionsWithOptions(rawData);
                 }
                 setupExploreView();
                 loadRandomSection();
@@ -977,7 +1014,7 @@
 
             // Group questions by quiz and section
             Object.keys(quizData.quizzes).forEach(quizNum => {
-                const questions = quizData.quizzes[quizNum];
+                const questions = quizData.quizzes[quizNum].filter(hasOptions);
                 
                 // Group by section
                 const sections = {};
@@ -1041,7 +1078,7 @@
                             </div>
                         ` : ''}
                         <div style="margin-top: 10px; display: flex; gap: 5px;">
-                            <button class="btn btn-primary" data-quiz="${quizNum}" data-section="${sectionName.replace(/"/g, '&quot;')}" onclick="event.stopPropagation(); const btn = event.target; const quizNum = btn.getAttribute('data-quiz'); const sectionName = btn.getAttribute('data-section'); const questions = quizData.quizzes[quizNum].filter(q => (q.section || 'Unnamed Section') === sectionName); loadSectionByQuestions(questions, quizNum, sectionName);" style="flex: 1; font-size: 0.9em;">
+                            <button class="btn btn-primary" data-quiz="${quizNum}" data-section="${sectionName.replace(/"/g, '&quot;')}" onclick="event.stopPropagation(); const btn = event.target; const quizNum = btn.getAttribute('data-quiz'); const sectionName = btn.getAttribute('data-section'); const questions = quizData.quizzes[quizNum].filter(q => hasOptions(q) && (q.section || 'Unnamed Section') === sectionName); loadSectionByQuestions(questions, quizNum, sectionName);" style="flex: 1; font-size: 0.9em;">
                                 📝 Take Quiz
                             </button>
                             ${sectionAnswered > 0 ? `
@@ -1060,7 +1097,7 @@
 
         // Load a specific section by quiz number (all questions in quiz)
         function loadSection(quizNum) {
-            const questions = quizData.quizzes[quizNum] || [];
+            const questions = (quizData.quizzes[quizNum] || []).filter(hasOptions);
             if (questions.length === 0) return;
 
             currentQuestions = questions;
@@ -1071,10 +1108,12 @@
 
         // Load a specific section by questions array (for section-based loading)
         function loadSectionByQuestions(questions, quizNum, sectionName) {
-            if (questions.length === 0) return;
+            // Filter to only include questions with options
+            const filteredQuestions = (Array.isArray(questions) ? questions : []).filter(hasOptions);
+            if (filteredQuestions.length === 0) return;
 
             // Make a copy of questions array to avoid reference issues
-            currentQuestions = Array.isArray(questions) ? JSON.parse(JSON.stringify(questions)) : questions;
+            currentQuestions = JSON.parse(JSON.stringify(filteredQuestions));
             currentQuestionIndex = 0;
             displayQuestion(currentQuestions[0], 0, currentQuestions.length, sectionName);
             showView('random-section');
@@ -1085,7 +1124,7 @@
             // Collect all sections from all quizzes
             const allSections = [];
             Object.keys(quizData.quizzes).forEach(quizNum => {
-                const questions = quizData.quizzes[quizNum];
+                const questions = quizData.quizzes[quizNum].filter(hasOptions);
                 // Group by section
                 const sections = {};
                 questions.forEach(q => {
@@ -1157,13 +1196,21 @@
                                 } else if (isSelected) {
                                     className += ' selected';
                                 }
+                                // For multiple choice: only allow toggleOption if not answered
+                                // For single choice: only allow selectOption if not answered
+                                const onclickHandler = isMultipleChoice 
+                                    ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                                    : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
+                                const onchangeHandler = isMultipleChoice 
+                                    ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                                    : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
                                 return `
-                                    <div class="${className}" onclick="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                    <div class="${className}" ${onclickHandler ? `onclick="${onclickHandler}"` : ''} style="${!onclickHandler ? 'cursor: default;' : ''}">
                                         <input type="${isMultipleChoice ? 'checkbox' : 'radio'}" 
                                                name="${questionId}" 
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
-                                               onchange="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                               ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
                                         ${opt}
                                     </div>
                                 `;
@@ -1240,13 +1287,21 @@
                                 } else if (isSelected) {
                                     className += ' selected';
                                 }
+                                // For multiple choice: only allow toggleOption if not answered
+                                // For single choice: only allow selectOption if not answered
+                                const onclickHandler = isMultipleChoice 
+                                    ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                                    : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
+                                const onchangeHandler = isMultipleChoice 
+                                    ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                                    : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
                                 return `
-                                    <div class="${className}" onclick="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                    <div class="${className}" ${onclickHandler ? `onclick="${onclickHandler}"` : ''} style="${!onclickHandler ? 'cursor: default;' : ''}">
                                         <input type="${isMultipleChoice ? 'checkbox' : 'radio'}" 
                                                name="${questionId}" 
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
-                                               onchange="${isMultipleChoice && !isAnswered ? `toggleOption('${questionId}', ${idx})` : `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})`}">
+                                               ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
                                         ${opt}
                                     </div>
                                 `;
@@ -1277,6 +1332,20 @@
 
         // Toggle option for multiple choice (before submission)
         function toggleOption(questionId, optionIndex) {
+            const question = findQuestionById(questionId);
+            if (!question) return;
+            
+            // CRITICAL: Only allow toggling if this is a multiple choice question
+            if (!question.correct_answer || !Array.isArray(question.correct_answer) || question.correct_answer.length <= 1) {
+                console.warn('toggleOption called for non-multiple-choice question - this should not happen');
+                return;
+            }
+            
+            // Don't allow changes if already answered
+            if (progress.answered[questionId]) {
+                return;
+            }
+            
             if (!progress.answers[questionId]) {
                 progress.answers[questionId] = [];
             }
@@ -1288,18 +1357,38 @@
                 progress.answers[questionId].push(optionIndex);
             }
             
+            // IMPORTANT: Do NOT mark as answered here - user must click Submit button
+            // Do NOT set progress.answered[questionId] here
+            
             saveProgress();
             
-            // Update UI to show selected state
+            // Update UI to show selected state (but don't show explanation yet)
+            // Only refresh the options, don't reload the entire question to avoid flicker
+            updateOptionDisplay(questionId);
+        }
+        
+        // Helper function to update option display without full reload
+        function updateOptionDisplay(questionId) {
             const question = findQuestionById(questionId);
-            if (question) {
-                if (currentQuestions.length > 0) {
-                    const sectionName = currentQuestions[0].section || null;
-                    displayQuestion(question, currentQuestionIndex, currentQuestions.length, sectionName);
-                } else {
-                    displaySingleQuestion(question);
+            if (!question) return;
+            
+            const userAnswer = progress.answers[questionId] || [];
+            const optionsContainer = document.getElementById(`options-${questionId}`);
+            if (!optionsContainer) return;
+            
+            // Update selected state of options
+            optionsContainer.querySelectorAll('.option').forEach((optionEl, idx) => {
+                const isSelected = userAnswer.includes(idx);
+                const checkbox = optionEl.querySelector('input');
+                if (checkbox) {
+                    checkbox.checked = isSelected;
                 }
-            }
+                if (isSelected) {
+                    optionEl.classList.add('selected');
+                } else {
+                    optionEl.classList.remove('selected');
+                }
+            });
         }
 
         // Submit answer for multiple choice questions
@@ -1352,7 +1441,9 @@
             if (!question) return;
 
             // Don't handle multiple choice questions here - they use toggleOption/submitAnswer
-            if (question.correct_answer && question.correct_answer.length > 1) {
+            // This is a critical safeguard: multiple choice questions should NEVER trigger selectOption
+            if (question.correct_answer && Array.isArray(question.correct_answer) && question.correct_answer.length > 1) {
+                console.warn('selectOption called for multiple choice question - this should not happen');
                 return;
             }
 
@@ -1553,7 +1644,7 @@
         // Reset quiz by quiz number
         function resetQuizByNumber(quizNum) {
             if (confirm(`Are you sure you want to reset all answers for Quiz ${quizNum}? This will clear your answers for this quiz but keep your progress history.`)) {
-                const questions = quizData.quizzes[quizNum] || [];
+                const questions = (quizData.quizzes[quizNum] || []).filter(hasOptions);
                 let resetCount = 0;
                 
                 questions.forEach(q => {
@@ -1583,7 +1674,7 @@
         // Reset section answers
         function resetSection(quizNum, sectionName) {
             if (confirm(`Are you sure you want to reset answers for "${sectionName}" in Quiz ${quizNum}?`)) {
-                const questions = quizData.quizzes[quizNum] || [];
+                const questions = (quizData.quizzes[quizNum] || []).filter(hasOptions);
                 const sectionQuestions = questions.filter(q => (q.section || 'Unnamed Section') === sectionName);
                 let resetCount = 0;
                 
@@ -1654,7 +1745,7 @@
                 </div>
                 <h3 style="margin-top: 30px;">Progress by Quiz</h3>
                 ${Object.keys(quizData.quizzes).map(quizNum => {
-                    const questions = quizData.quizzes[quizNum];
+                    const questions = quizData.quizzes[quizNum].filter(hasOptions);
                     const quizAnswered = questions.filter(q => 
                         progress.answered[`q_${quizNum}_${q.question_number}`]
                     ).length;

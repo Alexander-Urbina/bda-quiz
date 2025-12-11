@@ -9552,7 +9552,9 @@ const QUIZ_DATA = {
         "$\\sigma_j \\sim \\text{normal}_+ (0,0); \\mu_j \\sim \\text{normal} (\\eta, \\tau); Y_{ij} \\sim \\text{normal} (\\mu_j, \\sigma_j);$",
         "$\\sigma_j \\sim \\text{normal}_+ (0,0); Y_{ij} \\sim \\text{normal} (\\eta, \\sigma_j)$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "The R code simulates a two-level hierarchical model:"
     },
     {
@@ -9818,7 +9820,9 @@ const QUIZ_DATA = {
         "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_1.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />",
         "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Figure 3"
     },
     {
@@ -9891,7 +9895,9 @@ const QUIZ_DATA = {
         "Yes",
         "No"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Since Rhat = 1.003 ≤ 1.01, the chains have converged. Rhat (potential scale reduction factor) measures MCMC convergence. When Rhat is very close to 1.00 (typically ≤ 1.01), it indicates the chains have converged and are sampling from the same distribution. Values significantly greater than 1.01 suggest the chains have not converged and more iterations are needed."
     },
     {
@@ -10222,7 +10228,9 @@ const QUIZ_DATA = {
         "`log p(y_i | y, x, θ)`",
         "`log p(y_i | y_i, x_i)`"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Option 3 - `log p(y_i | y, x, θ)`"
     },
     {
@@ -10239,7 +10247,10 @@ const QUIZ_DATA = {
         "In the limit of large sample sizes, the model with the highest expected log predictive density (lowest Kullback-Leibler information) will have the highest posterior density",
         "It is a measure of model fit, independent of any implied loss function"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0,
+        2
+      ],
       "explanation": "Both Option 1 and Option 3 are correct reasons why the log-score is convenient."
     },
     {
@@ -10256,7 +10267,9 @@ const QUIZ_DATA = {
         "$\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | \\theta) d\\tilde{y}_i$",
         "$\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | y) d\\tilde{y}_i$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        3
+      ],
       "explanation": "Option 4 - $\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | y) d\\tilde{y}_i$"
     },
     {
@@ -10289,7 +10302,9 @@ const QUIZ_DATA = {
         "$\\sum_{i=1}^n \\log \\int p(y_{(-i)} | \\theta) p(\\theta | y_i) d\\theta$",
         "$\\sum_{i=1}^n \\log \\int p(y_i | \\theta) p(\\theta | y_{(-i)}) d\\theta$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Option 3 - $\\sum_{i=1}^n \\log \\int p(y_i | \\theta) p(\\theta | y_{(-i)}) d\\theta$"
     },
     {
@@ -10305,7 +10320,9 @@ const QUIZ_DATA = {
         "$\\sum_{s=1}^S w_i^{(s)} p(\\theta^{(s)} | x_i, y_i)$",
         "$\\sum_{s=1}^S w_i^{(s)} p(y_i | x_i, \\theta^{(s)})$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Option 1 (or Option 3 if they're identical) - $\\sum_{s=1}^S w_i^{(s)} p(y_i | x_i, \\theta^{(s)})$"
     },
     {
@@ -10322,7 +10339,9 @@ const QUIZ_DATA = {
         "$1 / p(\\theta^{(s)} | x_i, y_i)$",
         "$1 / p(y_i | x_i, \\theta^{(s)})$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        3
+      ],
       "explanation": "Option 4 - $1 / p(y_i | x_i, \\theta^{(s)})$"
     },
     {
@@ -10339,7 +10358,9 @@ const QUIZ_DATA = {
         "$1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(\\theta^{(s)} | x_i, y_i)}\\right)$",
         "$1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(\\theta^{(s)})}\\right)$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "Option 2 - $1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(y_i | x_i, \\theta^{(s)})}\\right)$"
     },
     {
@@ -10355,7 +10376,9 @@ const QUIZ_DATA = {
         "$p_i = p(y_i^{rep} \\ge y_i | y_{-i})$",
         "$p_i = p(y_i^{rep} = y_i | y_{-i})$"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Option 1 - $p_i = p(y_i^{rep} \\le y_i | y_{-i})$"
     },
     {
@@ -10372,7 +10395,9 @@ const QUIZ_DATA = {
         "According to a Chi-square distribution with n-1 degrees of freedom",
         "According to a student t-distribution with n-1 degrees of freedom"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "Option 2 - According to a uniform distribution"
     },
     {
@@ -10403,7 +10428,9 @@ const QUIZ_DATA = {
         "Figure 2 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 2\" style=\"max-width: 100%; height: auto;\" />",
         "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Figure 2"
     },
     {
@@ -10433,7 +10460,9 @@ const QUIZ_DATA = {
         "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />",
         "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "Figure 6"
     },
     {
@@ -10496,7 +10525,9 @@ const QUIZ_DATA = {
         "∞",
         "1"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Option 3 - 1"
     },
     {
@@ -10513,7 +10544,9 @@ const QUIZ_DATA = {
         "0.1",
         "0"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Option 1 - 0.7"
     },
     {
@@ -10528,7 +10561,9 @@ const QUIZ_DATA = {
         "It is similar to the proposal distribution based on the full data",
         "It is very different from the proposal distribution based on the full data"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "Option 2 - \"It is very different from the proposal distribution based on the full data\""
     },
     {
@@ -10545,7 +10580,12 @@ const QUIZ_DATA = {
         "Misspecified model/outliers",
         "Few observations (particularly for few observations in groups with group-specific parameters)"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0,
+        1,
+        2,
+        3
+      ],
       "explanation": "All options are correct - Options 1, 2, 3, and 4 should all be selected."
     },
     {
@@ -10596,7 +10636,9 @@ const QUIZ_DATA = {
         "The plot shows the predictions for each Day aggregated over all Subjects",
         "The plot shows the predictions for each Day separately for each Subject"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Option 3 - \"The plot shows the predictions for each Day separately for each Subject\""
     },
     {
@@ -10678,7 +10720,9 @@ const QUIZ_DATA = {
         "The varying intercept model appears to be better at predicting unseen observations than the varying slopes and intercepts model",
         "The varying intercept slopes and intercepts model appears to be better at predicting unseen observations than the varying intercepts model"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        2
+      ],
       "explanation": "Option 3 - \"The varying intercept slopes and intercepts model appears to be better at predicting unseen observations than the varying intercepts model\""
     },
     {
@@ -10693,7 +10737,9 @@ const QUIZ_DATA = {
         "The distributions of the predictions match the observed data better in the lower tail, compared to the other models.",
         "The distributions of the predictions match the observed data worse in the lower tail, compared to the other models."
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Option 1 - \"The distributions of the predictions match the observed data better in the lower tail, compared to the other models.\""
     },
     {
@@ -10778,7 +10824,9 @@ const QUIZ_DATA = {
         "The normal model shows less influence of extreme observations.",
         "The normal model shows more influence of extreme observations."
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        0
+      ],
       "explanation": "Option 1 - \"The student-t model shows less influence of extreme observations.\""
     },
     {
