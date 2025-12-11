@@ -2312,7 +2312,7 @@ const QUIZ_DATA = {
           "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/Quiz5/gibbs_1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />"
         ],
         "correct_answer": [
-          1
+          0
         ],
         "explanation": "Effective Sample Size is inversely related to autocorrelation. High ESS means low autocorrelation.\n- **Figure 4** shows a chain with very high autocorrelation. The value at one iteration is very close to the value at the next, resulting in a slow, meandering exploration of the space. This chain contains a lot of redundant information.\n- **Figure 5** shows a chain with much lower autocorrelation. The values jump around much more rapidly, more closely resembling white noise. This indicates that each draw provides more new information relative to the last.\nTherefore, the sequence in Figure 5 will have a much higher Effective Sample Size than the one in Figure 4."
       },
@@ -3501,7 +3501,9 @@ const QUIZ_DATA = {
           "Exchangeability in the joint distribution applies only when the parameters have identical distributions",
           "The exchangeability of parameters is determined by the order in which they were observed and does not relate to their joint distribution"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "This is the definition of exchangeability as stated in the lecture notes (line 52-53). Exchangeability means that if you swap the labels/indices of any variables, their joint probability distribution remains unchanged. This captures the idea that you have no information to distinguish the parameters except by their labels. The other options are incorrect:\n- Option 2 confuses exchangeability with a different concept (the distribution not depending on parameter values)\n- Option 3 incorrectly suggests exchangeability requires identical distributions (exchangeable variables can have different marginals)\n- Option 4 is backwards - exchangeability is specifically about the joint distribution, not about the order of observation"
       },
       {
@@ -3518,7 +3520,9 @@ const QUIZ_DATA = {
           "Exchangeability is a stricter condition than independence, meaning all independent sequences are exchangeable, but not all exchangeable sequences are independent",
           "Both exchangeability and independence refer to the absence of correlations between observations in a sequence"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "This option accurately describes both concepts:\n- Exchangeability: The joint distribution is invariant to permutations (as defined in lecture notes line 52-53)\n- Independence: Events don't affect each other's probabilities (the joint distribution factors into the product of marginals)"
       },
       {
@@ -3534,7 +3538,9 @@ const QUIZ_DATA = {
           "They do not remain exchangeable since the conditional joint probability function does not depend on the order. If $y_1 \\neq y_2$, then the joint probability is $2BW/(n(n-1))$, if $y_1 = y_2 =$ white, then the joint probability is $W(W-1)/(n(n-1))$, and if $y_1 = y_2 =$ black, then the joint probability is $B(B-1)/(n(n-1))$",
           "They remain exchangeable since the conditional joint probability function does not depend on the order. If $y_1 \\neq y_2$, then the joint probability is $2BW/(n(n-1))$, if $y_1 = y_2 =$ white, then the joint probability is $W(W-1)/(n(n-1))$, and if $y_1 = y_2 =$ black, then the joint probability is $B(B-1)/(n(n-1))$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "This corresponds to Ex 5.2(b) in the lecture notes (lines 81-84). When sampling without replacement from an unknown composition:\n- If $y_1 \\neq y_2$: $P(y_1=\\text{black}, y_2=\\text{white}) = \\frac{B}{n} \\times \\frac{W}{n-1} = \\frac{BW}{n(n-1)}$ and $P(y_1=\\text{white}, y_2=\\text{black}) = \\frac{W}{n} \\times \\frac{B}{n-1} = \\frac{BW}{n(n-1)}$. These are equal, so swapping gives the same probability. The factor of 2 in $2BW/(n(n-1))$ comes from counting both (B,W) and (W,B) cases when order doesn't matter.\n- If $y_1 = y_2 =$ white: $P = \\frac{W}{n} \\times \\frac{W-1}{n-1} = \\frac{W(W-1)}{n(n-1)}$ (symmetric)\n- If $y_1 = y_2 =$ black: $P = \\frac{B}{n} \\times \\frac{B-1}{n-1} = \\frac{B(B-1)}{n(n-1)}$ (symmetric)"
       },
       {
@@ -3550,7 +3556,9 @@ const QUIZ_DATA = {
           "The draws are no longer independent if we don't put the first ball back before picking the second ball",
           "The draws are not exchangeable."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "This continues from question 1.3 (Ex 5.2(b) in chapter notes, lines 81-84). When sampling without replacement, the composition of the urn changes after the first draw, making the probability of the second draw dependent on the outcome of the first. For example, if $y_1$ is black, there are fewer black balls left, so $P(y_2=\\text{black} | y_1=\\text{black}) \\neq P(y_2=\\text{black})$. Therefore, $y_1$ and $y_2$ are NOT independent when sampling without replacement, even though they are exchangeable."
       },
       {
@@ -3566,7 +3574,9 @@ const QUIZ_DATA = {
           "Yes",
           "This depends on the prior $p(B, W)$: if there is significant probability mass on low values, then we shouldn't treat them as independent. If the only significant probability mass were on very large values of B and W, then we could treat them as if they were independent"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "This relates to Ex 5.2(c) in the chapter notes (line 85): \"Same as (b) but we know that there are many balls of each color in the box.\" The chapter notes (lines 43-45) mention de Finetti's theorem, which states that for exchangeable observations, we may sometimes act as if observations were independent if the additional potential information gained from the dependencies is very small. When B and W are very large, removing one ball has negligible effect on the composition, making the draws approximately independent. However, if the prior $p(B, W)$ assigns significant probability to small values, the dependence is more pronounced and we shouldn't treat them as independent. This is also mentioned in the notes about opinion polls where humans are not put back but there is a large but finite number (line 86)."
       },
       {
@@ -3581,7 +3591,9 @@ const QUIZ_DATA = {
           "$p(\\theta, \\phi) = p(\\phi) \\prod_{j=1}^{J} p(\\theta_j | \\phi)$",
           "$p(\\theta, \\phi) = p(\\phi, \\theta) \\prod_{j=1}^{J} p(\\theta_j | \\phi)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "This is the standard factorization for hierarchical models. The joint probability of the parameters $\\theta = (\\theta_1, ..., \\theta_J)$ and the hyperparameter $\\phi$ is given by the prior for the hyperparameter $p(\\phi)$ multiplied by the product of the conditional priors for each $\\theta_j$ given $\\phi$. This structure follows from:\n1. The assumption of conditional independence: given $\\phi$, the $\\theta_j$ are independent, so $p(\\theta | \\phi) = \\prod_{j=1}^{J} p(\\theta_j | \\phi)$\n2. The chain rule: $p(\\theta, \\phi) = p(\\phi) \\times p(\\theta | \\phi) = p(\\phi) \\prod_{j=1}^{J} p(\\theta_j | \\phi)$"
       },
       {
@@ -3598,7 +3610,9 @@ const QUIZ_DATA = {
           "They are negative because although the covariance conditional on $\\phi$ is zero, the covariance of the conditional expectations are negative",
           "They are strictly positive because although the covariance conditional on $\\phi$ is zero, the covariance of the conditional expectations are strictly positive"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "For exchangeable variables $\\theta_i$ and $\\theta_j$ that are conditionally independent given $\\phi$, we can use the law of total covariance:\n$$Cov(\\theta_i, \\theta_j) = E[Cov(\\theta_i, \\theta_j | \\phi)] + Cov(E[\\theta_i | \\phi], E[\\theta_j | \\phi])$$"
       },
       {
@@ -3613,7 +3627,9 @@ const QUIZ_DATA = {
           "Generalised linear models, where conditional on parameters and data $x_i$ the likelihood contributions $p(y_i | \\theta_i, \\phi, x_i)$ can be treated as independent",
           "Generalised linear models, where conditional on parameters and extra data $x_i$ the likelihood contributions $p(x_i | \\theta_i, \\phi, y_i)$ can be treated as dependent"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "This describes conditional exchangeability (mentioned in chapter notes lines 125-131). The chapter notes state: \"If $y_i$ has additional information $x_i$, then $y_i$ are not exchangeable, but $(y_i, x_i)$ still are exchangeable, then we can be make joint model for $(y_i, x_i)$ or conditional model $p(y_i | x_i)$.\""
       },
       {
@@ -3630,7 +3646,11 @@ const QUIZ_DATA = {
           "A model that uses a fixed number of parameters to fit the data well, without considering any population distribution for the parameters",
           "A model that fits a formal probability model for the hierarchical structure without incorporating any dependence or relatedness among the parameters."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0,
+          2,
+          3
+        ],
         "explanation": "Hierarchical models are defined by their multi-level structure where parameters for individual groups are themselves drawn from a higher-level population distribution (as described in chapter notes, e.g., the concept of \"population distribution\" and \"hyperparameter\" on lines 17-18). This structure introduces dependence between group-specific parameters through the shared population distribution, allowing for partial pooling of information across groups. The other options are incorrect:\n- Option 1 describes a pooled model (single set of parameters)\n- Option 3 describes a separate model (fixed parameters without population structure)\n- Option 4 contradicts the key feature of hierarchical models - they do incorporate dependence/relatedness among parameters"
       },
       {
@@ -3670,7 +3690,9 @@ const QUIZ_DATA = {
           "$Y_{ij} \\sim \\text{normal}(\\mu, \\sigma)$",
           "$Y_{ij} \\sim \\text{normal} (\\mu_j, \\sigma); \\mu_j \\sim \\text{normal} (\\mu, \\tau)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "A separate model implies that each group's parameters are estimated independently of other groups. The notation $(\\mu_j, \\sigma_j) \\sim \\pi (\\eta_j)$ with the condition $cov(\\eta_s, \\eta_r) = 0$ for $s \\neq r$ explicitly states that the prior distributions for the parameters of different groups are independent (zero covariance), meaning there is no pooling or information sharing between groups at a higher level. Each group has its own $\\mu_j$ and $\\sigma_j$ that are estimated separately."
       },
       {
@@ -3686,7 +3708,9 @@ const QUIZ_DATA = {
           "$Y_{ij} \\sim \\text{normal}(\\mu, \\sigma)$",
           "$Y_{ij} \\sim \\text{normal} (\\mu_j, \\sigma); \\mu_j \\sim \\text{normal} (\\mu, \\tau)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "A pooled model assumes that all groups share the exact same parameters. In this notation, $Y_{ij} \\sim \\text{normal}(\\mu, \\sigma)$ indicates that the mean $\\mu$ and standard deviation $\\sigma$ are common across all observations $i$ and all groups $j$, with no group-specific variation in these parameters. All observations are treated as coming from a single distribution, ignoring any group structure."
       },
       {
@@ -3702,7 +3726,9 @@ const QUIZ_DATA = {
           "$Y_{ij} \\sim \\text{normal}(\\mu, \\sigma)$",
           "$Y_{ij} \\sim \\text{normal} (\\mu_j, \\sigma); \\mu_j \\sim \\text{normal} (\\mu, \\tau)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "A hierarchical model is characterized by group-specific parameters (here, $\\mu_j$) that are themselves drawn from a common population distribution (here, $\\mu_j \\sim \\text{normal} (\\mu, \\tau)$). This structure allows for partial pooling, where each group's mean $\\mu_j$ is influenced by the overall population mean $\\mu$ and variance $\\tau$, while still allowing for group-level differences. The standard deviation $\\sigma$ is shown as common across groups in this specific example, but the key hierarchical aspect is the modeling of $\\mu_j$ from a higher-level distribution. This corresponds to the hierarchical normal model discussed in the chapter notes (line 8) and BDA3 Chapter 5.4."
       },
       {
@@ -3718,7 +3744,9 @@ const QUIZ_DATA = {
           "Hierarchical models are computationally efficient, and inferences from hierarchical models should be equal to separate or pooled models only when the data contains few observations per group",
           "By modeling $\\mu_j$ as generated from a population distribution, information is shared across groups $j$, and posterior estimates of $\\mu_j$ are likely between separate and pooled model estimates"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "As discussed on page 115 of BDA3, hierarchical models produce posterior estimates that are weighted combinations: $\\hat{\\theta}_j = \\lambda_j \\bar{y}_j + (1 - \\lambda_j) \\bar{y}$, where $\\lambda_j$ is between 0 and 1. This means:\n- When $\\lambda_j = 1$: $\\hat{\\theta}_j = \\bar{y}_j$ (separate/unpooled estimate)\n- When $\\lambda_j = 0$: $\\hat{\\theta}_j = \\bar{y}$ (pooled estimate)\n- When $0 < \\lambda_j < 1$: $\\hat{\\theta}_j$ is a weighted combination between the group-specific and overall mean (partial pooling)"
       },
       {
@@ -3735,7 +3763,9 @@ const QUIZ_DATA = {
           "Sequential draws from priors and data model are always equivalent to draws from the posterior in Stan",
           "Sequential draws from priors and observation model correspond to a Gibbs sampling algorithm, which differs from Stan's Hamiltonian Monte Carlo based sampling"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "There is a fundamental difference between:\n1. **Sequential draws from priors:** Starting from the top of the DAG, draw hyperparameters from their priors, then draw group-level parameters from their conditional priors (given hyperparameters), then draw observations from the data model. These parameters are **not updated by data** - they reflect only prior beliefs. The resulting distribution of observations is the **prior predictive distribution** (pushforward distribution), showing what data we expect to see before observing any actual data."
       },
       {
@@ -3751,7 +3781,9 @@ const QUIZ_DATA = {
           "$p(\\mu, \\tau, \\mu_1, ..., \\mu_J, \\sigma | y_{i1}, ..., y_{iJ}, ..., y_{NJ}) \\propto p(\\sigma) \\prod_{j=1}^{J} p(\\mu_j | \\mu, \\tau) \\prod_{j=1}^{J} \\prod_{i=1}^{N} p(y_{ij} | \\mu_j, \\sigma)$",
           "$p(\\mu, \\tau, \\mu_1, ..., \\mu_J, \\sigma | y_{i1}, ..., y_{iJ}, ..., y_{NJ}) \\propto p(\\sigma) \\prod_{j=1}^{J} p(\\mu | \\mu_j, \\tau) \\prod_{j=1}^{J} \\prod_{i=1}^{N} p(y_{ij} | \\mu_j, \\sigma)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Based on the DAG structure in Figure 1, the joint posterior distribution should factor according to the conditional independence relationships:\n1. **Hyperparameters** $\\mu$ and $\\tau$ have priors $p(\\mu)$ and $p(\\tau)$ (they are at the top level with no parents in the DAG, though they may have a joint prior)\n2. **Group-level parameters** $\\mu_j$ depend on $\\mu$ and $\\tau$, so we need $p(\\mu_j | \\mu, \\tau)$ for each $j = 1, ..., J$\n3. **Observation-level parameter** $\\sigma$ has its own prior $p(\\sigma)$ (according to the DAG, though it may depend on $\\mu$ and $\\tau$ in some specifications, here it appears to have an independent prior)\n4. **Observations** $y_{ij}$ depend on $\\mu_j$ and $\\sigma$, so we need $p(y_{ij} | \\mu_j, \\sigma)$ for each observation"
       },
       {
@@ -3767,7 +3799,9 @@ const QUIZ_DATA = {
           "Since studies assume a normal prior on $y_i$, we may also assume a normal distribution",
           "Since most studies assume a symmetric prior on $y_i$, we may also assume a normal distribution"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In meta-analysis, the point estimates ($y_i$) from individual studies are typically sample means, regression coefficients, odds ratios, or other statistics that, for sufficiently large sample sizes within each study, have sampling distributions that are approximately normal due to the Central Limit Theorem (CLT). The standard deviation $\\sigma_i$ is the standard error of the estimate $y_i$, which quantifies the uncertainty in that estimate. This normality of the sampling distribution is a fundamental statistical property, not a result of prior assumptions. The other options incorrectly refer to priors on $y_i$ as the reason for its normal distribution, whereas the normality comes from the CLT applied to the sampling distribution of the statistic itself."
       },
       {
@@ -3783,7 +3817,9 @@ const QUIZ_DATA = {
           "Modeling estimates of studies with a pooled model would ignore a common effect for all studies",
           "Regarding estimates of studies as exchangeable but not necessarily either identical or completely unrelated allows for differences from study to study, but such that the differences are not expected a priori to have predictable effects favoring one study over another"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Hierarchical models (also called random-effects models in meta-analysis) are preferable because they strike a balance between separate and pooled approaches:\n- **Separate models** treat each study independently with no information sharing, which doesn't ignore study-specific effects but fails to leverage information across studies, especially for studies with small sample sizes.\n- **Pooled models** assume all studies share a single common effect, ignoring genuine heterogeneity between studies.\n- **Hierarchical models** assume study-specific effects ($\\theta_i$) are exchangeable - drawn from a common population distribution. This allows for variation between studies (unlike pooled models) while enabling partial pooling where each study's estimate is informed by both its own data and data from other studies through the common population distribution. This approach acknowledges that studies might differ but assumes these differences are not systematically predictable *a priori* without additional covariates, which is the key benefit over both separate and pooled approaches."
       },
       {
@@ -3799,7 +3835,9 @@ const QUIZ_DATA = {
           "Maintain the assumption of exchangeability, the bias may be small, independent of including $x_i$ in the analysis",
           "Extend the assumption of exchangeability to hold conditional on $x_i$. You can include $x_i$ as an additional covariate in the observation model which would make it a hierarchical regression model"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "When the estimates depend on covariates $x_i$ (like geolocation, study design, patient characteristics), the studies are not unconditionally exchangeable. However, they may be *conditionally exchangeable* given these covariates (as discussed in chapter notes lines 125-131). This means that once you account for the influence of $x_i$, the remaining variation among studies can be treated as exchangeable. The appropriate approach is to incorporate $x_i$ into the model as a covariate. This can be done by including $x_i$ in the observation model (e.g., $y_i \\sim \\text{normal}(\\theta_i + \\beta x_i, \\sigma_i)$) or by making $\\theta_i$ depend on $x_i$ in the population model (e.g., $\\theta_i \\sim \\text{normal}(\\mu + \\alpha x_i, \\tau)$). This transforms the hierarchical model into a hierarchical regression model, allowing the model to explain some of the heterogeneity between studies using the available covariate information."
       },
       {
@@ -3815,7 +3853,9 @@ const QUIZ_DATA = {
           "$y \\sim \\text{normal}(\\theta_i, 0); \\theta_i \\sim \\text{normal}(\\mu, \\tau)$",
           "$y_i \\sim \\text{normal}(\\theta_i, \\sigma_i); \\theta_i \\sim \\text{normal}(\\mu, \\tau)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "This represents a standard two-level hierarchical model (random-effects model) for meta-analysis:\n- **Observation level:** $y_i \\sim \\text{normal}(\\theta_i, \\sigma_i)$ indicates each observation $y_i$ (effect size from study $i$) is normally distributed around its study-specific mean $\\theta_i$ with known standard deviation $\\sigma_i$ (the standard error of $y_i$).\n- **Population level:** $\\theta_i \\sim \\text{normal}(\\mu, \\tau)$ indicates study-specific means $\\theta_i$ are drawn from a common population distribution with hyperparameters $\\mu$ (population mean) and $\\tau$ (population standard deviation)."
       },
       {
@@ -3836,7 +3876,9 @@ const QUIZ_DATA = {
           "`y ~ 1 + x + (1 | j)`",
           "`y ~ 1 + x + j`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In R's formula syntax (used by `brms`), `y ~ 1` specifies a model where `y` is predicted by an intercept only (no predictors). This directly corresponds to $\\mu_{ij} = \\alpha_0$, where $\\alpha_0$ is the intercept term. The `1` in the formula explicitly indicates the intercept is included. The other options include additional terms (x, z, group effects) that are not in the equation."
       },
       {
@@ -3857,7 +3899,9 @@ const QUIZ_DATA = {
           "`y ~ 1 + x + (1 | j)`",
           "`y ~ 1 + x + j`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "In R's formula syntax, `y ~ 1 + x` specifies a model where `y` is predicted by an intercept (`1`) and a linear effect of `x`. This directly corresponds to $\\mu_{ij} = \\alpha_0 + \\beta_1 x_i$, where $\\alpha_0$ is the intercept and $\\beta_1$ is the coefficient for `x`. The `1` explicitly indicates the intercept is included, and `x` represents the predictor variable. Note that `y ~ x` would also work (the intercept is included by default unless suppressed with `0 +`), but `y ~ 1 + x` is more explicit. The other options either miss terms (like `y ~ 1` which has no x) or include extra terms (like z or group effects) that are not in the equation."
       },
       {
@@ -3878,7 +3922,9 @@ const QUIZ_DATA = {
           "`y ~ 1 + x + (1 | j)`",
           "`y ~ 1 + x + j`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "In R's formula syntax, `y ~ 1 + x + z` specifies a model where `y` is predicted by an intercept (`1`), a linear effect of `x`, and a linear effect of `z`. This directly corresponds to $\\mu_{ij} = \\alpha_0 + \\beta_1 x_i + \\beta_2 z_i$, where $\\alpha_0$ is the intercept, $\\beta_1$ is the coefficient for `x`, and $\\beta_2$ is the coefficient for `z`. All these coefficients are population-level effects (fixed effects in traditional terminology) - they don't vary by group. The other options either miss terms or include incorrect terms."
       },
       {
@@ -3899,7 +3945,9 @@ const QUIZ_DATA = {
           "`y ~ 1 + x + (1 | j)`",
           "`y ~ 1 + x + j`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          6
+        ],
         "explanation": "In `brms` formula syntax:\n- `y ~ 1 + x` specifies population-level effects: an intercept and a coefficient for `x`\n- `(1 | j)` specifies a **varying intercept** for each level of the grouping factor `j`. This corresponds to $\\alpha_j$ in the equation, where each group has its own intercept drawn from a common population distribution."
       },
       {
@@ -3916,7 +3964,9 @@ const QUIZ_DATA = {
           "$\\sigma_j \\sim \\text{normal}_+ (0,0); \\mu_j \\sim \\text{normal} (\\eta, \\tau); Y_{ij} \\sim \\text{normal} (\\mu_j, \\sigma_j);$",
           "$\\sigma_j \\sim \\text{normal}_+ (0,0); Y_{ij} \\sim \\text{normal} (\\eta, \\sigma_j)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "The R code simulates a two-level hierarchical model:"
       },
       {
@@ -3933,7 +3983,9 @@ const QUIZ_DATA = {
           "The true value of the mean of the population distribution of group means",
           "The estimated mean of the population distribution of group means"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "In the `hierarchical_sim` function, the `group_pop_mean` parameter represents the true mean ($\\eta$) of the population distribution from which the group-specific means ($\\mu_j$) are drawn. In the plotting code, `geom_vline(xintercept = group_pop_mean, linetype = \"dashed\")` draws a vertical dashed line at the value of `group_pop_mean`. Looking at Figure 2, this line is at `y = 0`, which corresponds to `group_pop_mean = 0` used in the simulation. This line therefore indicates the true, underlying mean of the population distribution of group means, not an estimated value (which would be computed from data) or the mean of pooled observations (which would be calculated from all observations combined)."
       },
       {
@@ -3950,7 +4002,9 @@ const QUIZ_DATA = {
           "`hierarchical_sim(0, 10, 1, 8, 5)`",
           "`hierarchical_sim(0, 1, 1, 8, 5)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Let's analyze the visual characteristics of Figure 2 and match them to the `hierarchical_sim` parameters:\n- **`n_groups = 8` and `n_obs_per_group = 5`**: Figure 2 shows 8 distinct groups on the y-axis, each with 5 data points. All options match these values.\n- **`group_pop_mean = 0`**: The vertical dashed line is at `y = 0`, and the group means appear to be centered around this line. All options match this value.\n- **`between_group_sd = 10`**: This parameter controls the spread of the group means around the `group_pop_mean`. In Figure 2, the group means are very widely spread out (ranging from approximately -4 for group 1 to +13 for group 3). This indicates a **large** `between_group_sd`. Options 1 and 3 have `between_group_sd = 10`, while options 2 and 4 have `between_group_sd = 1` (which would result in much less spread between groups).\n- **`within_group_sd = 1`**: This parameter controls the spread of observations *within* each group. In Figure 2, the 5 data points within each group are very tightly clustered together, indicating a **small** `within_group_sd`. Options 3 and 4 have `within_group_sd = 1`, while options 1 and 2 have `within_group_sd = 10` (which would result in much wider spread within groups)."
       },
       {
@@ -3968,7 +4022,9 @@ const QUIZ_DATA = {
           "The variation within groups decreases",
           "The number of groups does not affect the within or between group variation"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          4
+        ],
         "explanation": "In the hierarchical model simulated by `hierarchical_sim`, the variation parameters are controlled by:\n- `between_group_sd` (τ) - controls the standard deviation of the population distribution from which group means are drawn\n- `within_group_sd` (σ) - controls the standard deviation of observations within each group"
       },
       {
@@ -3984,7 +4040,9 @@ const QUIZ_DATA = {
           "When the within group variance is similar to or larger than the between group variance, the grouping structure is less clear in the plot",
           "The ratio of the within and between group variance does not affect how clear the grouping structure is in the plot"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "The clarity of the grouping structure in the plot depends on how well separated the groups are, which is determined by the ratio of between-group variance to within-group variance."
       },
       {
@@ -3999,7 +4057,9 @@ const QUIZ_DATA = {
           "$\\mu_{ij} = \\alpha_0 + \\alpha_j + \\beta_0 \\text{Days}_{ij}$",
           "$\\mu_{ij} = \\alpha_0 + \\beta_0 \\text{Days}_{ij} + \\beta_j \\text{Days}_{ij}$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "The question asks for a model with:\n1. **Population-level intercept**: $\\alpha_0$ - this is the same for all subjects\n2. **Population-level effect of Days**: $\\beta_0$ - this is the same coefficient for Days for all subjects\n3. **Varying intercept per Subject**: $\\alpha_j$ - this is a subject-specific deviation from the population intercept"
       },
       {
@@ -4014,7 +4074,9 @@ const QUIZ_DATA = {
           "`Reaction ~ 1 + Days + (1 | Subject)`",
           "`Subject ~ 1 + Days + (1 + Days | Reaction)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In `brms` formula syntax:\n- **`Reaction`** is the response variable (on the left side of `~`), which matches the observation model $\\text{Reaction}_{ij} \\sim \\text{normal} (\\mu_{ij}, \\sigma)$\n- **`1`** explicitly includes the population-level intercept ($\\alpha_0$)\n- **`Days`** includes the population-level effect of Days ($\\beta_0$)\n- **`(1 | Subject)`** specifies a varying intercept for each level of the grouping factor `Subject` ($\\alpha_j$)"
       },
       {
@@ -4042,7 +4104,9 @@ const QUIZ_DATA = {
           "The population mean of the effect of increasing days of sleep deprivation on reaction time",
           "The reaction time of Subject 1 at zero days of sleep deprivation"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "In a linear regression model, the intercept ($\\alpha_0$) represents the expected value of the response variable (Reaction time) when all predictor variables are zero. Since `Days = 0` represents zero days of sleep deprivation, the population-level intercept represents the average reaction time for the entire population (across all subjects) at baseline (zero days of sleep deprivation). This is a population-level parameter that applies to all subjects, not a subject-specific value."
       },
       {
@@ -4069,7 +4133,9 @@ const QUIZ_DATA = {
           "The population-level effect on reaction time of increasing sleep deprivation by one day",
           "The population-level effect on reaction time of increasing sleep deprivation by a week"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "In a linear regression model, the coefficient for a continuous predictor variable (like Days) represents the expected change in the response variable for a **one-unit increase** in that predictor. Since `Days` is measured in individual days, the coefficient $\\beta_0$ represents the change in reaction time associated with increasing sleep deprivation by **one day**. To find the effect of increasing by a week (7 days), you would multiply the estimate by 7."
       },
       {
@@ -4096,7 +4162,9 @@ const QUIZ_DATA = {
           "A measure of variability between Subjects of the effect of Days of sleep deprivation on Reaction times",
           "A measure of variability between Subjects of the baseline Reaction times at day zero"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "The standard deviation of the Subject-specific Intercept (τ, which we found to be approximately 39.97) measures how much the subject-specific intercepts ($\\alpha_j$) vary around the population intercept ($\\alpha_0$). Since the intercept represents the reaction time when `Days = 0` (baseline), this standard deviation quantifies the variability in baseline reaction times across different subjects. It does NOT measure variability in the effect of Days (which would be captured by the standard deviation of the varying slope $\\beta_j$). The first option incorrectly describes what would be measured by the standard deviation of the Days effect, not the Intercept."
       },
       {
@@ -4111,7 +4179,9 @@ const QUIZ_DATA = {
           "$\\mu_{ij} = \\alpha_0 + \\beta_0 \\text{Days}_{ij} + \\beta_j \\text{Days}_{ij}$",
           "$\\mu_{ij} = \\alpha_0 + \\alpha_j + \\beta_0 \\text{Days}_{ij} + \\beta_j \\text{Days}_{ij}$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "This model includes:\n1. **Population-level intercept**: $\\alpha_0$ - common to all subjects\n2. **Subject-specific intercept**: $\\alpha_j$ - varies by subject\n3. **Population-level effect of Days**: $\\beta_0$ - common to all subjects\n4. **Subject-specific effect of Days**: $\\beta_j$ - varies by subject"
       },
       {
@@ -4126,7 +4196,9 @@ const QUIZ_DATA = {
           "`Reaction ~ 1 + Days + (1 + Days | Subject)`",
           "`Reaction ~ 1 + Days + (0 + Days | Subject)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In `brms` formula syntax:\n- `Reaction ~ 1 + Days` specifies the population-level effects (intercept and Days)\n- `(1 + Days | Subject)` specifies both a varying intercept (`1`) and a varying slope (`Days`) for each subject, with potential correlation between them"
       },
       {
@@ -4167,7 +4239,9 @@ const QUIZ_DATA = {
           "All people plausibly have exactly the same baseline reaction time",
           "It is plausible that the effect of sleep deprivation on reaction time varies between people"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Based on the model outputs:\n- **Option 1**: From the hierarchical model, the population-level effect of Days ($\\beta_0$) is approximately 10.45 with a 95% credible interval that excludes zero and is positive. This indicates it's plausible (indeed, highly likely) that there is a positive relationship between days of sleep deprivation and reaction time."
       },
       {
@@ -4182,7 +4256,9 @@ const QUIZ_DATA = {
           "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_1.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />",
           "Figure 4 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/cond_effects_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Figure 3"
       },
       {
@@ -4201,7 +4277,9 @@ const QUIZ_DATA = {
           "There seem to be some outliers",
           "There seem to be no outliers"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Based on the plot of the varying slope model (showing 18 subjects' individual regression lines):\n- **Option 2 (correct)**: The slopes show clear heterogeneity with respect to Days. Different subjects have different slopes - some are steeper (e.g., subject 308) while others are flatter (e.g., subject 335), indicating that the effect of Days on Reaction varies between subjects. This is consistent with our finding from question 6.11 that $\\tau_\\beta \\approx 6.53$, showing substantial variation in slopes."
       },
       {
@@ -4216,7 +4294,9 @@ const QUIZ_DATA = {
           "`y_i | se(sqrt(v_i)) ~ 1`",
           "`y_i ~ 1`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In meta-analysis with `brms`, when the standard error is known, you use the `se()` function to specify it. The syntax `y_i | se(sqrt(v_i)) ~ 1` means:\n- `y_i` is the response variable (effect size estimate)\n- `| se(sqrt(v_i))` specifies that the standard error is known and equals $\\sqrt{v_i}$ (where $v_i$ is the variance)\n- `~ 1` specifies only an intercept (no predictors)"
       },
       {
@@ -4255,7 +4335,9 @@ const QUIZ_DATA = {
           "Yes",
           "No"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Since Rhat = 1.003 ≤ 1.01, the chains have converged. Rhat (potential scale reduction factor) measures MCMC convergence. When Rhat is very close to 1.00 (typically ≤ 1.01), it indicates the chains have converged and are sampling from the same distribution. Values significantly greater than 1.01 suggest the chains have not converged and more iterations are needed."
       },
       {
@@ -4283,7 +4365,9 @@ const QUIZ_DATA = {
           "The effect is likely to be positive",
           "The effect is likely to be negative"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "The 95% credible interval is [0.029, 0.065], which is entirely above zero (Q2.5 = 0.029 > 0 and Q97.5 = 0.065 > 0). Since the entire interval is positive, we conclude that the effect is likely to be positive. In this meta-analysis context, positive values indicate improvement in student achievement, so the school calendar intervention appears to have a positive effect on student achievement."
       },
       {
@@ -4322,7 +4406,9 @@ const QUIZ_DATA = {
           "`y_i | se(sqrt(v_i)) ~ 0 + district_school`",
           "`y_i ~ 0 + district_school`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In the separate model, we want to estimate a separate effect for each `district_school` combination without pooling. The syntax `~ 0 + district_school` means:\n- `0` suppresses the intercept (so each level of `district_school` gets its own coefficient)\n- `district_school` is treated as a fixed factor with one parameter per level\n- `| se(sqrt(v_i))` specifies that the standard error is known (required for meta-analysis)"
       },
       {
@@ -4375,7 +4461,9 @@ const QUIZ_DATA = {
           "The effect is likely to be negative in all cases",
           "The effect appears to vary depending on the school/district"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "In a separate model, each school/district combination has its own independent estimate. The posterior estimates will show different values (and different credible intervals) for different schools. Some schools might show positive effects, some might show negative effects, and some might have intervals that include zero. This heterogeneity is the key characteristic of a separate model - it allows the effect to vary between groups without any pooling or information sharing."
       },
       {
@@ -4391,7 +4479,9 @@ const QUIZ_DATA = {
           "Because the separate model only estimates parameters for the schools that exist in the original data and doesn't estimate a parameter for a new school",
           "Because most statistical software does not allow for the estimation of effects for new levels of a factor variable"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "In a separate model, each school/district combination is treated as a fixed factor level with its own independent parameter. The model only estimates parameters for the levels that were present in the training data. For a new school (new level of `district_school`), there is no estimated parameter, so you cannot make predictions without additional assumptions (like assuming it equals the district average or population average, which would require a different model structure)."
       },
       {
@@ -4406,7 +4496,9 @@ const QUIZ_DATA = {
           "`y_i | se(sqrt(v_i)) ~ 1 + (1 | district_school)`",
           "`y_i ~ 1 + (1 | district_school)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In the partially pooled hierarchical model:\n- `y_i | se(sqrt(v_i))` specifies the response with known standard errors (required for meta-analysis)\n- `~ 1` specifies the population-level intercept ($\\mu_0$)\n- `(1 | district_school)` specifies varying intercepts by `district_school` ($\\mu_{jk}$), where each school/district combination has its own deviation from the population mean, but these deviations are drawn from a common normal distribution with mean 0 and standard deviation $\\tau$"
       },
       {
@@ -4435,7 +4527,9 @@ const QUIZ_DATA = {
           "The effect is likely to be negative, and large",
           "The effect appears to vary depending on the school/district"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Based on the posterior estimates:\n- **Population-level intercept** ($\\mu_0 = 0.125$) with 95% interval [0.041, 0.209] is entirely positive, indicating a positive overall effect\n- **Standard deviation of varying intercepts** ($\\tau = 0.305$) is positive and substantial, indicating that the effect varies significantly between schools/districts\n- The **school-specific estimates** demonstrate this variation:\n  - School 3, District 71: 1.084 (strong positive effect)\n  - School 7, District 86: 0.011 (essentially no effect, interval includes zero)"
       },
       {
@@ -4498,7 +4592,9 @@ const QUIZ_DATA = {
           "`y_i | se(sqrt(v_i)) ~ 1 + (1 | district_school) + (1 | district)`",
           "`y_i ~ 1 + (1 | district_school) + (1 | district)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "In the two-level hierarchical model:\n- `y_i | se(sqrt(v_i))` specifies the response with known standard errors (required for meta-analysis)\n- `~ 1` specifies the population-level intercept ($\\mu_0$)\n- `(1 | district)` specifies varying intercepts by district ($\\mu_j$)\n- `(1 | district_school)` specifies varying intercepts by school/district combination ($\\mu_{jk}$)"
       },
       {
@@ -4550,7 +4646,9 @@ const QUIZ_DATA = {
           "The partially pooled model with both school specific and district specific effects assumes that schools within a single district and school are exchangeable",
           "The separate model assumes all schools are exchangeable"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "- **Option 1 (correct)**: The pooled model assumes $\\mu_{ijk} = \\mu_0$ for all observations, meaning all observations share the same effect regardless of which school or district they come from. This implies they are exchangeable - we have no information to distinguish them based on school/district membership."
       },
       {
@@ -4567,7 +4665,9 @@ const QUIZ_DATA = {
           "The separate model does not provide results immediately generalisable to new schools or districts.",
           "The partial pooling models can be used to generalise to new schools or districts."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "- **Option 1 (incorrect)**: Different models produce different conclusions:\n  - Pooled model: single population effect\n  - Separate model: school-specific effects, can vary widely\n  - Partially pooled models: compromise between pooled and separate, with varying degrees of shrinkage"
       }
     ],
@@ -4586,7 +4686,9 @@ const QUIZ_DATA = {
           "`log p(y_i | y, x, θ)`",
           "`log p(y_i | y_i, x_i)`"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - `log p(y_i | y, x, θ)`"
       },
       {
@@ -4603,7 +4705,10 @@ const QUIZ_DATA = {
           "In the limit of large sample sizes, the model with the highest expected log predictive density (lowest Kullback-Leibler information) will have the highest posterior density",
           "It is a measure of model fit, independent of any implied loss function"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0,
+          2
+        ],
         "explanation": "Both Option 1 and Option 3 are correct reasons why the log-score is convenient."
       },
       {
@@ -4620,7 +4725,9 @@ const QUIZ_DATA = {
           "$\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | \\theta) d\\tilde{y}_i$",
           "$\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | y) d\\tilde{y}_i$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "Option 4 - $\\sum_{i=1}^n \\int p_t(\\tilde{y}_i) \\log p(\\tilde{y}_i | y) d\\tilde{y}_i$"
       },
       {
@@ -4637,7 +4744,9 @@ const QUIZ_DATA = {
           "lpd will tend to be pessimistic (lower) about elpd, because we have used the same observations for making inference on model parameters and evaluating predictive performance conditioned on the same observations for inference",
           "lpd will tend to be over-optimistic (higher) about elpd, because we have used the same observations for making inference on parameters and evaluating predictive performance"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "Option 4 - \"lpd will tend to be over-optimistic (higher) about elpd, because we have used the same observations for making inference on parameters and evaluating predictive performance\""
       },
       {
@@ -4653,7 +4762,9 @@ const QUIZ_DATA = {
           "$\\sum_{i=1}^n \\log \\int p(y_{(-i)} | \\theta) p(\\theta | y_i) d\\theta$",
           "$\\sum_{i=1}^n \\log \\int p(y_i | \\theta) p(\\theta | y_{(-i)}) d\\theta$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - $\\sum_{i=1}^n \\log \\int p(y_i | \\theta) p(\\theta | y_{(-i)}) d\\theta$"
       },
       {
@@ -4669,7 +4780,10 @@ const QUIZ_DATA = {
           "$\\sum_{s=1}^S w_i^{(s)} p(\\theta^{(s)} | x_i, y_i)$",
           "$\\sum_{s=1}^S w_i^{(s)} p(y_i | x_i, \\theta^{(s)})$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0,
+          2
+        ],
         "explanation": "Option 1 (or Option 3 if they're identical) - $\\sum_{s=1}^S w_i^{(s)} p(y_i | x_i, \\theta^{(s)})$"
       },
       {
@@ -4686,7 +4800,9 @@ const QUIZ_DATA = {
           "$1 / p(\\theta^{(s)} | x_i, y_i)$",
           "$1 / p(y_i | x_i, \\theta^{(s)})$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          3
+        ],
         "explanation": "Option 4 - $1 / p(y_i | x_i, \\theta^{(s)})$"
       },
       {
@@ -4703,7 +4819,9 @@ const QUIZ_DATA = {
           "$1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(\\theta^{(s)} | x_i, y_i)}\\right)$",
           "$1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(\\theta^{(s)})}\\right)$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - $1 / \\left(\\frac{1}{S} \\sum_{s=1}^S \\frac{1}{p(y_i | x_i, \\theta^{(s)})}\\right)$"
       },
       {
@@ -4719,7 +4837,9 @@ const QUIZ_DATA = {
           "$p_i = p(y_i^{rep} \\ge y_i | y_{-i})$",
           "$p_i = p(y_i^{rep} = y_i | y_{-i})$"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - $p_i = p(y_i^{rep} \\le y_i | y_{-i})$"
       },
       {
@@ -4736,7 +4856,9 @@ const QUIZ_DATA = {
           "According to a Chi-square distribution with n-1 degrees of freedom",
           "According to a student t-distribution with n-1 degrees of freedom"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - According to a uniform distribution"
       },
       {
@@ -4752,7 +4874,9 @@ const QUIZ_DATA = {
           "The predictive distribution has sufficient probability for low and high values of y, indicating that the data are over-dispersed compared to the predictions of the model",
           "The predictive distribution has insufficient probability for low and high values of y, indicating that the data are over-dispersed compared to the predictions of the model"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - \"The predictive distribution has sufficient probability for low and high values of y, indicating that the data are over-dispersed compared to the predictions of the model\""
       },
       {
@@ -4767,7 +4891,9 @@ const QUIZ_DATA = {
           "Figure 2 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 2\" style=\"max-width: 100%; height: auto;\" />",
           "Figure 3 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Figure 2"
       },
       {
@@ -4782,7 +4908,9 @@ const QUIZ_DATA = {
           "ECDF below the envelope for PIT lower than 0.5 and above the envelope for PIT greater than 0.5 indicates too thin left and right tails of the predictive distribution",
           "ECDF above the envelope for PIT lower than 0.5 and below the envelope for PIT greater than 0.5 indicates too thin left and right tails of the predictive distribution"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - \"ECDF below the envelope for PIT lower than 0.5 and above the envelope for PIT greater than 0.5 indicates too thin left and right tails of the predictive distribution\""
       },
       {
@@ -4797,7 +4925,9 @@ const QUIZ_DATA = {
           "Figure 5 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />",
           "Figure 6 <img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/ecdf2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Figure 6"
       },
       {
@@ -4813,7 +4943,9 @@ const QUIZ_DATA = {
           "$p(\\theta | y, x)$ is likely to have fatter tails than $p(\\theta | y_i, x_i)$, leading to small variance in the importance weights and therefore leading to small variance in the importance sampling estimator",
           "$p(\\theta | y_{(-i)}, x_{(-i)})$ is likely to have fatter tails than $p(\\theta | y, x)$, leading to large variance in the importance weights and therefore leading to large variance in the importance sampling estimator"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"$p(\\theta | y_{(-i)}, x_{(-i)})$ is likely to have fatter tails than $p(\\theta | y, x)$, leading to large variance in the importance weights and therefore leading to large variance in the importance sampling estimator\""
       },
       {
@@ -4829,7 +4961,9 @@ const QUIZ_DATA = {
           "The Generalised Inverse Gaussian Distribution (GIG) whose shape parameter $k$ estimates the existence of $1/k$ fractional moments",
           "The Generalised Pareto Distribution (GDP) whose shape parameter $k$ estimates the existence of $1/k$ fractional moments"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"The Generalised Pareto Distribution (GDP) whose shape parameter $k$ estimates the existence of $1/k$ fractional moments\""
       },
       {
@@ -4844,7 +4978,9 @@ const QUIZ_DATA = {
           "Modeling reduces noise and therefore variance of the importance sampling estimator, particularly in comparison to plain importance sampling",
           "Modeling increases noise and therefore variance of the importance sampling estimator, particularly in comparison to plain importance sampling"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - \"Modeling reduces noise and therefore variance of the importance sampling estimator, particularly in comparison to plain importance sampling\""
       },
       {
@@ -4860,7 +4996,9 @@ const QUIZ_DATA = {
           "∞",
           "1"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - 1"
       },
       {
@@ -4877,7 +5015,9 @@ const QUIZ_DATA = {
           "0.1",
           "0"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - 0.7"
       },
       {
@@ -4892,7 +5032,9 @@ const QUIZ_DATA = {
           "It is similar to the proposal distribution based on the full data",
           "It is very different from the proposal distribution based on the full data"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - \"It is very different from the proposal distribution based on the full data\""
       },
       {
@@ -4909,7 +5051,10 @@ const QUIZ_DATA = {
           "Misspecified model/outliers",
           "Few observations (particularly for few observations in groups with group-specific parameters)"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0,
+          1
+        ],
         "explanation": "All options are correct - Options 1, 2, 3, and 4 should all be selected."
       },
       {
@@ -4928,7 +5073,12 @@ const QUIZ_DATA = {
           "Use a more appropriate cross-validation method depending on data context (K-fold, leave-future-out, etc.)",
           "Always ignore"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0,
+          1,
+          2,
+          5
+        ],
         "explanation": "Options 2, 3, 4, and 5 should be selected. Option 1 may be considered but is less recommended. Option 6 is incorrect."
       },
       {
@@ -4944,7 +5094,9 @@ const QUIZ_DATA = {
           "The model clearly predicts Reaction times higher than the highest Reaction time in the observed data, indicated by the left tail.",
           "The model predicts Reaction times exactly the same as the observed data."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - \"The model predicts Reaction times lower than the lowest Reaction time in the observed data, indicated by the left tail.\""
       },
       {
@@ -4960,7 +5112,9 @@ const QUIZ_DATA = {
           "The plot shows the predictions for each Day aggregated over all Subjects",
           "The plot shows the predictions for each Day separately for each Subject"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"The plot shows the predictions for each Day separately for each Subject\""
       },
       {
@@ -4975,7 +5129,9 @@ const QUIZ_DATA = {
           "The plot shows that the model predicts the observations of individual Subjects very well, as the increase in Reaction times is at the same rate for everyone",
           "The plot shows that the model predicts the observations of several Subjects quite well, but does not predict well the change in Reaction time for some Subjects, as the effect of Days of sleep deprivation on Reaction times appears to differ between people"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - \"The plot shows that the model predicts the observations of several Subjects quite well, but does not predict well the change in Reaction time for some Subjects, as the effect of Days of sleep deprivation on Reaction times appears to differ between people\""
       },
       {
@@ -5002,7 +5158,9 @@ const QUIZ_DATA = {
           "The shape of the density plots of the predictions appear less similar to the observed data than for the varying intercepts model, indicating the varying slopes lead to worse fit.",
           "The shapes of the density plots of the predictions appear more similar to the observed data than for the varying intercepts model, indicating that the addition of varying slopes may lead to a better fit."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - \"The shapes of the density plots of the predictions appear more similar to the observed data than for the varying intercepts model, indicating that the addition of varying slopes may lead to a better fit.\""
       },
       {
@@ -5042,7 +5200,9 @@ const QUIZ_DATA = {
           "The varying intercept model appears to be better at predicting unseen observations than the varying slopes and intercepts model",
           "The varying intercept slopes and intercepts model appears to be better at predicting unseen observations than the varying intercepts model"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"The varying intercept slopes and intercepts model appears to be better at predicting unseen observations than the varying intercepts model\""
       },
       {
@@ -5057,7 +5217,9 @@ const QUIZ_DATA = {
           "The distributions of the predictions match the observed data better in the lower tail, compared to the other models.",
           "The distributions of the predictions match the observed data worse in the lower tail, compared to the other models."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - \"The distributions of the predictions match the observed data better in the lower tail, compared to the other models.\""
       },
       {
@@ -5085,7 +5247,9 @@ const QUIZ_DATA = {
           "The lognormal model is indistinguishable from the varying intercept and slopes model",
           "The lognormal model appears to be better than both the other models"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"The lognormal model appears to be better than both the other models\""
       },
       {
@@ -5101,7 +5265,9 @@ const QUIZ_DATA = {
           "The spline model is likely worse than the lognormal model without spline, because the difference in elpd is greater than the standard error of the difference.",
           "The predictive performance of the spline model and the lognormal is indistinguishable because the difference in elpd is very small (<4)."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          2
+        ],
         "explanation": "Option 3 - \"The predictive performance of the spline model and the lognormal is indistinguishable because the difference in elpd is very small (<4).\""
       },
       {
@@ -5142,7 +5308,9 @@ const QUIZ_DATA = {
           "The normal model shows less influence of extreme observations.",
           "The normal model shows more influence of extreme observations."
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          0
+        ],
         "explanation": "Option 1 - \"The student-t model shows less influence of extreme observations.\""
       },
       {
@@ -5159,7 +5327,9 @@ const QUIZ_DATA = {
           "lognormal spline model > student-t spline model > lognormal model > varying slopes and intercepts model > varying intercepts model",
           "varying intercepts and slopes model > lognormal spline model > lognormal model > varying intercepts model > student-t spline model"
         ],
-        "correct_answer": null,
+        "correct_answer": [
+          1
+        ],
         "explanation": "Option 2 - \"student-t spline model > lognormal model = lognormal spline model > varying slopes and intercepts model > varying intercepts model\""
       }
     ],
@@ -9749,7 +9919,9 @@ const QUIZ_DATA = {
         "The effect is likely to be positive",
         "The effect is likely to be negative"
       ],
-      "correct_answer": null,
+      "correct_answer": [
+        1
+      ],
       "explanation": "The 95% credible interval is [0.029, 0.065], which is entirely above zero (Q2.5 = 0.029 > 0 and Q97.5 = 0.065 > 0). Since the entire interval is positive, we conclude that the effect is likely to be positive. In this meta-analysis context, positive values indicate improvement in student achievement, so the school calendar intervention appears to have a positive effect on student achievement."
     },
     {
