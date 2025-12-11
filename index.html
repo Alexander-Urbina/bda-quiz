@@ -904,6 +904,23 @@
             return question.options && Array.isArray(question.options) && question.options.length > 0;
         }
 
+        // Convert markdown images to HTML img tags
+        function convertMarkdownImages(text) {
+            if (!text || typeof text !== 'string') return text;
+            
+            // Convert markdown image syntax ![alt](url) to HTML <img> tags
+            // This regex handles:
+            // - ![alt text](url)
+            // - ![alt text](url "title") (optional title)
+            // - Works across newlines
+            return text.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, function(match, alt, url) {
+                // Remove optional title if present (e.g., "title" at end of URL)
+                const cleanUrl = url.split(' ')[0].trim();
+                const cleanAlt = alt.trim() || 'Image';
+                return `<img src="${cleanUrl}" alt="${cleanAlt}" style="max-width: 100%; height: auto; display: block; margin: 10px 0;" />`;
+            });
+        }
+
         // Filter quiz data to only include questions with options
         function filterQuestionsWithOptions(data) {
             const filtered = {
@@ -1180,10 +1197,10 @@
                     ${showSectionDesc ? `
                         <div class="section-description" style="background: var(--info-bg); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent); color: var(--text-primary);">
                             <h3 style="margin-top: 0; color: var(--accent); font-size: 1.1em;">${displaySectionName}</h3>
-                            <div style="line-height: 1.6;">${sectionDescription}</div>
+                            <div style="line-height: 1.6;">${convertMarkdownImages(sectionDescription)}</div>
                         </div>
                     ` : ''}
-                    <div class="question-statement">${question.statement}</div>
+                    <div class="question-statement">${convertMarkdownImages(question.statement)}</div>
                     ${question.options ? `
                         <div class="options" id="options-${questionId}">
                             ${question.options.map((opt, idx) => {
@@ -1211,7 +1228,7 @@
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
                                                ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
-                                        ${opt}
+                                        ${convertMarkdownImages(opt)}
                                     </div>
                                 `;
                             }).join('')}
@@ -1230,7 +1247,7 @@
                     ${question.explanation ? `
                         <div class="explanation ${isAnswered ? 'show' : ''}" id="explanation-${questionId}">
                             <h3>Explanation</h3>
-                            ${question.explanation}
+                            ${convertMarkdownImages(question.explanation)}
                         </div>
                     ` : ''}
                 </div>
@@ -1271,10 +1288,10 @@
                     ${sectionDescription ? `
                         <div class="section-description" style="background: var(--info-bg); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent); color: var(--text-primary);">
                             <h3 style="margin-top: 0; color: var(--accent); font-size: 1.1em;">${question.section || 'Section'}</h3>
-                            <div style="line-height: 1.6;">${sectionDescription}</div>
+                            <div style="line-height: 1.6;">${convertMarkdownImages(sectionDescription)}</div>
                         </div>
                     ` : ''}
-                    <div class="question-statement">${question.statement}</div>
+                    <div class="question-statement">${convertMarkdownImages(question.statement)}</div>
                     ${question.options ? `
                         <div class="options" id="options-${questionId}">
                             ${question.options.map((opt, idx) => {
@@ -1302,7 +1319,7 @@
                                                ${isSelected ? 'checked' : ''}
                                                ${isAnswered ? 'disabled' : ''}
                                                ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
-                                        ${opt}
+                                        ${convertMarkdownImages(opt)}
                                     </div>
                                 `;
                             }).join('')}
@@ -1321,7 +1338,7 @@
                     ${question.explanation ? `
                         <div class="explanation ${isAnswered ? 'show' : ''}" id="explanation-${questionId}">
                             <h3>Explanation</h3>
-                            ${question.explanation}
+                            ${convertMarkdownImages(question.explanation)}
                         </div>
                     ` : ''}
                 </div>
