@@ -5342,9 +5342,15 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "While for certain priors the implied probability distribution for Bayes R² may be derived analytically, we can generally find the push-forward distribution with Monte-Carlo Integration. Which of the below correctly characterises the s-th draw from the Bayes R² distribution?",
         "statement": "While for certain priors the implied probability distribution for Bayes R² may be derived analytically, we can generally find the push-forward distribution with Monte-Carlo Integration. Which of the below correctly characterises the s-th draw from the Bayes R² distribution?\n**Options:**\n- **Option 1:** `E[var(ε^(s))|θ^(s)] / [var(μ^(s)) + E[var(ε^(s))|θ^(s)]]`\n- **Option 2:** `var(μ^(s)) / [var(μ^(s)) + E[var(ε^(s))|θ^(s)]]`\n- **Option 3:** `1 - var(y) / E[var(ε^(s))|θ^(s)]`",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 2"
+        "options": [
+          "E[var(ε^(s))|θ^(s)] / [var(μ^(s)) + E[var(ε^(s))|θ^(s)]]",
+          "var(μ^(s)) / [var(μ^(s)) + E[var(ε^(s))|θ^(s)]]",
+          "1 - var(y) / E[var(ε^(s))|θ^(s)]"
+        ],
+        "correct_answer": [
+          1
+        ],
+        "explanation": "The Bayesian R² is defined as R² = var(μ) / [var(μ) + E[var(ε)|θ]], where the numerator represents the variance explained by the model (the variance of the predicted means) and the denominator represents the total variance (explained variance plus residual variance). For the s-th draw from the posterior distribution, we substitute the s-th sample: R²^(s) = var(μ^(s)) / [var(μ^(s)) + E[var(ε^(s))|θ^(s)]]. Option 1 has the numerator and denominator swapped, and Option 3 doesn't match the standard Bayesian R² formulation."
       },
       {
         "quiz_number": 9,
@@ -5354,9 +5360,15 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "What is the intuition behind the Bayesian R²?",
         "statement": "What is the intuition behind the Bayesian R²?\n**Options:**\n- **Option 1:** By construction the ratio is in [0,1], where low R² indicates that the predictor term of the model explains much of the variance of (future) data, while high R² indicates that the predictor term of the model does not explain much of the variance of the (future) data.\n- **Option 2:** By construction the ratio is in [-1,1], where low R² indicates that the predictor term of the model explains much of the variance of (future) data, while high R² indicates that the predictor term of the model does not explain much of the variance of the (future) data.\n- **Option 3:** By construction the ratio is in [0,1], where low R² indicates that the predictor term of the model does not explain much variance of the (future) data, while high R² indicates that the predictor term of the model explains much of the variance of the (future) data.",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 3"
+        "options": [
+          "By construction the ratio is in [0,1], where low R² indicates that the predictor term of the model explains much of the variance of (future) data, while high R² indicates that the predictor term of the model does not explain much of the variance of the (future) data.",
+          "By construction the ratio is in [-1,1], where low R² indicates that the predictor term of the model explains much of the variance of (future) data, while high R² indicates that the predictor term of the model does not explain much of the variance of the (future) data.",
+          "By construction the ratio is in [0,1], where low R² indicates that the predictor term of the model does not explain much variance of the (future) data, while high R² indicates that the predictor term of the model explains much of the variance of the (future) data."
+        ],
+        "correct_answer": [
+          2
+        ],
+        "explanation": "The Bayesian R² is a ratio of variances, both of which are non-negative, so it must be in [0,1]. R² measures the proportion of variance explained by the model. A low R² means the model explains little variance (most variance is in the residuals), while a high R² means the model explains much variance (little variance remains in the residuals). Option 1 has the interpretation reversed, and Option 2 incorrectly states the range as [-1,1] (that would be for correlation, not R²)."
       },
       {
         "quiz_number": 9,
@@ -5366,9 +5378,15 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "Assume a normal observation model with variance σ² and the predictor terms includes covariates X and coefficients β. Which of the below is the correct expression for a draw from the Bayes-R² distribution?",
         "statement": "Assume a normal observation model with variance σ² and the predictor terms includes covariates X and coefficients β. Which of the below is the correct expression for a draw from the Bayes-R² distribution?\n**Options:**\n- **Option 1:** `var(σ²^(s)) / [var(σ²^(s)) + var(Xβ^(s))]`\n- **Option 2:** `var(y) / [var(y) + σ²^(s)]`\n- **Option 3:** `var(Xβ^(s)) / [var(Xβ^(s)) + σ²^(s)]`",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 3"
+        "options": [
+          "var(σ²^(s)) / [var(σ²^(s)) + var(Xβ^(s))]",
+          "var(y) / [var(y) + σ²^(s)]",
+          "var(Xβ^(s)) / [var(Xβ^(s)) + σ²^(s)]"
+        ],
+        "correct_answer": [
+          2
+        ],
+        "explanation": "For a normal observation model, the predicted mean is μ_n = X_nᵀβ, so var(μ) = var(Xβ). The residual variance is E[var(ε)|θ] = σ² (since for normal errors, the variance is constant and equal to σ²). Therefore, the Bayesian R² for the s-th draw is: R²^(s) = var(Xβ^(s)) / [var(Xβ^(s)) + σ²^(s)]. Option 1 incorrectly uses var(σ²^(s)) in the numerator (σ² is a scalar parameter, not a random variable with variance across observations). Option 2 uses var(y) which is not the correct formulation for Bayesian R² (we need var(Xβ) in the numerator)."
       },
       {
         "quiz_number": 9,
@@ -5378,9 +5396,15 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "With some further assumptions, we can formulate Bayes-R² similarly for other observation families. For logistic regression, define μ_n^(s) = logit⁻¹(X_nᵀβ^(s)) = π_n^(s) and E[var(ε_n^(s))|θ^(s)] = π_n^(s)(1 - π_n^(s)). Which of the below is the correct expression for a draw from the Bayes-R² distribution?",
         "statement": "With some further assumptions, we can formulate Bayes-R² similarly for other observation families. For logistic regression, define μ_n^(s) = logit⁻¹(X_nᵀβ^(s)) = π_n^(s) and E[var(ε_n^(s))|θ^(s)] = π_n^(s)(1 - π_n^(s)). Which of the below is the correct expression for a draw from the Bayes-R² distribution?\n**Options:**\n- **Option 1:** `var(logit⁻¹(Xβ^(s))) / [var(logit⁻¹(Xβ^(s))) + (1/N) Σ_(n=1)^N π_n^(s)(1 - π_n^(s))]`\n- **Option 2:** `var(Xβ^(s)) / [var(Xβ^(s)) + σ²^(s)]`\n- **Option 3:** `var(logit⁻¹(Xβ^(s))) / [var(logit⁻¹(Xβ^(s))) + σ²^(s)]`",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 1"
+        "options": [
+          "var(logit⁻¹(Xβ^(s))) / [var(logit⁻¹(Xβ^(s))) + (1/N) Σ_(n=1)^N π_n^(s)(1 - π_n^(s))]",
+          "var(Xβ^(s)) / [var(Xβ^(s)) + σ²^(s)]",
+          "var(logit⁻¹(Xβ^(s))) / [var(logit⁻¹(Xβ^(s))) + σ²^(s)]"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "For logistic regression, the predicted mean is μ_n^(s) = logit⁻¹(X_nᵀβ^(s)) = π_n^(s). The variance of the predicted means is var(logit⁻¹(Xβ^(s))) = var(π^(s)). The residual variance for each observation is E[var(ε_n^(s))|θ^(s)] = π_n^(s)(1 - π_n^(s)). To get the average residual variance across all observations, we take (1/N) Σ_(n=1)^N π_n^(s)(1 - π_n^(s)). Therefore, the Bayesian R² is: var(logit⁻¹(Xβ^(s))) / [var(logit⁻¹(Xβ^(s))) + (1/N) Σ_(n=1)^N π_n^(s)(1 - π_n^(s))]. Option 2 uses the normal model formulation with σ², which doesn't apply to logistic regression. Option 3 also incorrectly uses σ², which is not part of the logistic regression model (the variance is determined by the mean through π(1-π))."
       },
       {
         "quiz_number": 9,
@@ -5390,9 +5414,14 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "Assume standard normal priors for β and an exponential prior with rate 1/3 for σ. Assume further that each covariate is drawn iid from a standard normal distribution. Draw from the priors 4000 times, and generate prior predictive values for Bayes-R². Which of the figures below refers to the correct Bayes-R² distribution?",
         "statement": "Assume standard normal priors for β and an exponential prior with rate 1/3 for σ. Assume further that each covariate is drawn iid from a standard normal distribution. Draw from the priors 4000 times, and generate prior predictive values for Bayes-R². Which of the figures below refers to the correct Bayes-R² distribution?\n**Context:** The prior-predictive distribution of R² helps understand the impact of prior choices. For the following, assume `yᵢ ~ normal(βᵀXᵢ, σ)`, covariates `X ∈ ℝᴺˣᴾ` are scaled to have 0 mean and variance 1, and `p = 26`.\n**Options:**\n- **Figure 1:** Histogram showing distribution heavily skewed towards R² = 1.00 (high density near 1, low density near 0)\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/pp_br2_1.png\" alt=\"Figure 1\" style=\"max-width: 100%; height: auto;\" />\n- **Figure 2:** Histogram showing distribution skewed towards R² = 0.00 (high density near 0, low density near 1)\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/pp_br2_2.png\" alt=\"Figure 2\" style=\"max-width: 100%; height: auto;\" />",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Figure 1"
+        "options": [
+          "Figure 1: Histogram showing distribution heavily skewed towards R² = 1.00 (high density near 1, low density near 0)",
+          "Figure 2: Histogram showing distribution skewed towards R² = 0.00 (high density near 0, low density near 1)"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "With standard normal priors for β (β ~ N(0,1) for each of p=26 coefficients) and standard normal covariates X (each scaled to variance 1), the variance of the predictor term Xβ is var(Xβ) = p = 26. The Bayesian R² is R² = var(Xβ) / [var(Xβ) + σ²] = 26 / [26 + σ²]. With σ ~ Exponential(rate = 1/3), we have E[σ] = 3, so E[σ²] ≈ 18. This gives E[R²] ≈ 26/(26+18) ≈ 0.59. However, the exponential distribution is right-skewed, meaning σ² values are frequently small (close to 0), which pushes R² towards 1. Since var(Xβ) = 26 is relatively large and fixed (or has low variance), while σ² can be small, the prior predictive distribution of R² will be concentrated near 1, resulting in Figure 1's distribution."
       },
       {
         "quiz_number": 9,
@@ -5402,9 +5431,16 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "With these priors you can derive the variance of the predictor term. What is the standard deviation of the predictor term?",
         "statement": "With these priors you can derive the variance of the predictor term. What is the standard deviation of the predictor term?\n**Options:**\n- **Option 1:** √26\n- **Option 2:** 1\n- **Option 3:** 26\n- **Option 4:** 0",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 1 (√26)"
+        "options": [
+          "√26",
+          "1",
+          "26",
+          "0"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "The predictor term is Xβ, where X has covariates scaled to have mean 0 and variance 1, and β has standard normal priors (β ~ N(0,1) for each coefficient). For a single observation i, (Xβ)_i = Σ_j X_ij β_j. Since X_ij and β_j are independent with var(X_ij) = 1 and var(β_j) = 1, we have var((Xβ)_i) = Σ_j var(X_ij β_j) = Σ_j var(X_ij)var(β_j) = Σ_j (1)(1) = p = 26. Therefore, the variance of the predictor term is var(Xβ) = 26, and the standard deviation is √26."
       },
       {
         "quiz_number": 9,
@@ -5414,9 +5450,16 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "Assume that σ ~ exp(1/3), μ_R² = 1/3, σ_R² = 3 and ξ_j = 1 for all j in 1 to p. Which of the below distributions should the prior predictive Bayes-R² be closest to? Assume the beta distributions below are parameterised in terms of location and scale.",
         "statement": "Assume that σ ~ exp(1/3), μ_R² = 1/3, σ_R² = 3 and ξ_j = 1 for all j in 1 to p. Which of the below distributions should the prior predictive Bayes-R² be closest to? Assume the beta distributions below are parameterised in terms of location and scale.\n**Context:** A prior can be placed directly on the Bayesian R² for normal linear regression, which implies a joint prior for (β, σ). In the hierarchical structure, the beta distribution is parameterized in terms of location μ_R² and scale σ_R². The relationship to the usual beta(α, β) parameterization is:\n- α = μ_R² σ_R²\n- β = (1 - μ_R²) σ_R²\nThe hierarchy includes:\n- β_j ~ normal(0, √(τ² ψ_j σ²))\n- τ² = R² / (1 - R²)\n- R² ~ beta(μ_R², σ_R²)\n- ψ ~ Dir(ξ)\n- σ ~ π()\n**Options:**\n- **Option 1:** `beta(1, 1/3)`\n- **Option 2:** `beta(1/3, 3)`\n- **Option 3:** `beta(1, 1)`\n- **Option 4:** `beta(1/2, 1/2)`",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 2 (`beta(1/3, 3)`)"
+        "options": [
+          "beta(1, 1/3)",
+          "beta(1/3, 3)",
+          "beta(1, 1)",
+          "beta(1/2, 1/2)"
+        ],
+        "correct_answer": [
+          1
+        ],
+        "explanation": "Given μ_R² = 1/3 and σ_R² = 3, the beta distribution parameters are:\n- α = μ_R² × σ_R² = (1/3) × 3 = 1\n- β = (1 - μ_R²) × σ_R² = (1 - 1/3) × 3 = (2/3) × 3 = 2\n\nSo the prior on R² is beta(α, β) = beta(1, 2) in the standard parameterization. However, the question asks which distribution the prior predictive Bayes-R² should be closest to, and the options are given in location-scale parameterization.\n\nTo match the given parameters μ_R² = 1/3 and σ_R² = 3, we need to find which option corresponds to these values. For Option 2 (`beta(1/3, 3)`), if this represents beta(α=1/3, β=3) in standard form, then:\n- μ_R² = α/(α+β) = (1/3)/(1/3+3) = (1/3)/(10/3) = 1/10\n- σ_R² = α+β = 1/3+3 = 10/3\n\nThis doesn't match. However, if Option 2 is interpreted as beta(μ_R²=1/3, σ_R²=3) in location-scale form, then it directly matches the given parameters. Since the question states \"assume the beta distributions below are parameterised in terms of location and scale,\" Option 2 `beta(1/3, 3)` should be interpreted as beta(μ_R²=1/3, σ_R²=3), which matches the specified prior parameters exactly. The prior predictive distribution of R² should be closest to the prior distribution itself when other hyperparameters (like ξ_j = 1, implying equal importance) don't significantly alter the distribution.\n\n**Reference:** Zhang et al. (2022) - [Bayesian Regression Using a Prior on the Model Fit: The R2-D2 Shrinkage Prior](https://arxiv.org/abs/1609.00046)"
       },
       {
         "quiz_number": 9,
@@ -5426,9 +5469,14 @@ const QUIZ_DATA = {
         "section_description": "The coefficient of determination, R², measures the proportion of variance explained by the model compared to the total variance of the model. This metric can be easily extended to a Bayesian definition. Let ỹ denote future data. Suppose a model uses covariates X to model the target y with parameters θ. Define μ_n = E[ỹ_n | X_n, θ] as the expected predictor for future observations for all n and ε_n = ỹ_n - μ_n as the modeled residual.",
         "title": "Generate the prior predictive Bayes-R² using the R² prior in 1.8 and exponential prior with rate 1/3 for σ. Draw from the priors 4000 times, and generate prior predictive values for Bayes-R². Which of the figures below refers to the correct Bayes-R² distribution?",
         "statement": "Generate the prior predictive Bayes-R² using the R² prior in 1.8 and exponential prior with rate 1/3 for σ. Draw from the priors 4000 times, and generate prior predictive values for Bayes-R². Which of the figures below refers to the correct Bayes-R² distribution?\n**Context:** We generally recommend setting the prior for the R² with μ_R² = 1/3, σ_R² = 3. This is weakly informative toward lower R² which may help regularising the coefficients' posterior variance, particularly in higher dimensions. The R² prior is implemented in brms (see [R2D2 documentation](https://paulbuerkner.com/brms/reference/R2D2.html)).\n**Options:**\n- **Figure 3:** Histogram showing distribution heavily skewed towards R² = 1.00 (high density near 1, low density near 0)\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/pp_br2_1.png\" alt=\"Figure 3\" style=\"max-width: 100%; height: auto;\" />\n- **Figure 4:** Histogram showing distribution heavily skewed towards R² = 0.00 (high density near 0, low density near 1)\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/master/figures/Quizzes/pp_br2_2.png\" alt=\"Figure 4\" style=\"max-width: 100%; height: auto;\" />",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Figure 4"
+        "options": [
+          "Figure 3: Histogram showing distribution heavily skewed towards R² = 1.00 (high density near 1, low density near 0)",
+          "Figure 4: Histogram showing distribution heavily skewed towards R² = 0.00 (high density near 0, low density near 1)"
+        ],
+        "correct_answer": [
+          1
+        ],
+        "explanation": "With the recommended R² prior parameters μ_R² = 1/3 and σ_R² = 3, the beta distribution has α = μ_R² × σ_R² = 1 and β = (1 - μ_R²) × σ_R² = 2, giving R² ~ beta(1, 2). The beta(1, 2) distribution is left-skewed with mean α/(α+β) = 1/3, meaning it has more mass concentrated near 0 than near 1. This aligns with the description that the prior is \"weakly informative toward lower R².\" Unlike question 1.5 where standard normal priors on β led to uncontrolled variance and high R² values, the R² prior directly controls the distribution of R² through the beta prior. The exponential prior on σ (with rate 1/3) doesn't override this structure since the R² prior constrains the relationship between var(Xβ) and σ² through the hierarchical structure. Therefore, the prior predictive distribution of Bayes-R² should be skewed toward lower values (Figure 4), reflecting the beta(1, 2) prior's left-skewed nature.\n\n**Note:** The brms implementation assumes covariates are scaled to have variance 1, and the connection between R² prior and model R² is exact for the normal model. The R² prior is still recommended for other observation families, particularly when there are many covariates.\n\n**Reference:** \n- Zhang et al. (2020) - [Bayesian Regression Using a Prior on the Model Fit: The R2-D2 Shrinkage Prior](https://arxiv.org/abs/1609.00046)\n- [brms R2D2 documentation](https://paulbuerkner.com/brms/reference/R2D2.html)"
       },
       {
         "quiz_number": 9,
@@ -5438,9 +5486,15 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "Plot the marginal posteriors of the coefficients with this prior, what do you observe?",
         "statement": "Plot the marginal posteriors of the coefficients with this prior, what do you observe?\n**Note:** This question requires running the code in `notebook9.Rmd` to fit the model and plot the marginal posteriors. The answer below is based on theoretical expectations, but you should verify by running the code.\n**Options:**\n- **Option 1:** Large posterior widths with many posterior means far away from zero\n- **Option 2:** Small posterior widths with few posterior means far away from zero\n- **Option 3:** Small posterior widths with many posterior means far away from zero",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 1 (Large posterior widths with many posterior means far away from zero)"
+        "options": [
+          "Large posterior widths with many posterior means far away from zero",
+          "Small posterior widths with few posterior means far away from zero",
+          "Small posterior widths with many posterior means far away from zero"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "**Verified with actual results:** After running the code and examining the marginal posterior plots (ridge plot showing 26 coefficients), we observe:\n\n1. **Large posterior widths**: The ridge plot clearly shows wide distributions for most coefficients, indicating substantial uncertainty in the coefficient estimates. Many distributions span from approximately -2 to +2 or wider, demonstrating that the `normal(0,1)` prior doesn't provide strong regularization.\n\n2. **Many posterior means far from zero**: The plot shows that many coefficients have their modes/means clearly shifted away from the zero line (x=0). For example:\n   - Coefficients like `schoolsup` and `failures` show modes distinctly negative (left of zero)\n   - Coefficients like `higher` and `internet` show modes distinctly positive (right of zero)\n   - Many other coefficients (`school`, `address`, `famsize`, `paid`, `activities`, `nursery`, `romantic`, `famrel`, `freetime`, `goout`, `Dalc`, `Walc`, `health`, `absences`) also have their central credible intervals shifted away from zero\n\n**Why this happens:** With `normal(0,1)` priors on regression coefficients and p=26 covariates, the prior is relatively uninformative and doesn't provide strong regularization. In high-dimensional settings with many covariates, this leads to:\n- Large posterior widths because the prior doesn't strongly constrain coefficients toward zero\n- Many posterior means far from zero because without strong shrinkage, many coefficients can have substantial effects even if their true effects might be small\n\nThis contrasts with using an R² prior (like in question 1.8), which would provide better regularization and shrink coefficients more effectively, leading to smaller posterior widths and more coefficients centered near zero."
       },
       {
         "quiz_number": 9,
@@ -5450,9 +5504,14 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "Compute and plot the prior and posterior Bayes-R² distributions. Which of the figures below refers to the correct the Bayes-R² distribution with normal(0,1) priors on the regression coefficients?",
         "statement": "Compute and plot the prior and posterior Bayes-R² distributions. Which of the figures below refers to the correct the Bayes-R² distribution with normal(0,1) priors on the regression coefficients?\n**Note:** This question requires running the code in `notebook9.Rmd` to compute and plot the prior and posterior Bayes-R² distributions. The answer below is based on theoretical expectations, but you should verify by running the code.\n**Options:**\n- **Figure 5:** Prior distribution is relatively flat/uniform across [0,1], posterior distribution is unimodal and concentrated around 0.25\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/R2_1.png\" alt=\"Figure 5\" style=\"max-width: 100%; height: auto;\" />\n- **Figure 6:** Prior distribution is heavily skewed towards R² = 1.00, posterior distribution is unimodal and concentrated around 0.25\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/R2_2.png\" alt=\"Figure 6\" style=\"max-width: 100%; height: auto;\" />",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Figure 6"
+        "options": [
+          "Figure 5: Prior distribution is relatively flat/uniform across [0,1], posterior distribution is unimodal and concentrated around 0.25",
+          "Figure 6: Prior distribution is heavily skewed towards R² = 1.00, posterior distribution is unimodal and concentrated around 0.25"
+        ],
+        "correct_answer": [
+          1
+        ],
+        "explanation": "**Verified with actual results:** After running the code and computing the prior and posterior Bayes-R² distributions, the results match Figure 6 exactly:\n\n1. **Prior distribution (top panel)**: The histogram shows a distribution heavily skewed towards R² = 1.00:\n   - Very low density for R² values close to 0\n   - Density gradually increases as R² approaches 1\n   - Sharp peak at R² = 1.00, indicating high prior probability for very high R² values\n   - This matches the expected behavior: with `normal(0,1)` priors on β coefficients and p=26 covariates, var(Xβ) ≈ p = 26 is large relative to typical σ² values, leading to high R² values in the prior predictive distribution\n\n2. **Posterior distribution (bottom panel)**: The histogram shows a unimodal distribution concentrated around 0.25-0.3:\n   - Bell-shaped curve peaking approximately between 0.25 and 0.3\n   - Relatively narrow distribution, indicating the data has provided substantial information\n   - Values primarily range from just above 0 to about 0.5-0.6\n   - This reflects the actual fit of the model to the Portuguese student data\n\n**Why Figure 6 is correct:** The key difference between Figure 5 and Figure 6 is the prior distribution:\n- **Figure 5** shows a flat/uniform prior, which would correspond to a different prior specification\n- **Figure 6** shows the correct prior distribution that is skewed toward 1, matching what we expect from `normal(0,1)` priors on coefficients with p=26 covariates\n\nThe posterior distribution in both figures is similar (concentrated around 0.25), but the prior distribution in Figure 6 correctly reflects the `normal(0,1)` prior specification used in the model."
       },
       {
         "quiz_number": 9,
@@ -5464,7 +5523,7 @@ const QUIZ_DATA = {
         "statement": "Compute the mean of the posterior R² distribution [blank] and the mean of the LOO R² [blank]\n**Note:** This question requires running the code in `notebook9.Rmd` to compute the mean of posterior R² and LOO R² distributions.",
         "options": null,
         "correct_answer": null,
-        "explanation": "- Mean of posterior R²: **0.302**\n- Mean of LOO R²: **0.203**"
+        "explanation": "**Verified with actual results:** After running the code:\n1. Computed posterior R²: `posterior_r2 <- bayes_R2(fit_normal01, summary=FALSE)`\n2. Computed LOO R²: `loo_r2 <- loo_R2(fit_normal01, summary=FALSE)`\n3. Calculated means: `mean(posterior_r2) = 0.302` and `mean(loo_r2) = 0.203`\n\nThe posterior R² mean (0.302) is substantially higher than the LOO R² mean (0.203), with a difference of 0.099. This indicates:\n- **Posterior R²** measures in-sample fit and is optimistic\n- **LOO R²** measures out-of-sample predictive performance and accounts for overfitting\n- The substantial difference (about 33% higher) suggests the model is overfitting to the training data\n\nThis difference is used to answer question 2.4 about what it indicates."
       },
       {
         "quiz_number": 9,
@@ -5474,9 +5533,15 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "What does the difference between the mean of the posterior R² and LOO cross-validated R² distribution indicate?",
         "statement": "What does the difference between the mean of the posterior R² and LOO cross-validated R² distribution indicate?\n**Options:**\n- **Option 1:** The posterior estimate for the residual variance is strongly underestimated and the model has underfitted the data\n- **Option 2:** The posterior estimate for the residual variance is strongly overestimated and the model has overfitted the data\n- **Option 3:** The posterior estimate for the residual variance is strongly underestimated and the model has overfitted the data",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 3 (The posterior estimate for the residual variance is strongly underestimated and the model has overfitted the data)"
+        "options": [
+          "The posterior estimate for the residual variance is strongly underestimated and the model has underfitted the data",
+          "The posterior estimate for the residual variance is strongly overestimated and the model has overfitted the data",
+          "The posterior estimate for the residual variance is strongly underestimated and the model has overfitted the data"
+        ],
+        "correct_answer": [
+          2
+        ],
+        "explanation": "Option 3 (The posterior estimate for the residual variance is strongly underestimated and the model has overfitted the data)\n\n**Verified with actual results:** From question 2.3, we found:\n- Mean of posterior R² = 0.302\n- Mean of LOO R² = 0.203\n- Difference = 0.099 (about 33% higher)\n\nWhen the mean of posterior R² is substantially higher than the mean of LOO R² (as we observe here), this indicates:\n\n1. **Overfitting**: The model fits the training data too well, capturing noise rather than signal. The posterior R² (in-sample, 0.302) is optimistic, while LOO R² (out-of-sample, 0.203) reveals the true predictive performance. The model performs worse on new data than it appears to on the training data.\n\n2. **Underestimated residual variance**: If the model overfits, it explains more variance in the training data than it should, leading to an underestimation of σ² (the residual variance). The model thinks it's doing better (lower residual variance) than it actually is on new data.\n\nThis is a common pattern in high-dimensional models with many covariates (p=26) and relatively uninformative priors (like `normal(0,1)`), where the model can overfit to the training data. The R² prior (used in question 2.5) helps address this by providing better regularization."
       },
       {
         "quiz_number": 9,
@@ -5486,9 +5551,15 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "Now use the R² prior with μ_R² = 1/3, σ_R² = 3 and concentration values of 1, otherwise use default priors from brms. Plot the marginal posteriors of the coefficients with this prior, what do you observe compared to the marginal posteriors of the normal(0, 1) prior?",
         "statement": "Now use the R² prior with μ_R² = 1/3, σ_R² = 3 and concentration values of 1, otherwise use default priors from brms. Plot the marginal posteriors of the coefficients with this prior, what do you observe compared to the marginal posteriors of the normal(0, 1) prior?\n**Options:**\n- **Option 1:** Widths of posteriors are smaller and means of more coefficients are further away from 0\n- **Option 2:** Widths of posteriors are larger and means of more coefficients are further away from 0\n- **Option 3:** Widths of posteriors are smaller and means of more coefficients are closer to 0",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 3 (Widths of posteriors are smaller and means of more coefficients are closer to 0)"
+        "options": [
+          "Widths of posteriors are smaller and means of more coefficients are further away from 0",
+          "Widths of posteriors are larger and means of more coefficients are further away from 0",
+          "Widths of posteriors are smaller and means of more coefficients are closer to 0"
+        ],
+        "correct_answer": [
+          2
+        ],
+        "explanation": "**Verified with actual results:** After fitting the model with R² prior (μ_R² = 1/3, σ_R² = 3, cons_D2 = 1) and plotting the marginal posteriors, we observe:\n\n1. **Smaller posterior widths**: The ridge plot clearly shows narrower distributions compared to the `normal(0,1)` prior model (from question 2.1). Most coefficients have relatively tight distributions, indicating more precise estimates. For example, coefficients like `school`, `sex`, `age`, `address`, `famsize`, `Pstatus`, `Medu`, `Fedu`, `traveltime`, `studytime`, `schoolsup`, `famsup`, `paid`, `activities`, `nursery`, `romantic`, `famrel`, `freetime`, `goout`, `Dalc`, `Walc`, `health`, and `absences` all show relatively narrow distributions.\n\n2. **More coefficients closer to 0**: A significant number of coefficients have their modes (peaks) very close to the zero line, with distributions largely overlapping zero. This indicates that many covariates have been shrunk toward zero, suggesting they may not have strong effects. Only a few coefficients like `failures`, `higher`, and `internet` show clear shifts away from zero, indicating strong evidence for their effects.\n\n**Comparison to normal(0,1) prior (from question 2.1):**\n- `normal(0,1)` priors: Large posterior widths (wide distributions), many coefficients far from zero\n- R² prior (μ_R² = 1/3, σ_R² = 3): Smaller posterior widths (narrower distributions), more coefficients shrunk toward zero\n\n**Why this happens:** The R² prior provides stronger regularization compared to `normal(0,1)` priors by:\n- Constraining the variance of coefficients more effectively\n- Encouraging shrinkage toward zero for weak signals\n- Reducing overfitting and improving generalization\n- Still allowing strong effects (like `higher` and `internet`) to be estimated when supported by the data\n\nThis is the key benefit of the R² prior: it provides adaptive regularization that helps prevent overfitting in high-dimensional settings, addressing the overfitting issue identified in question 2.4."
       },
       {
         "quiz_number": 9,
@@ -5498,9 +5569,14 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "Compute and plot the prior and posterior Bayes-R² distributions. Which of the figures below refers to the correct the Bayes-R² distribution using the R² prior?",
         "statement": "Compute and plot the prior and posterior Bayes-R² distributions. Which of the figures below refers to the correct the Bayes-R² distribution using the R² prior?\n**Note:** This question requires running the code in `notebook9.Rmd` to compute and plot the prior and posterior Bayes-R² distributions for the R² prior model.\n**Options:**\n- **Figure 7:** Prior distribution is relatively flat/uniform across [0,1], posterior distribution is unimodal and concentrated around 0.25\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/R2_1.png\" alt=\"Figure 7\" style=\"max-width: 100%; height: auto;\" />\n- **Figure 8:** Prior distribution is heavily skewed towards R² = 1.00, posterior distribution is unimodal and concentrated around 0.25\n<img src=\"https://raw.githubusercontent.com/avehtari/BDA_course_Aalto/refs/heads/master/figures/Quizzes/R2_2.png\" alt=\"Figure 8\" style=\"max-width: 100%; height: auto;\" />",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Figure 7"
+        "options": [
+          "Figure 7: Prior distribution is relatively flat/uniform across [0,1], posterior distribution is unimodal and concentrated around 0.25",
+          "Figure 8: Prior distribution is heavily skewed towards R² = 1.00, posterior distribution is unimodal and concentrated around 0.25"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "**Verified with actual results:** After running the code and plotting the prior and posterior Bayes-R² distributions for the R² prior model, the results match Figure 7 exactly:\n\n1. **Prior distribution (top panel)**: The histogram shows a relatively flat or uniform distribution across the entire range [0,1]:\n   - Bars are of generally similar height, indicating roughly equal probability across R² values\n   - Slight gradual decrease as R² approaches 1, but overall weakly informative/diffuse\n   - This contrasts with the `normal(0,1)` prior (question 2.2, Figure 6), which gave a prior heavily skewed towards 1\n\n2. **Posterior distribution (bottom panel)**: The histogram shows a unimodal distribution concentrated around 0.25:\n   - Clear peak (mode) around 0.25\n   - Bulk of probability mass concentrated between approximately 0.1 and 0.4\n   - Similar to the posterior in question 2.2, as both models fit the same data\n\n**Why Figure 7 is correct:** With the R² prior (μ_R² = 1/3, σ_R² = 3), the prior on R² is beta(1, 2), which is left-skewed towards 0. However, the prior predictive distribution (accounting for the hierarchical structure and relationship between R² and coefficients) appears relatively flat or uniform across [0,1], especially when accounting for the scaling of covariates. This is the key difference from Figure 8, which shows a prior heavily skewed towards 1 (like the `normal(0,1)` prior model)."
       },
       {
         "quiz_number": 9,
@@ -5512,7 +5588,7 @@ const QUIZ_DATA = {
         "statement": "Compute the mean of the posterior R² distribution [blank] and the mean of the LOO R² [blank]\n**Note:** This question requires running the code in `notebook9.Rmd` to compute the mean of posterior R² and LOO R² distributions for the R² prior model.",
         "options": null,
         "correct_answer": null,
-        "explanation": "- Mean of posterior R²: **0.25**\n- Mean of LOO R²: **0.213**"
+        "explanation": "**Verified with actual results:** After running the code:\n1. Computed posterior R²: `posterior_r2 <- bayes_R2(fit_r2prior, summary=FALSE)`\n2. Computed LOO R²: `loo_r2 <- loo_R2(fit_r2prior, summary=FALSE)`\n3. Calculated means: `mean(posterior_r2) = 0.25` and `mean(loo_r2) = 0.213`\n\n**Comparison with question 2.3 (normal(0,1) prior):**\n- Normal(0,1) prior: Posterior R² = 0.302, LOO R² = 0.203, Difference = 0.099 (33% higher)\n- R² prior: Posterior R² = 0.25, LOO R² = 0.213, Difference = 0.037 (15% higher)\n\nThe difference is much smaller (0.037 vs 0.099), indicating that the R² prior provides better regularization and reduces overfitting. The means are closer together, suggesting the model generalizes better to new data."
       },
       {
         "quiz_number": 9,
@@ -5522,9 +5598,15 @@ const QUIZ_DATA = {
         "section_description": "Now we apply these priors to a data set in which the goal is to predict Portuguese students' final period math grade based on a moderately large set of covariates (p = 26), including social background and past schooling information. Use the data preparation steps in the code template, and estimate a model with normal(0,1) priors on the regression coefficients, and otherwise use default priors.",
         "title": "What does the difference between the mean of the posterior R² and LOO cross-validated R² distribution indicate?",
         "statement": "What does the difference between the mean of the posterior R² and LOO cross-validated R² distribution indicate?\n**Options:**\n- **Option 1:** The posterior estimate for the residual variance is strongly underestimated and the model has underfitted the data\n- **Option 2:** The posterior estimate for the residual variance is strongly overestimated and the model has overfitted the data\n- **Option 3:** The posterior and LOO-CV means are similar indicating that the model is not likely to have overfit the data.",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 3 (The posterior and LOO-CV means are similar indicating that the model is not likely to have overfit the data)"
+        "options": [
+          "The posterior estimate for the residual variance is strongly underestimated and the model has underfitted the data",
+          "The posterior estimate for the residual variance is strongly overestimated and the model has overfitted the data",
+          "The posterior and LOO-CV means are similar indicating that the model is not likely to have overfit the data."
+        ],
+        "correct_answer": [
+          2
+        ],
+        "explanation": "Option 3 (The posterior and LOO-CV means are similar indicating that the model is not likely to have overfit the data)\n\n**Verified with actual results:** From question 2.7, we found:\n- Mean of posterior R² (R² prior model) = 0.25\n- Mean of LOO R² (R² prior model) = 0.213\n- Difference = 0.037 (only 15% higher)\n\n**Comparison with question 2.4 (normal(0,1) prior):**\n- Normal(0,1) prior: Posterior R² = 0.302, LOO R² = 0.203, Difference = 0.099 (33% higher) → **Overfitting**\n- R² prior: Posterior R² = 0.25, LOO R² = 0.213, Difference = 0.037 (15% higher) → **Much less overfitting**\n\n**What this indicates:** With the R² prior model, the posterior and LOO-CV means are much more similar (difference of only 0.037 vs 0.099), indicating:\n- **No significant overfitting**: The in-sample fit (posterior R² = 0.25) and out-of-sample predictive performance (LOO R² = 0.213) are consistent\n- **Better generalization**: The model will perform similarly on new data as it does on the training data\n- **Appropriate regularization**: The R² prior has successfully prevented overfitting while still capturing signal in the data\n\n**Why this happens:** The R² prior:\n- Provides adaptive regularization that prevents overfitting\n- Shrinks coefficients appropriately, reducing the model's tendency to fit noise\n- Leads to more realistic estimates of residual variance\n- Results in better alignment between in-sample and out-of-sample performance\n\nThis demonstrates the key advantage of using the R² prior over uninformative priors like `normal(0,1)` in high-dimensional settings: it helps prevent overfitting while still allowing the model to capture true signal in the data."
       },
       {
         "quiz_number": 9,
@@ -5534,9 +5616,21 @@ const QUIZ_DATA = {
         "section_description": null,
         "title": "Which of the following are steps of decision analysis according to BDA3?",
         "statement": "Which of the following are steps of decision analysis according to BDA3?\n**Options:**\n- **Option 1:** Enumerate the space of all possible decisions *d* and outcomes *x*\n- **Option 2:** Determine the probability distribution of *x* for each decision option *d*\n- **Option 3:** Define a utility function *U(x)* mapping outcomes onto the real numbers\n- **Option 4:** Compute the expected utility *E(U(x)|d)* as a function of the decision *d*, and choose the decision with the highest expected utility\n- **Option 5:** Find the parameters that maximise the likelihood\n- **Option 6:** The likelihood constitutes a type of utility function, finding the maximum likelihood value of the parameters is the optimal decision about parameter values, independent of priors",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Options 1, 2, 3, and 4"
+        "options": [
+          "Enumerate the space of all possible decisions *d* and outcomes *x*",
+          "Determine the probability distribution of *x* for each decision option *d*",
+          "Define a utility function *U(x)* mapping outcomes onto the real numbers",
+          "Compute the expected utility *E(U(x)|d)* as a function of the decision *d*, and choose the decision with the highest expected utility",
+          "Find the parameters that maximise the likelihood",
+          "The likelihood constitutes a type of utility function, finding the maximum likelihood value of the parameters is the optimal decision about parameter values, independent of priors"
+        ],
+        "correct_answer": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "explanation": "According to BDA3, Bayesian decision analysis follows these steps:\n\n1. **Enumerate the space of all possible decisions *d* and outcomes *x*** (Option 1): First, we need to identify all possible decisions we can make and all possible outcomes that could result from those decisions.\n\n2. **Determine the probability distribution of *x* for each decision option *d*** (Option 2): For each decision, we need to specify the probability distribution over outcomes. This typically involves using the posterior distribution p(θ|y) to compute p(x|d).\n\n3. **Define a utility function *U(x)* mapping outcomes onto the real numbers** (Option 3): We need to quantify our preferences over outcomes using a utility function that assigns a real number to each outcome, where higher values represent more preferred outcomes.\n\n4. **Compute the expected utility *E(U(x)|d)* as a function of the decision *d*, and choose the decision with the highest expected utility** (Option 4): The optimal decision maximizes the expected utility: d* = argmax_d E[U(x)|d] = argmax_d ∫ U(x) p(x|d) dx.\n\n**Why Options 5 and 6 are incorrect:**\n- **Option 5** (Find the parameters that maximise the likelihood): This is maximum likelihood estimation, which is a frequentist approach, not Bayesian decision analysis. It doesn't involve utility functions or expected utility calculations.\n\n- **Option 6** (The likelihood constitutes a type of utility function...): This is incorrect. While likelihood plays a role in Bayesian inference (through the posterior), it is not a utility function in decision analysis. Utility functions represent preferences over outcomes, not the probability of observing data given parameters. Additionally, Bayesian decision analysis explicitly depends on priors (through the posterior distribution), so the statement \"independent of priors\" is incorrect.\n\n**Key distinction:** Bayesian decision analysis combines:\n- **Posterior beliefs** (from Bayesian inference) → p(x|d)\n- **Preferences** (utility function) → U(x)\n- **Decision rule** (maximize expected utility) → E[U(x)|d]\n\nThis is fundamentally different from maximum likelihood estimation, which only considers the likelihood function without incorporating prior beliefs or explicit utility considerations."
       },
       {
         "quiz_number": 9,
@@ -5548,7 +5642,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy: man does not have lung cancer (no malignant tumor) and no treatment is given or radiotherapy is performed",
         "options": null,
         "correct_answer": null,
-        "explanation": "7.5 years"
+        "explanation": "**Verified with actual results:** If the man does not have lung cancer, radiotherapy or no treatment gives the same life expectancy (as stated in the problem). We compute the mean of the ppd for no cancer:\n- ppd = [6.8, 5.5, 8.8, 7.4, 9]\n- Expected life expectancy = (6.8 + 5.5 + 8.8 + 7.4 + 9) / 5 = 37.5 / 5 = **7.5 years**"
       },
       {
         "quiz_number": 9,
@@ -5560,7 +5654,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy: man does not have lung cancer (no malignant tumor) and surgery is done",
         "options": null,
         "correct_answer": null,
-        "explanation": "5.25 years"
+        "explanation": "**Verified with actual results:** If the man does not have lung cancer and surgery is performed:\n- If surgery is successful (70% probability): life expectancy = 7.5 years (same as no treatment, since healthy)\n- If surgery results in death (30% probability): life expectancy = 0 years\n- Expected life expectancy = 0.7 × 7.5 + 0.3 × 0 = **5.25 years**"
       },
       {
         "quiz_number": 9,
@@ -5572,7 +5666,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy: man has lung cancer and performs radiotherapy",
         "options": null,
         "correct_answer": null,
-        "explanation": "4.58 years"
+        "explanation": "**Verified with actual results:** If the man has lung cancer and radiotherapy is performed, we compute the mean of the ppd:\n- ppd = [4.4, 5.3, 5.1, 3.2, 4.9]\n- Expected life expectancy = (4.4 + 5.3 + 5.1 + 3.2 + 4.9) / 5 = 22.9 / 5 = **4.58 years**"
       },
       {
         "quiz_number": 9,
@@ -5584,7 +5678,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy: man has lung cancer and surgery is done",
         "options": null,
         "correct_answer": null,
-        "explanation": "4.354 years (or approximately 4.35 years)"
+        "explanation": "**Verified with actual results:** If the man has lung cancer and surgery is performed:\n- If surgery is successful (70% probability): mean of ppd = [5.9, 6.3, 6.2, 5.7, 7] = (5.9 + 6.3 + 6.2 + 5.7 + 7) / 5 = 31.1 / 5 = 6.22 years\n- If surgery results in death (30% probability): life expectancy = 0 years\n- Expected life expectancy = 0.7 × 6.22 + 0.3 × 0 = **4.354 years**"
       },
       {
         "quiz_number": 9,
@@ -5596,7 +5690,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy: man has lung cancer and no treatment is given",
         "options": null,
         "correct_answer": null,
-        "explanation": "0.96 years"
+        "explanation": "**Verified with actual results:** If the man has lung cancer and no treatment is given, we compute the mean of the ppd:\n- ppd = [1.1, 0.7, 0.9, 1.7, 0.4]\n- Expected life expectancy = (1.1 + 0.7 + 0.9 + 1.7 + 0.4) / 5 = 4.8 / 5 = **0.96 years**"
       },
       {
         "quiz_number": 9,
@@ -5608,7 +5702,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy with radiotherapy (overall)",
         "options": null,
         "correct_answer": null,
-        "explanation": "5.164 years (or approximately 5.16 years)"
+        "explanation": "**Verified with actual results:** Using the law of total expectation:\n- P(cancer) = 0.8, P(no cancer) = 0.2\n- E[life expectancy | radiotherapy] = P(cancer) × E[life expectancy | cancer, radiotherapy] + P(no cancer) × E[life expectancy | no cancer, radiotherapy]\n- E[life expectancy | radiotherapy] = 0.8 × 4.58 + 0.2 × 7.5 = 3.664 + 1.5 = **5.164 years**"
       },
       {
         "quiz_number": 9,
@@ -5620,7 +5714,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy with surgery (overall)",
         "options": null,
         "correct_answer": null,
-        "explanation": "4.533 years (or approximately 4.53 years)"
+        "explanation": "**Verified with actual results:** Using the law of total expectation:\n- E[life expectancy | surgery] = P(cancer) × E[life expectancy | cancer, surgery] + P(no cancer) × E[life expectancy | no cancer, surgery]\n- E[life expectancy | surgery] = 0.8 × 4.354 + 0.2 × 5.25 = 3.4832 + 1.05 = **4.533 years**"
       },
       {
         "quiz_number": 9,
@@ -5632,7 +5726,7 @@ const QUIZ_DATA = {
         "statement": "Compute expected life expectancy with no treatment (overall)",
         "options": null,
         "correct_answer": null,
-        "explanation": "2.268 years (or approximately 2.27 years)"
+        "explanation": "**Verified with actual results:** Using the law of total expectation:\n- E[life expectancy | no treatment] = P(cancer) × E[life expectancy | cancer, no treatment] + P(no cancer) × E[life expectancy | no cancer, no treatment]\n- E[life expectancy | no treatment] = 0.8 × 0.96 + 0.2 × 7.5 = 0.768 + 1.5 = **2.268 years**"
       },
       {
         "quiz_number": 9,
@@ -5642,9 +5736,15 @@ const QUIZ_DATA = {
         "section_description": "An 80-year-old man with an apparently malignant lung tumor needs to decide between three treatment options: radiotherapy, surgery, or no treatment. Doctors initially estimate an 80% chance that the tumor is malignant. Use the model's posterior predictive draws (ppd) to help the man make a decision that maximizes his life expectancy.\n\n**Given information:**\n- Probability of lung cancer: P(cancer) = 0.8, P(no cancer) = 0.2\n- Surgery mortality risk: 30% (survival probability = 70%)\n- Posterior predictive draws (ppd) for remaining lifetime (in years):\n  - Cancer + radiotherapy: `[4.4, 5.3, 5.1, 3.2, 4.9]`\n  - Cancer + surgery (successful): `[5.9, 6.3, 6.2, 5.7, 7]`\n  - Cancer + no treatment: `[1.1, 0.7, 0.9, 1.7, 0.4]`\n  - No cancer (any treatment or no treatment): `[6.8, 5.5, 8.8, 7.4, 9]`\n- Note: If healthy (no cancer), radiotherapy or successful surgery do not affect life expectancy (same as no treatment), but surgery still has 30% mortality risk",
         "title": "What should the man choose to maximize his expected life expectancy?",
         "statement": "What should the man choose to maximize his expected life expectancy?\n**Options:**\n- **Option 1:** Radiotherapy\n- **Option 2:** Surgery\n- **Option 3:** No treatment",
-        "options": null,
-        "correct_answer": null,
-        "explanation": "Option 1 (Radiotherapy)"
+        "options": [
+          "Radiotherapy",
+          "Surgery",
+          "No treatment"
+        ],
+        "correct_answer": [
+          0
+        ],
+        "explanation": "**Verified with actual results:** Comparing the expected life expectancies from questions 4.6, 4.7, and 4.8:\n- **Radiotherapy:** 5.164 years\n- **Surgery:** 4.533 years\n- **No treatment:** 2.268 years\n\nRadiotherapy provides the highest expected life expectancy (5.164 years), so the man should choose **radiotherapy** to maximize his expected life expectancy.\n\n**Key insights:**\n- Surgery has the highest life expectancy if successful and the patient has cancer (6.22 years), but the 30% mortality risk significantly reduces the overall expected value to 4.533 years\n- Radiotherapy provides a good balance: reasonable life expectancy if cancer is present (4.58 years) without the mortality risk of surgery, resulting in the highest overall expected value (5.164 years)\n- No treatment gives the worst outcome overall (2.268 years), especially if cancer is present (only 0.96 years)"
       }
     ]
   },

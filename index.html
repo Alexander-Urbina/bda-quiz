@@ -775,7 +775,7 @@
             <button class="nav-btn active" onclick="showView('home', this)">Home</button>
             <button class="nav-btn" onclick="showView('explore', this)">Explore</button>
             <button class="nav-btn" onclick="showView('random-section', this)">Random Section</button>
-            <button class="nav-btn" onclick="showView('random-question', this)">Random Question</button>
+            <button class="nav-btn" onclick="showView('challenges', this)">Challenges</button>
             <button class="nav-btn" onclick="showView('progress', this)">Progress</button>
         </div>
 
@@ -791,9 +791,9 @@
                     <h2>🎲 Random Section</h2>
                     <p>Get a random section from any quiz to test your knowledge</p>
                 </div>
-                <div class="mode-card" onclick="showView('random-question')">
-                    <h2>❓ Random Question</h2>
-                    <p>Practice with individual random questions</p>
+                <div class="mode-card" onclick="showView('challenges')">
+                    <h2>🎯 Challenges</h2>
+                    <p>Focus on your weakest sections to improve your knowledge</p>
                 </div>
                 <div class="mode-card" onclick="showView('progress')">
                     <h2>📊 Progress</h2>
@@ -830,13 +830,20 @@
             </div>
         </div>
 
-        <!-- Random Question View -->
-        <div id="random-question-view" class="view">
-            <div id="random-question-content">
-                <!-- Random question will be displayed here -->
+        <!-- Challenges View -->
+        <div id="challenges-view" class="view">
+            <div id="challenges-content">
+                <div style="text-align: center; padding: 40px 20px;">
+                    <h2>🎯 Challenges</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 30px;">
+                        Practice questions from your worst-performing sections to improve your knowledge
+                    </p>
+                    <button class="btn btn-primary" onclick="loadChallenges()" style="font-size: 1.1em; padding: 15px 30px;">
+                        🎯 Load Challenges
+                    </button>
+                </div>
             </div>
-            <div class="controls">
-                <button class="btn btn-primary" onclick="loadRandomQuestion()">❓ New Random Question</button>
+            <div class="controls" id="challenges-controls" style="display: none;">
                 <button class="btn btn-secondary" onclick="showView('home')">🏠 Home</button>
             </div>
         </div>
@@ -949,18 +956,14 @@
         // Initialize app
         async function init() {
             try {
-                // Try to load from embedded data first
+                // Load from embedded data
                 if (typeof QUIZ_DATA !== 'undefined') {
                     quizData = filterQuestionsWithOptions(QUIZ_DATA);
                 } else {
-                    // Fallback to fetch if not embedded
-                    const response = await fetch('all_quizzes.json');
-                    const rawData = await response.json();
-                    quizData = filterQuestionsWithOptions(rawData);
+                    throw new Error('QUIZ_DATA is not defined. Make sure quiz_data.js is loaded.');
                 }
                 setupExploreView();
                 loadRandomSection();
-                loadRandomQuestion();
                 updateProgressView();
                 
                 // Wait for MathJax to be ready, then render
@@ -978,7 +981,7 @@
                         <div class="error">
                             <h2>Error loading quiz data</h2>
                             <p>${error.message}</p>
-                            <p>Make sure quiz data is embedded in the HTML file or all_quizzes.json is available.</p>
+                            <p>Make sure quiz_data.js is properly loaded and QUIZ_DATA is defined.</p>
                         </div>
                     </div>
                 `;
@@ -1136,6 +1139,73 @@
             showView('random-section');
         }
 
+        // Helper function to take a section from progress view
+        function takeSectionFromProgress(quizNum, sectionName) {
+            if (!quizData || !quizData.quizzes || !quizData.quizzes[quizNum]) {
+                alert('Quiz data not found');
+                return;
+            }
+            
+            // Find questions for this section
+            const questions = quizData.quizzes[quizNum].filter(q => 
+                hasOptions(q) && (q.section || 'Unnamed Section') === sectionName
+            );
+            
+            if (questions.length === 0) {
+                alert('No questions found for this section');
+                return;
+            }
+            
+            // Load the section
+            loadSectionByQuestions(questions, quizNum, sectionName);
+        }
+
+        // Retake a challenge section (reset and load)
+        function retakeChallengeSection(quizNum, sectionName) {
+            if (!quizData || !quizData.quizzes || !quizData.quizzes[quizNum]) {
+                alert('Quiz data not found');
+                return;
+            }
+            
+            // Find questions for this section
+            const questions = quizData.quizzes[quizNum].filter(q => 
+                hasOptions(q) && (q.section || 'Unnamed Section') === sectionName
+            );
+            
+            if (questions.length === 0) {
+                alert('No questions found for this section');
+                return;
+            }
+            
+            // Reset the section first (without confirmation prompt for smoother UX)
+            const sectionQuestions = questions.filter(q => (q.section || 'Unnamed Section') === sectionName);
+            let resetCount = 0;
+            
+            sectionQuestions.forEach(q => {
+                const questionId = `q_${quizNum}_${q.question_number}`;
+                if (progress.answers[questionId]) {
+                    delete progress.answers[questionId];
+                    resetCount++;
+                }
+                if (progress.answered[questionId]) {
+                    delete progress.answered[questionId];
+                }
+                if (progress.correct[questionId]) {
+                    delete progress.correct[questionId];
+                }
+                if (progress.wrong[questionId]) {
+                    delete progress.wrong[questionId];
+                }
+            });
+            
+            saveProgress();
+            updateProgressView();
+            setupExploreView();
+            
+            // Load the section
+            loadSectionByQuestions(questions, quizNum, sectionName);
+        }
+
         // Load random section
         function loadRandomSection() {
             // Collect all sections from all quizzes
@@ -1167,12 +1237,347 @@
             loadSectionByQuestions(randomSection.questions, randomSection.quizNum, randomSection.sectionName);
         }
 
-        // Load random question
-        function loadRandomQuestion() {
-            if (!quizData || !quizData.all_questions || quizData.all_questions.length === 0) return;
+        // Variables for challenges
+        let challengeQuestions = [];
+        let currentChallengeIndex = 0;
 
-            const randomQuestion = quizData.all_questions[Math.floor(Math.random() * quizData.all_questions.length)];
-            displaySingleQuestion(randomQuestion);
+        // Analyze section performance and get worst-performing sections
+        function analyzeSectionPerformance() {
+            if (!quizData || !quizData.quizzes) return [];
+
+            const sectionStats = {};
+
+            // Iterate through all quizzes
+            Object.keys(quizData.quizzes).forEach(quizNum => {
+                const questions = quizData.quizzes[quizNum];
+                
+                // Group questions by section
+                const sections = {};
+                questions.forEach(q => {
+                    const sectionKey = `${quizNum}_${q.section || 'Unnamed Section'}`;
+                    if (!sections[sectionKey]) {
+                        sections[sectionKey] = {
+                            quizNum: quizNum,
+                            sectionName: q.section || 'Unnamed Section',
+                            questions: []
+                        };
+                    }
+                    sections[sectionKey].questions.push(q);
+                });
+
+                // Calculate performance for each section
+                Object.keys(sections).forEach(sectionKey => {
+                    const section = sections[sectionKey];
+                    let answered = 0;
+                    let correct = 0;
+                    let wrong = 0;
+
+                    section.questions.forEach(q => {
+                        const questionId = `q_${quizNum}_${q.question_number}`;
+                        if (progress.answered[questionId]) {
+                            answered++;
+                            if (progress.correct[questionId]) {
+                                correct++;
+                            } else if (progress.wrong[questionId]) {
+                                wrong++;
+                            }
+                        }
+                    });
+
+                    // Only include sections with at least one answered question
+                    if (answered > 0) {
+                        const accuracy = correct / answered;
+                        const totalQuestions = section.questions.length;
+                        
+                        sectionStats[sectionKey] = {
+                            quizNum: quizNum,
+                            sectionName: section.sectionName,
+                            questions: section.questions,
+                            answered: answered,
+                            correct: correct,
+                            wrong: wrong,
+                            accuracy: accuracy,
+                            totalQuestions: totalQuestions,
+                            // Score: lower is worse (prioritize low accuracy and high wrong count)
+                            score: (1 - accuracy) * 100 + (wrong / answered) * 50
+                        };
+                    }
+                });
+            });
+
+            // Sort by score (worst first)
+            const sortedSections = Object.values(sectionStats).sort((a, b) => b.score - a.score);
+            return sortedSections;
+        }
+
+        // Load challenges from worst-performing sections
+        function loadChallenges() {
+            if (!quizData) return;
+
+            const worstSections = analyzeSectionPerformance();
+            
+            if (worstSections.length === 0) {
+                document.getElementById('challenges-content').innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <h2>🎯 Challenges</h2>
+                        <p style="color: var(--text-secondary); margin: 20px 0;">
+                            You haven't answered any questions yet. Start practicing to identify your weak areas!
+                        </p>
+                        <button class="btn btn-primary" onclick="showView('explore')" style="font-size: 1.1em; padding: 15px 30px;">
+                            🔍 Explore Quizzes
+                        </button>
+                    </div>
+                `;
+                document.getElementById('challenges-controls').style.display = 'none';
+                return;
+            }
+
+            // Display sections (top 10 worst-performing)
+            const topWorstSections = worstSections.slice(0, 10);
+            
+            let html = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2>🎯 Challenges</h2>
+                    <p style="color: var(--text-secondary);">
+                        Focus on your worst-performing sections to improve your knowledge
+                    </p>
+                </div>
+                <div style="display: grid; gap: 20px;">
+            `;
+
+            topWorstSections.forEach((section, idx) => {
+                const accuracyPercent = (section.accuracy * 100).toFixed(1);
+                const sectionPercent = section.totalQuestions > 0 
+                    ? ((section.answered / section.totalQuestions) * 100).toFixed(1) 
+                    : 0;
+                const sectionNameEscaped = section.sectionName.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                
+                html += `
+                    <div style="padding: 20px; background: var(--bg-card); border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                    <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9em;">
+                                        #${idx + 1}
+                                    </span>
+                                    <h3 style="margin: 0; color: var(--text-primary);">${section.sectionName}</h3>
+                                </div>
+                                <div style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 10px;">
+                                    Quiz ${section.quizNum} • ${section.totalQuestions} questions
+                                </div>
+                                <div style="display: flex; gap: 15px; font-size: 0.9em; margin-bottom: 10px;">
+                                    <span style="color: #28a745;">
+                                        <strong>✓ ${section.correct}</strong> correct
+                                    </span>
+                                    <span style="color: #dc3545;">
+                                        <strong>✗ ${section.wrong}</strong> wrong
+                                    </span>
+                                    <span style="color: var(--text-secondary);">
+                                        <strong>${section.answered}</strong> answered
+                                    </span>
+                                </div>
+                            </div>
+                            <div style="text-align: right; margin-left: 20px;">
+                                <div style="font-size: 0.85em; color: var(--text-secondary); margin-bottom: 5px;">Accuracy</div>
+                                <div style="font-size: 1.8em; font-weight: bold; color: ${section.accuracy < 0.5 ? '#dc3545' : section.accuracy < 0.7 ? '#ffc107' : '#28a745'};">
+                                    ${accuracyPercent}%
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar" style="height: 25px; margin-bottom: 15px;">
+                            <div class="progress-fill" style="width: ${sectionPercent}%">
+                                ${sectionPercent}%
+                            </div>
+                        </div>
+                        <button class="btn btn-primary retake-section-btn" 
+                                data-quiz="${section.quizNum}" 
+                                data-section="${sectionNameEscaped}"
+                                style="width: 100%; font-size: 1em; padding: 12px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            🔄 Retake This Section
+                        </button>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+            
+            document.getElementById('challenges-content').innerHTML = html;
+            document.getElementById('challenges-controls').style.display = 'none';
+            
+            // Add event listeners for retake buttons
+            document.querySelectorAll('.retake-section-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizNum = this.getAttribute('data-quiz');
+                    const sectionName = this.getAttribute('data-section');
+                    retakeChallengeSection(quizNum, sectionName);
+                });
+            });
+        }
+
+        // Display current challenge question
+        function displayChallengeQuestion() {
+            const container = document.getElementById('challenges-content');
+            const questionItems = challengeQuestions.filter(item => item.type === 'question');
+            
+            if (currentChallengeIndex >= questionItems.length) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <h2>🎉 All Challenges Complete!</h2>
+                        <p style="color: var(--text-secondary); margin: 20px 0;">
+                            You've reviewed all questions from your challenging sections. Great work!
+                        </p>
+                        <button class="btn btn-primary" onclick="loadChallenges()" style="font-size: 1.1em; padding: 15px 30px;">
+                            🔄 Refresh Challenges
+                        </button>
+                    </div>
+                `;
+                document.getElementById('challenges-controls').style.display = 'none';
+                return;
+            }
+
+            const currentItem = questionItems[currentChallengeIndex];
+            const question = currentItem.question;
+            const quizNum = currentItem.quizNum;
+            
+            // Find section header for this question
+            let sectionHeader = null;
+            for (let i = currentChallengeIndex; i >= 0; i--) {
+                if (challengeQuestions[i].type === 'section-header') {
+                    sectionHeader = challengeQuestions[i];
+                    break;
+                }
+            }
+
+            // Display question with section context
+            const questionId = `q_${quizNum}_${question.question_number}`;
+            const userAnswer = progress.answers[questionId] || null;
+            const isAnswered = userAnswer !== null;
+            const sectionDescription = question.section_description || null;
+
+            let html = '<div class="question-container">';
+            
+            // Section header
+            if (sectionHeader) {
+                html += `
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3 style="margin: 0 0 5px 0; font-size: 1.2em;">🎯 Challenge Section #${sectionHeader.rank}</h3>
+                                <p style="margin: 0; opacity: 0.9; font-size: 0.95em;">${sectionHeader.sectionName}</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 0.9em; opacity: 0.9;">Accuracy</div>
+                                <div style="font-size: 1.5em; font-weight: bold;">${sectionHeader.accuracy}%</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `
+                <div class="question-header">
+                    <h2>Question ${question.question_number}</h2>
+                    <div class="question-meta">Quiz ${quizNum}${question.section ? ` • ${question.section}` : ''}</div>
+                    <div style="margin-top: 10px; color: var(--text-secondary); font-size: 0.9em;">
+                        Challenge ${currentChallengeIndex + 1} of ${questionItems.length}
+                    </div>
+                </div>
+            `;
+
+            if (sectionDescription) {
+                html += `
+                    <div class="section-description" style="background: var(--info-bg); padding: 20px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid var(--accent); color: var(--text-primary);">
+                        <h3 style="margin-top: 0; color: var(--accent); font-size: 1.1em;">${question.section || 'Section'}</h3>
+                        <div style="line-height: 1.6;">${convertMarkdownImages(sectionDescription)}</div>
+                    </div>
+                `;
+            }
+
+            html += `<div class="question-statement">${convertMarkdownImages(question.statement)}</div>`;
+
+            if (question.options) {
+                html += `<div class="options" id="options-${questionId}">`;
+                question.options.forEach((opt, idx) => {
+                    const isSelected = userAnswer && userAnswer.includes(idx);
+                    const isCorrect = question.correct_answer && question.correct_answer.includes(idx);
+                    const isMultipleChoice = question.correct_answer && question.correct_answer.length > 1;
+                    let className = 'option';
+                    if (isAnswered) {
+                        className += isCorrect ? ' correct' : (isSelected ? ' incorrect' : '');
+                    } else if (isSelected) {
+                        className += ' selected';
+                    }
+                    const onclickHandler = isMultipleChoice 
+                        ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                        : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
+                    const onchangeHandler = isMultipleChoice 
+                        ? (!isAnswered ? `toggleOption('${questionId}', ${idx})` : '') 
+                        : (!isAnswered ? `selectOption('${questionId}', ${idx}, ${question.correct_answer ? question.correct_answer.includes(idx) : false})` : '');
+                    html += `
+                        <div class="${className}" ${onclickHandler ? `onclick="${onclickHandler}"` : ''} ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
+                            <input type="${isMultipleChoice ? 'checkbox' : 'radio'}" 
+                                   name="options-${questionId}" 
+                                   value="${idx}" 
+                                   ${isSelected ? 'checked' : ''} 
+                                   ${isAnswered ? 'disabled' : ''}
+                                   ${onchangeHandler ? `onchange="${onchangeHandler}"` : ''}>
+                            <label>${convertMarkdownImages(opt)}</label>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+
+                if (!isAnswered) {
+                    if (isMultipleChoice) {
+                        html += `<button class="btn btn-primary" onclick="submitAnswer('${questionId}')" style="margin-top: 20px;">Submit Answer</button>`;
+                    }
+                } else {
+                    if (question.explanation) {
+                        html += `
+                            <div class="explanation" style="margin-top: 20px; padding: 20px; background: var(--info-bg); border-radius: 10px; border-left: 4px solid var(--accent);">
+                                <h4 style="margin-top: 0; color: var(--accent);">Explanation:</h4>
+                                <div style="line-height: 1.6;">${convertMarkdownImages(question.explanation)}</div>
+                            </div>
+                        `;
+                    }
+                }
+            } else {
+                // Fill-in question
+                html += `
+                    <div style="margin-top: 20px;">
+                        <textarea id="answer-${questionId}" 
+                                  class="form-control" 
+                                  rows="3" 
+                                  placeholder="Enter your answer here..."
+                                  ${isAnswered ? 'disabled' : ''}>${userAnswer ? userAnswer.join(', ') : ''}</textarea>
+                        ${!isAnswered ? `<button class="btn btn-primary" onclick="submitTextAnswer('${questionId}')" style="margin-top: 10px;">Submit Answer</button>` : ''}
+                    </div>
+                `;
+                if (isAnswered && question.explanation) {
+                    html += `
+                        <div class="explanation" style="margin-top: 20px; padding: 20px; background: var(--info-bg); border-radius: 10px; border-left: 4px solid var(--accent);">
+                            <h4 style="margin-top: 0; color: var(--accent);">Explanation:</h4>
+                            <div style="line-height: 1.6;">${convertMarkdownImages(question.explanation)}</div>
+                        </div>
+                    `;
+                }
+            }
+
+            html += '</div>';
+            container.innerHTML = html;
+            renderMath();
+        }
+
+        // Navigate to next challenge question
+        function nextChallengeQuestion() {
+            const questionItems = challengeQuestions.filter(item => item.type === 'question');
+            if (currentChallengeIndex < questionItems.length - 1) {
+                currentChallengeIndex++;
+                displayChallengeQuestion();
+            } else {
+                // Reached the end, reload challenges to get fresh data
+                loadChallenges();
+            }
         }
 
         // Display a question
@@ -1271,9 +1676,17 @@
             setTimeout(() => renderMath(), 100);
         }
 
-        // Display single question (for random question mode)
+        // Display single question (for challenges mode or fallback)
         function displaySingleQuestion(question) {
-            const container = document.getElementById('random-question-content');
+            // Try challenges content first, then fallback to any available container
+            let container = document.getElementById('challenges-content');
+            if (!container) {
+                container = document.getElementById('random-section-content');
+            }
+            if (!container) {
+                console.warn('No container found for displaySingleQuestion');
+                return;
+            }
             const questionId = `q_${question.quiz_number}_${question.question_number}`;
             const userAnswer = progress.answers[questionId] || null;
             const isAnswered = userAnswer !== null;
@@ -1444,6 +1857,42 @@
             saveProgress();
             
             // Update UI to show answer
+            if (currentQuestions.length > 0) {
+                const sectionName = currentQuestions[0].section || null;
+                displayQuestion(question, currentQuestionIndex, currentQuestions.length, sectionName);
+            } else {
+                displaySingleQuestion(question);
+            }
+        }
+
+        // Submit text answer (for fill-in questions)
+        function submitTextAnswer(questionId) {
+            const question = findQuestionById(questionId);
+            if (!question) return;
+            
+            const answerInput = document.getElementById(`answer-${questionId}`);
+            if (!answerInput) return;
+            
+            const answerText = answerInput.value.trim();
+            if (!answerText) {
+                alert('Please enter an answer');
+                return;
+            }
+            
+            // Store answer
+            if (!progress.answers[questionId]) {
+                progress.answers[questionId] = [];
+            }
+            progress.answers[questionId] = [answerText];
+            
+            // Mark as answered
+            if (!progress.answered[questionId]) {
+                progress.answered[questionId] = Date.now();
+            }
+            
+            saveProgress();
+            
+            // Update UI
             if (currentQuestions.length > 0) {
                 const sectionName = currentQuestions[0].section || null;
                 displayQuestion(question, currentQuestionIndex, currentQuestions.length, sectionName);
@@ -1652,7 +2101,8 @@
                     const sectionName = currentQuestions[0].section || null;
                     displayQuestion(currentQuestions[currentQuestionIndex], currentQuestionIndex, currentQuestions.length, sectionName);
                 } else {
-                    loadRandomQuestion();
+                    // Return to home view if no active view
+                    showView('home');
                 }
                 alert('Quiz answers have been reset!');
             }
@@ -1820,6 +2270,8 @@
                                         const sectionPercent = sectionQuestions.length > 0 ? ((sectionAnswered / sectionQuestions.length) * 100).toFixed(1) : 0;
                                         const sectionAccuracy = sectionAnswered > 0 ? ((sectionCorrect / sectionAnswered) * 100).toFixed(1) : 0;
                                         
+                                        // Escape section name for use in HTML attributes
+                                        const sectionNameEscaped = sectionName.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
                                         return `
                                             <div style="margin: 10px 0; padding: 10px; background: var(--bg-card); border-radius: 5px;">
                                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
@@ -1833,11 +2285,17 @@
                                                     </div>
                                                     <span style="font-size: 0.9em;">${sectionAnswered} / ${sectionQuestions.length} (${sectionPercent}%)</span>
                                                 </div>
-                                                <div class="progress-bar" style="height: 20px;">
+                                                <div class="progress-bar" style="height: 20px; margin-bottom: 10px;">
                                                     <div class="progress-fill" style="width: ${sectionPercent}%">
                                                         ${sectionPercent}%
                                                     </div>
                                                 </div>
+                                                <button class="btn btn-primary take-section-btn" 
+                                                        data-quiz="${quizNum}" 
+                                                        data-section="${sectionNameEscaped}"
+                                                        style="width: 100%; font-size: 0.9em; padding: 8px 15px;">
+                                                    📝 Take This Section
+                                                </button>
                                             </div>
                                         `;
                                     }).join('')}
@@ -1865,6 +2323,15 @@
                     </div>
                 ` : ''}
             `;
+            
+            // Add event listeners for "Take This Section" buttons
+            document.querySelectorAll('.take-section-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const quizNum = this.getAttribute('data-quiz');
+                    const sectionName = this.getAttribute('data-section');
+                    takeSectionFromProgress(quizNum, sectionName);
+                });
+            });
         }
 
         // Initialize on load
